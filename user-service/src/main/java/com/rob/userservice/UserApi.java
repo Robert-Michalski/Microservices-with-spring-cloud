@@ -1,4 +1,4 @@
-package com.rob.paymentservice;
+package com.rob.userservice;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class PaymentApi {
+public class UserApi {
 
     @GetMapping
     public String hello(){
-        return "Hello from payment api";
+        return "Hello from user api";
     }
 }

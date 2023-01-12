@@ -11,8 +11,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="spring-cloud-app" />
-        <module name="eureka" />
         <module name="payment-service" />
+        <module name="user-service" />
+        <module name="eureka" />
       </profile>
     </annotationProcessing>
   </component>
@@ -20,6 +21,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="eureka" options="-parameters" />
       <module name="payment-service" options="-parameters" />
+      <module name="user-service" options="-parameters" />
     </option>
   </component>
 </project>
