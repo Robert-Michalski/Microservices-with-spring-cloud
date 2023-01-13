@@ -1,5 +1,8 @@
 package com.rob.userservice.service;
 
+import com.rob.userservice.config.JWTGenerator;
+import com.rob.userservice.dto.LoginRequest;
+import com.rob.userservice.dto.LoginResponse;
 import com.rob.userservice.dto.UserRequest;
 import com.rob.userservice.dto.UserResponse;
 import com.rob.userservice.entity.User;
@@ -7,6 +10,10 @@ import com.rob.userservice.entity.UserRole;
 import com.rob.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +30,8 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -83,4 +92,6 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
+
+
 }
