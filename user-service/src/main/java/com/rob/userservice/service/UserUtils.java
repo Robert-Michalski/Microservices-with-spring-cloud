@@ -6,6 +6,10 @@ import com.rob.userservice.entity.User;
 
 public class UserUtils {
 
+    public static String badIdErrorMessage(Long id){
+        return "User with id " + id + " not found";
+    }
+
     public static UserResponse toDto(User user){
         return UserResponse.builder()
                 .id(user.getId())

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,13 +26,22 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        Optional<User> userOpt = userRepository.findByMailIgnoreCase(username);
+        if(userOpt.isEmpty()){
+            throw new UsernameNotFoundException("User with mail " + username + " not found");
+        }
+        User user = userOpt.get();
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getMail())
+                .password(user.getPassword())
+                .roles(user.getRole().toString())
+                .build();
     }
 
 
-    public UserResponse saveUser(UserRequest userRequest){
+    public UserResponse saveUser(UserRequest userRequest) {
         User userToSave = UserUtils.toEntity(userRequest);
-        if(userRepository.findByMailIgnoreCase(userToSave.getMail()).isPresent()){
+        if (userRepository.findByMailIgnoreCase(userToSave.getMail()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User with this mail already exists");
         }
         userToSave.setPassword(encoder.encode(userRequest.password()));
@@ -39,20 +49,20 @@ public class UserService implements UserDetailsService {
         return UserUtils.toDto(userRepository.save(userToSave));
     }
 
-    public List<UserResponse> getAllUsers(){
+    public List<UserResponse> getAllUsers() {
         return userRepository.findAll()
                 .stream()
                 .map(UserUtils::toDto)
                 .toList();
     }
 
-    public UserResponse getUserById(Long id){
-        checkIfExistsAndThrowRse(id, HttpStatus.BAD_REQUEST,"User with id " + id + " not found" );
+    public UserResponse getUserById(Long id) {
+        checkIfExistsAndThrowRse(id, HttpStatus.BAD_REQUEST, UserUtils.badIdErrorMessage(id));
         return UserUtils.toDto(userRepository.findById(id).get());
     }
 
-    public UserResponse updateUserById(Long id, UserRequest userRequest){
-        checkIfExistsAndThrowRse(id, HttpStatus.BAD_REQUEST,"User with id " + id + " not found" );
+    public UserResponse updateUserById(Long id, UserRequest userRequest) {
+        checkIfExistsAndThrowRse(id, HttpStatus.BAD_REQUEST, UserUtils.badIdErrorMessage(id));
         User userToSave = userRepository.findById(id).get();
         userToSave.setFirstName(userRequest.firstName());
         userToSave.setLastName(userRequest.lastName());
@@ -62,13 +72,13 @@ public class UserService implements UserDetailsService {
         return UserUtils.toDto(userRepository.save(userToSave));
     }
 
-    public void deleteUserById(Long id){
-        checkIfExistsAndThrowRse(id, HttpStatus.BAD_REQUEST,"User with id " + id + " not found" );
+    public void deleteUserById(Long id) {
+        checkIfExistsAndThrowRse(id, HttpStatus.BAD_REQUEST, UserUtils.badIdErrorMessage(id));
         userRepository.deleteById(id);
     }
 
-    private boolean checkIfExistsAndThrowRse(Long id, HttpStatus httpStatus, String message){
-        if(userRepository.findById(id).isEmpty()){
+    private boolean checkIfExistsAndThrowRse(Long id, HttpStatus httpStatus, String message) {
+        if (userRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(httpStatus, message);
         }
         return false;
