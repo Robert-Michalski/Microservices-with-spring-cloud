@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.checkerframework.common.aliasing.qual.Unique;
 
 @Entity
 @Getter @Setter
@@ -18,6 +19,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String phone;
+    @Unique
     private String mail;
     private String password;
     private UserRole role;
