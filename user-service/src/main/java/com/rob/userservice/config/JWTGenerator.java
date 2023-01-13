@@ -22,7 +22,7 @@ public class JWTGenerator {
     public String generateToken(Authentication authentication){
         String username = authentication.getName();
         Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + 70000);
+        Date expireDate = new Date(currentDate.getTime() + JWT_EXPIRATION);
 
         return Jwts.builder()
                 .setSubject(username)
