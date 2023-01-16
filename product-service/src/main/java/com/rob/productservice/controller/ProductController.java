@@ -4,6 +4,7 @@ import com.rob.productservice.dto.ProductOrder;
 import com.rob.productservice.dto.ProductRequest;
 import com.rob.productservice.dto.ProductResponse;
 import com.rob.productservice.service.ProductService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,11 +33,12 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @Transactional
     @PutMapping("{id}")
     public ProductResponse updateProductById(@PathVariable Long id, @RequestBody ProductRequest productRequest){
         return productService.updateProductById(id, productRequest);
     }
-
+    @Transactional
     @DeleteMapping("{id}")
     public String deleteProductById(@PathVariable Long id){
         return productService.deleteProductById(id);
