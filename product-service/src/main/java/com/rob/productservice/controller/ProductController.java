@@ -6,6 +6,7 @@ import com.rob.productservice.dto.ProductResponse;
 import com.rob.productservice.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ProductResponse addProduct(@RequestBody ProductRequest productRequest){
         return productService.addProduct(productRequest);
     }
