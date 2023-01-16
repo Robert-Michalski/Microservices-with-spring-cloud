@@ -15,6 +15,7 @@
         <module name="eureka" />
         <module name="api-gateway" />
         <module name="spring-cloud-app" />
+        <module name="product-service" />
         <module name="user-service" />
         <module name="order-service" />
       </profile>
@@ -31,6 +32,7 @@
       <module name="gateway" options="-parameters" />
       <module name="order-service" options="-parameters" />
       <module name="payment-service" options="-parameters" />
+      <module name="product-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>
