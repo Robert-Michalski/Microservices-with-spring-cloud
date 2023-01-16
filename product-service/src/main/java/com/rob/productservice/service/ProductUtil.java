@@ -17,13 +17,5 @@ public class ProductUtil {
                 .build();
     }
 
-    public static Product toEntity(ProductRequest productRequest){
-        return Product.builder()
-                .name(productRequest.name())
-                .category(productRequest.category())
-                .price(productRequest.price())
-                .details(productRequest.details())
-                .quantity(productRequest.quantity())
-                .build();
-    }
+
 }
