@@ -1,5 +1,6 @@
 package com.rob.productservice.service;
 
+import com.rob.productservice.dto.ProductOrder;
 import com.rob.productservice.dto.ProductRequest;
 import com.rob.productservice.dto.ProductResponse;
 import com.rob.productservice.entity.Category;
@@ -13,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -75,6 +77,19 @@ public class ProductService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         productRepository.deleteById(id);
-        return "Product id: " + id + " deleted succesfully";
+        return "Product id: " + id + " deleted successfully";
     }
+
+    public boolean isInStock(ProductOrder productOrder) {
+        if (productRepository.findById(productOrder.productId()).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        Product productToCheck = productRepository.findById(productOrder.productId()).get();
+        return productToCheck.getQuantity() >= productOrder.quantity();
+    }
+
+    public boolean areInStock(Set<ProductOrder> productOrders) {
+       return productOrders.stream().allMatch(this::isInStock);
+    }
+
 }
