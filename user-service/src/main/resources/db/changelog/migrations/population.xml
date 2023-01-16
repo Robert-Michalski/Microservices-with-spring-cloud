@@ -1,0 +1,34 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+    <!--    User roles are passed by ints 0 is Admin, 1 is Manager 2 is User-->
+    <changeSet id="2" author="Robert Michalski">
+        <insert tableName="user">
+            <column name="first_name" value="Robert"/>
+            <column name="last_name" value="Michalski"/>
+            <column name="mail" value="rob@test.com"/>
+            <column name="phone" value="123321434"/>
+            <column name="password" value="$2a$10$4Bl1s5eKevvhD0fwcyYh9.tOLyz7JnBZLFgRBjVjGZGICkUQKWQ2S"/>
+            <column name="role" value="0"/>
+        </insert>
+        <insert tableName="user">
+            <column name="first_name" value="Jake"/>
+            <column name="last_name" value="Jakowsky"/>
+            <column name="mail" value="jake@test.com"/>
+            <column name="phone" value="321554667"/>
+            <column name="password" value="$2a$10$4Bl1s5eKevvhD0fwcyYh9.tOLyz7JnBZLFgRBjVjGZGICkUQKWQ2S"/>
+            <column name="role" value="2"/>
+        </insert>
+        <insert tableName="user">
+            <column name="first_name" value="Manager"/>
+            <column name="last_name" value="Managerowsky"/>
+            <column name="mail" value="menago@test.com"/>
+            <column name="phone" value="556776886"/>
+            <column name="password" value="$2a$10$4Bl1s5eKevvhD0fwcyYh9.tOLyz7JnBZLFgRBjVjGZGICkUQKWQ2S"/>
+            <column name="role" value="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
