@@ -3,9 +3,11 @@ package com.rob.productservice;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.discovery.converters.Auto;
+import com.rob.productservice.dto.ProductOrder;
 import com.rob.productservice.dto.ProductRequest;
 import com.rob.productservice.entity.Product;
 import com.rob.productservice.repository.ProductRepository;
+import org.junit.internal.requests.OrderingRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +82,31 @@ class ProductServiceApplicationTests{
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         Assertions.assertEquals(sizeBefore-1, productRepository.findAll().size());
+    }
+
+    @Test
+    void shouldDecreaseQuantity() throws Exception {
+        int amount = 1;
+        ProductOrder productOrder = ProductOrder.builder()
+                .quantity(amount)
+                .productId(4L)
+                .build();
+        Product product = Product.builder()
+                .quantity(2)
+                .price(1200)
+                .details("No details")
+                .name("Test product")
+                .build();
+        Product saved = productRepository.save(product);
+        String productRequestString = objectMapper.writeValueAsString(productOrder);
+        int sizeBefore = productRepository.findById(saved.getId()).get().getQuantity();
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/product/is-in-stock")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(productRequestString))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+        Assertions.assertAll(()->{
+            Assertions.assertEquals(sizeBefore - 1, productRepository.findById(saved.getId()).get().getQuantity());
+        });
     }
     private ProductRequest getProductRequest() {
         return ProductRequest.builder()
