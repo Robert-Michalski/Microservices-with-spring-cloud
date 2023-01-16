@@ -1,8 +1,10 @@
 package com.rob.productservice;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netflix.discovery.converters.Auto;
 import com.rob.productservice.dto.ProductRequest;
+import com.rob.productservice.entity.Product;
 import com.rob.productservice.repository.ProductRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -54,7 +56,31 @@ class ProductServiceApplicationTests{
         Assertions.assertEquals(sizeBefore+1,productRepository.findAll().size());
 
     }
+    @Test
+    void shouldUpdateProduct() throws Exception {
+        ProductRequest productRequest = getProductRequest();
+        String productRequestString = objectMapper.writeValueAsString(productRequest);
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/product/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(productRequestString))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+        Product product = productRepository.findById(1L).get();
+        Assertions.assertAll(() -> {
+            Assertions.assertEquals(1, product.getId());
+            Assertions.assertEquals(1200, product.getPrice());
+            Assertions.assertEquals("Product 1", product.getName());
+        });
+    }
 
+    @Test
+    void shouldDeleteProduct() throws Exception {
+        int sizeBefore = productRepository.findAll().size();
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/product/{id}", 2)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+        Assertions.assertEquals(sizeBefore-1, productRepository.findAll().size());
+    }
     private ProductRequest getProductRequest() {
         return ProductRequest.builder()
                 .name("Product 1")
