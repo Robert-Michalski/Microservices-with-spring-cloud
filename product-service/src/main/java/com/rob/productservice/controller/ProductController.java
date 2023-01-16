@@ -53,4 +53,9 @@ public class ProductController {
     public boolean areInStock(@RequestBody Set<ProductOrder> productOrders){
         return productService.areInStock(productOrders);
     }
+
+    @PatchMapping("{id}")
+    public ProductResponse decreaseQuantity(@PathVariable Long id, @RequestParam int amount){
+        return productService.decreaseQuantity(id, amount);
+    }
 }

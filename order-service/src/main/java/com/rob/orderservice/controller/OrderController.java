@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Set;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/order")
@@ -19,5 +21,9 @@ public class OrderController {
     @PostMapping
     public OrderResponse saveOrder(@RequestBody OrderRequest orderRequest){
         return orderService.saveOrder(orderRequest);
+    }
+    @PostMapping("multiple")
+    public Set<OrderResponse> saveOrder(@RequestBody Set<OrderRequest> orderRequests){
+        return orderService.saveOrder(orderRequests);
     }
 }

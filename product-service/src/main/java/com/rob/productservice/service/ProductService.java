@@ -85,11 +85,24 @@ public class ProductService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         Product productToCheck = productRepository.findById(productOrder.productId()).get();
-        return productToCheck.getQuantity() >= productOrder.quantity();
+        boolean result = productToCheck.getQuantity() >= productOrder.quantity();
+        if(result) {
+            decreaseQuantity(productOrder.productId(), productOrder.quantity());
+        }
+        return result;
     }
 
     public boolean areInStock(Set<ProductOrder> productOrders) {
        return productOrders.stream().allMatch(this::isInStock);
     }
 
+    public ProductResponse decreaseQuantity(Long id, int amount) {
+        Optional<Product> byId = productRepository.findById(id);
+        if(byId.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        Product product = byId.get();
+        product.setQuantity(product.getQuantity()-amount);
+        return ProductUtil.toDto(productRepository.save(product));
+    }
 }
