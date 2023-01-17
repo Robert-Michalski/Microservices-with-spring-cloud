@@ -86,12 +86,19 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
+    public Long getUserIdByMail(String mail){
+        if(userRepository.findByMailIgnoreCase(mail).get()!=null)
+        return userRepository.findByMailIgnoreCase(mail).get().getId();
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO USER WITH MAIL " + mail);
+    }
+
     private boolean checkIfExistsAndThrowRse(Long id, HttpStatus httpStatus, String message) {
         if (userRepository.findById(id).isEmpty()) {
             throw new ResponseStatusException(httpStatus, message);
         }
         return false;
     }
+
 
 
 }

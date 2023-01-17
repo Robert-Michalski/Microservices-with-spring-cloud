@@ -18,7 +18,8 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("user")
+@RequestMapping("api/user")
+@CrossOrigin("http://localhost:3000")
 public class UserController {
 
     private final UserService userService;
@@ -59,6 +60,7 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
         String username = jwtGenerator.getUsernameFromJWT(token);
-        return new LoginResponse(token, username);
+        Long id = userService.getUserIdByMail(username);
+        return new LoginResponse(id,token, username);
     }
 }

@@ -1,4 +1,4 @@
 package com.rob.userservice.dto;
 
-public record LoginResponse(String accessToken, String login) {
+public record LoginResponse(Long id, String accessToken, String login) {
 }
