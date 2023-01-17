@@ -60,4 +60,10 @@ public class ProductController {
     public ProductResponse decreaseQuantity(@PathVariable Long id, @RequestParam int amount){
         return productService.decreaseQuantity(id, amount);
     }
+
+    @GetMapping("{id}/name")
+    public String getNameOfProduct(@PathVariable Long id){
+        return productService.getNameOfProduct(id);
+    }
+
 }

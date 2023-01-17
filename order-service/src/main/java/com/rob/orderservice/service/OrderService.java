@@ -1,5 +1,6 @@
 package com.rob.orderservice.service;
 
+import com.rob.orderservice.dto.DetailedOrderResponse;
 import com.rob.orderservice.dto.OrderRequest;
 import com.rob.orderservice.dto.OrderResponse;
 import com.rob.orderservice.entity.Order;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -67,5 +69,32 @@ public class OrderService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Something went wrong during order placement");
         }
         return setToReturn;
+    }
+
+    public List<DetailedOrderResponse> getOrdersOfUser(int id){
+
+        return orderRepository.findByCustomerId(id)
+                .stream()
+                .map(this::toDetailedDto)
+                .toList();
+    }
+    private String getProductName(int id){
+        String productName = webClient.get()
+                .uri("http://localhost:8011/api/product/"+id+"/name")
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+        return productName;
+    }
+
+    private DetailedOrderResponse toDetailedDto(Order order){
+        return DetailedOrderResponse.builder()
+                .id(order.getId())
+                .productName(getProductName(order.getProductId()))
+                .quantity(order.getQuantity())
+                .customerId(order.getCustomerId())
+                .orderDate(order.getOrderDate())
+                .status(order.getStatus())
+                .build();
     }
 }

@@ -11,6 +11,7 @@ function Orders() {
   const appDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
   const [state, setState] = useImmer({
+    orders: [],
     user: {
       id: "",
       firstName: "",
@@ -43,6 +44,28 @@ function Orders() {
       navigate("/")
     }
   }, [])
+  useEffect(() => {
+    if (appState.loggedIn) {
+      const ourRequest = Axios.CancelToken.source()
+      async function fetchData() {
+        try {
+          const response = await Axios.get(`/api/order/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          setState(draft => {
+            draft.orders = response.data
+          })
+        } catch (e) {
+          console.log("there was a problem fetching the data")
+        }
+      }
+
+      fetchData()
+      return () => {
+        ourRequest.cancel()
+      }
+    } else {
+      navigate("/")
+    }
+  }, [])
 
   function checkState() {
     console.log(state)
@@ -53,7 +76,7 @@ function Orders() {
       {/* Leftie and rightie */}
       {/* <button onClick={checkState}>CHECK</button> */}
       <Navigation />
-      <div className="col-10 mx-auto p-1 mt-4 bg-gray">
+      <div className="col-11 mx-auto p-3 mt-4 bg-gray">
         <div className="d-flex orders-top p-4 align-items-center">
           <div className="ms-4">Orders</div>
           <span className="material-symbols-outlined ms-auto">search</span>
@@ -71,15 +94,14 @@ function Orders() {
           <div className="bg-white row mt-4 ms-2 orders p-3">
             <div className="col-sm grid-header">Order ID</div>
             <div className="col-sm grid-header">Item</div>
-            <div className="col-sm grid-header">Buyer</div>
             <div className="col-sm grid-header">Date</div>
             <div className="col-sm grid-header">Status</div>
             <div className="col-sm grid-header">Amount</div>
             <div className="w-100"></div>
             <hr className="mt-3" />
-            <SingleOrder />
-            <SingleOrder />
-            <SingleOrder />
+            {state.orders.map(order => {
+              return <SingleOrder order={order} key={order.id} />
+            })}
           </div>
         </div>
       </div>

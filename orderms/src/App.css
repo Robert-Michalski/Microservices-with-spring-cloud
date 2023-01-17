@@ -78,3 +78,13 @@
 .login button:focus {
   outline: none;
 }
+.bg-green {
+  background-color: green;
+}
+.bg-red {
+  background-color: red;
+}
+#status {
+  border-radius: 10px;
+  color: white;
+}

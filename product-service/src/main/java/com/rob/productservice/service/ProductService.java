@@ -105,4 +105,11 @@ public class ProductService {
         product.setQuantity(product.getQuantity()-amount);
         return ProductUtil.toDto(productRepository.save(product));
     }
+
+    public String getNameOfProduct(Long id) {
+        if(productRepository.findById(id).get()!=null) {
+            return productRepository.findById(id).get().getName();
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+    }
 }
