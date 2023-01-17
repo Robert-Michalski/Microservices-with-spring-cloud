@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import Axios from "axios"
+import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 function Login() {
   const [mail, setMail] = useState("")
   const [password, setPassword] = useState("")
+  const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
 
@@ -35,6 +37,7 @@ function Login() {
         <button type="submit" className="col-3 mx-auto mt-3 mb-5 ">
           LOGIN
         </button>
+        <button onClick={() => console.log(appState)}>check state</button>
       </form>
     </div>
   )
