@@ -1,0 +1,54 @@
+:root {
+  --bg-dark: #22262b;
+  --bg-white: #fff;
+  --bg-gray: #f4f4f4;
+}
+
+.grid-header {
+  font-size: 1.5rem;
+}
+.bg-white {
+  background-color: var(--bg-white);
+}
+.bg-dark {
+  background-color: var(--bg-dark);
+}
+.bg-gray {
+  background-color: var(--bg-gray);
+}
+.fc-white {
+  color: var(--bg-white);
+}
+
+.nav {
+  font-size: 1.5rem;
+}
+.nav .material-symbols-outlined {
+  font-size: 3rem;
+}
+#label-icon .material-symbols-outlined {
+  rotate: -45deg;
+}
+.orders-top {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.orders-top .material-symbols-outlined {
+  font-size: 2rem;
+}
+.search-order input {
+  border-radius: 15px;
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  padding-left: 1rem;
+}
+.search-order input:focus {
+  outline: none;
+}
+.search-order input::placeholder {
+  font-size: 1rem;
+}
+.orders {
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px black;
+}
