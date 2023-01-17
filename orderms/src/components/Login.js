@@ -37,7 +37,7 @@ function Login() {
         <button type="submit" className="col-3 mx-auto mt-3 mb-5 ">
           LOGIN
         </button>
-        <button onClick={() => console.log(appState)}>check state</button>
+        {/* <button onClick={() => console.log(appState)}>check state</button> */}
       </form>
     </div>
   )

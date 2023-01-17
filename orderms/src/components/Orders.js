@@ -1,30 +1,64 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { useNavigate } from "react-router"
 import SingleOrder from "./SingleOrder"
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 import Navigation from "./Navigation"
+import { useImmer } from "use-immer"
 import Axios from "axios"
 function Orders() {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
+  const [state, setState] = useImmer({
+    user: {
+      id: "",
+      firstName: "",
+      lastName: "",
+      mail: "",
+      phone: "",
+      role: ""
+    }
+  })
 
-  function handleLogout() {
-    appDispatch({ type: "logout" })
-    navigate("/")
+  useEffect(() => {
+    if (appState.loggedIn) {
+      const ourRequest = Axios.CancelToken.source()
+      async function fetchData() {
+        try {
+          const response = await Axios.get(`/api/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          setState(draft => {
+            draft.user = response.data
+          })
+        } catch (e) {
+          console.log("there was a problem fetching the data")
+        }
+      }
+
+      fetchData()
+      return () => {
+        ourRequest.cancel()
+      }
+    } else {
+      navigate("/")
+    }
+  }, [])
+
+  function checkState() {
+    console.log(state)
   }
 
   return (
     <div className="d-flex container">
       {/* Leftie and rightie */}
+      {/* <button onClick={checkState}>CHECK</button> */}
       <Navigation />
       <div className="col-10 mx-auto p-1 mt-4 bg-gray">
         <div className="d-flex orders-top p-4 align-items-center">
           <div className="ms-4">Orders</div>
           <span className="material-symbols-outlined ms-auto">search</span>
           <span className="material-symbols-outlined ms-3">notifications</span>
-          <div className="ms-5">John Doe</div>
+          <div className="ms-5">{state.user.firstName + " " + state.user.lastName}</div>
         </div>
         <hr />
         <div className="container p-3">

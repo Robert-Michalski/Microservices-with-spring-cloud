@@ -30,7 +30,6 @@ function App() {
         break
       case "logout":
         state.loggedIn = false
-        state.user = undefined
         break
     }
   }

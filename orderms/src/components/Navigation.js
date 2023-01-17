@@ -13,7 +13,7 @@ function Navigation() {
 
   return (
     <div className="d-flex flex-column nav mt-4 p-4 bg-dark fc-white">
-      <button onClick={() => console.log(appState)}>check state</button>
+      {/* <button onClick={() => console.log(appState)}>check state</button> */}
       <div className="d-flex">
         {/* Icon and text */}
         <div>
