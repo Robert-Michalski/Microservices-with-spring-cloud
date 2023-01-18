@@ -1,0 +1,28 @@
+## Order Management System Application
+This is a fullstack application with primary goal being to learn microservice architecture.
+I was modeling this project https://1000projects.org/order-management-system-for-steel-fabrication-factory-java-project.html
+
+### TECH STACK
+
+| Database | Backend       | Fronted | Testing      |
+|----------|---------------|---------|--------------|
+|MySQL     |Spring         |React    |Junit 5       |
+|Liquibase |Spring boot*   |Axios    |Testcontainers|
+|          |Spring cloud*  |Bootstrap|              |
+|          |Jwt            |         |              |
+
+Spring boot: JPA, Security, Web, Webflux 
+Spring cloud: Gateway, Eureka, Config server 
+
+## Backend
+
+Backend is a Spring application. It consists of different modules.
+If possible, I try to make use of shared properties with Spring Cloud Config Server via GitHub
+Every web server in application is being discovered by Eureka Discovery Server, then routes are being redirected thanks to Spring cloud gateway.
+
+Authentication is done in user-service. Here JWT is generated and passed as a header.
+
+## Frontend
+
+Frontend is made with React. To connect with backend I use Axios library.
+CSS is heavily dependent on Bootstrap
