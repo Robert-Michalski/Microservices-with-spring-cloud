@@ -2,7 +2,7 @@ import React from "react"
 
 function SingleOrder(props) {
   function getStatusBg(status) {
-    if (status == "RECEIVED") return "bg-green"
+    if (status === "RECEIVED") return "bg-green"
     else {
       return "bg-red"
     }

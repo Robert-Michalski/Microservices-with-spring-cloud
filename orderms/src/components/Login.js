@@ -1,19 +1,19 @@
-import React, { useContext, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import React, { useContext, useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios"
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 function Login() {
   const [mail, setMail] = useState("")
   const [password, setPassword] = useState("")
-  const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
 
   async function handleSubmit(e) {
     e.preventDefault()
+    const ourRequest = Axios.CancelToken.source()
     try {
-      const response = await Axios.post("api/user/login", { mail, password })
+      const response = await Axios.post("api/user/login", { mail, password }, { cancelToken: ourRequest.token })
       if (response.data) {
         appDispatch({ type: "login", data: response.data })
         navigate("/orders")
@@ -26,7 +26,11 @@ function Login() {
       }
     }
   }
-
+  useEffect(() => {
+    if (localStorage.getItem("userId")) {
+      navigate("/orders")
+    }
+  }, [])
   return (
     <div className="container bg-gray mt-4">
       <form className="d-flex flex-column login" onSubmit={handleSubmit}>
@@ -37,6 +41,9 @@ function Login() {
         <button type="submit" className="col-3 mx-auto mt-3 mb-5 ">
           LOGIN
         </button>
+        <Link to="/register" className="mx-auto btn btn-secondary mb-5" id="register-btn">
+          REGISTER
+        </Link>
         {/* <button onClick={() => console.log(appState)}>check state</button> */}
       </form>
     </div>

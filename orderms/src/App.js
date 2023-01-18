@@ -7,6 +7,7 @@ import DispatchContext from "./DispatchContext"
 import { useImmerReducer } from "use-immer"
 import Axios from "axios"
 import { useEffect } from "react"
+import Register from "./components/Register"
 
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
@@ -54,6 +55,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/orders" element={<Orders />} />
           </Routes>
         </BrowserRouter>
