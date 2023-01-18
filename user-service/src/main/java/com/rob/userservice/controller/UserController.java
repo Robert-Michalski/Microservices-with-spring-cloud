@@ -7,6 +7,7 @@ import com.rob.userservice.dto.UserRequest;
 import com.rob.userservice.dto.UserResponse;
 import com.rob.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,6 +27,7 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
     private final JWTGenerator jwtGenerator;
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public UserResponse saveUser(@RequestBody @Validated UserRequest userRequest){
         return userService.saveUser(userRequest);
     }
