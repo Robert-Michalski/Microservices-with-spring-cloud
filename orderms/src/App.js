@@ -9,7 +9,7 @@ import Axios from "axios"
 import { useContext, useEffect } from "react"
 import Register from "./components/Register"
 import Products from "./components/Products"
-
+import MainView from "./components/MainView"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -59,8 +59,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/products" element={<Products />} />
+            <Route path="/orders" element={<MainView view={Orders} />} />
+            <Route path="/products" element={<MainView view={Products} />} />
           </Routes>
         </BrowserRouter>
       </DispatchContext.Provider>
