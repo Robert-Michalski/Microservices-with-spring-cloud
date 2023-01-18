@@ -8,6 +8,9 @@ function Dashboard() {
   const navigate = useNavigate()
   const appState = useContext(StateContext)
   const [state, setState] = useImmer({
+    orderCount: 0,
+    userCount: 0,
+    productCount: 0,
     user: {
       id: "",
       firstName: "",
@@ -24,7 +27,13 @@ function Dashboard() {
       async function fetchData() {
         try {
           const response = await Axios.get(`/api/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          const orderCountResponse = await Axios.get("/api/order/count-all", { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          const productCountResponse = await Axios.get("/api/product/count-all", { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          const userCountResponse = await Axios.get("/api/user/count-all", { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           setState(draft => {
+            draft.orderCount = orderCountResponse.data
+            draft.userCount = userCountResponse.data
+            draft.productCount = productCountResponse.data
             draft.user = response.data
           })
         } catch (e) {
@@ -53,9 +62,9 @@ function Dashboard() {
       <div className="container p-3">
         <div className="d-flex">
           <div className="d-flex container">
-            <DashboardInfoBox background="blue" title="Orders" />
-            <DashboardInfoBox background="green" title="Users" />
-            <DashboardInfoBox background="red" title="Products" />
+            <DashboardInfoBox background="blue" title="Orders" count={state.orderCount} />
+            <DashboardInfoBox background="green" title="Users" count={state.userCount} />
+            <DashboardInfoBox background="red" title="Products" count={state.productCount} />
           </div>
         </div>
       </div>
