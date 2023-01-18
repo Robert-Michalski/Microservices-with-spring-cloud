@@ -13,7 +13,7 @@ function Navigation() {
 
   return (
     <div className="d-flex flex-column nav mt-4 p-4 bg-dark fc-white">
-      <button onClick={() => console.log(appState)}>check state</button>
+      {/* <button onClick={() => console.log(appState)}>check state</button> */}
       <div className="d-flex">
         {/* Icon and text */}
         <div>
@@ -26,7 +26,14 @@ function Navigation() {
         <div>
           <span className="material-symbols-outlined">speed</span>
         </div>
-        <div className="ms-3 mt-1">DASHBOARD</div>
+        <div
+          className="ms-3 mt-1"
+          onClick={() => {
+            navigate("/dashboard")
+          }}
+        >
+          DASHBOARD
+        </div>
       </div>
       <hr className="bg-white" />
       <div

@@ -86,6 +86,12 @@
 .bg-red {
   background-color: red;
 }
+.bg-blue {
+  background-color: blue;
+}
+.bg-yellow {
+  background-color: yellow;
+}
 #status {
   border-radius: 10px;
   color: white;
@@ -93,4 +99,10 @@
 
 #register-btn {
   padding: 0.5rem 5rem;
+}
+.dash-info-box {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px black;
+  color: white;
 }
