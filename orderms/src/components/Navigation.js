@@ -21,7 +21,7 @@ function Navigation() {
         </div>
       </div>
       <hr className="bg-white" />
-      <div className="d-flex mt-4 p-2">
+      <div className="d-flex mt-4 p-2 nav-item">
         {/* Icon and text */}
         <div>
           <span className="material-symbols-outlined">speed</span>
@@ -37,7 +37,7 @@ function Navigation() {
       </div>
       <hr className="bg-white" />
       <div
-        className="d-flex p-2 mt-2"
+        className="d-flex p-2 mt-2 nav-item"
         onClick={() => {
           navigate("/products")
         }}
@@ -50,7 +50,7 @@ function Navigation() {
       </div>
       <hr className="bg-white" />
       <div
-        className="d-flex p-2 mt-2"
+        className="d-flex p-2 mt-2 nav-item"
         onClick={() => {
           navigate("/orders")
         }}
@@ -62,7 +62,7 @@ function Navigation() {
         <div className="ms-3 mt-1">ORDERS</div>
       </div>
       <hr className="bg-white" />
-      <div className="d-flex p-2 mt-2">
+      <div className="d-flex p-2 mt-2 nav-item">
         {/* Icon and text */}
         <div>
           <span className="material-symbols-outlined">settings</span>

@@ -65,4 +65,9 @@ public class UserController {
         Long id = userService.getUserIdByMail(username);
         return new LoginResponse(id,token, username);
     }
+
+    @GetMapping("/count-all")
+    public Long countAll(){
+        return userService.countAll();
+    }
 }

@@ -112,4 +112,8 @@ public class ProductService {
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
     }
+
+    public long countAll() {
+        return productRepository.count();
+    }
 }

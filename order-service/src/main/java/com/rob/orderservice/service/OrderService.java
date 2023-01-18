@@ -96,4 +96,8 @@ public class OrderService {
                 .status(order.getStatus())
                 .build();
     }
+
+    public Long countAll() {
+        return orderRepository.count();
+    }
 }

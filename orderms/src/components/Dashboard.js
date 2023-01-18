@@ -60,11 +60,14 @@ function Dashboard() {
       </div>
       <hr />
       <div className="container p-3">
-        <div className="d-flex">
+        <div className="d-flex flex-column">
           <div className="d-flex container">
             <DashboardInfoBox background="blue" title="Orders" count={state.orderCount} />
             <DashboardInfoBox background="green" title="Users" count={state.userCount} />
             <DashboardInfoBox background="red" title="Products" count={state.productCount} />
+          </div>
+          <div className="d-flex mt-5 ms-2">
+            <DashboardInfoBox background="red" title="Orders pending" count="123" />
           </div>
         </div>
       </div>

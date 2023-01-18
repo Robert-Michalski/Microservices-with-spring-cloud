@@ -66,4 +66,8 @@ public class ProductController {
         return productService.getNameOfProduct(id);
     }
 
+    @GetMapping("/count-all")
+    public long countProducts(){
+        return productService.countAll();
+    }
 }

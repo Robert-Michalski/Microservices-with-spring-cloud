@@ -106,3 +106,7 @@
   box-shadow: 2px 2px 5px black;
   color: white;
 }
+.nav-item:hover {
+  text-decoration: underline;
+  text-decoration-skip: 100px;
+}

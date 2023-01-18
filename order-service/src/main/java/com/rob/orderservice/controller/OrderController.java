@@ -30,4 +30,8 @@ public class OrderController {
     public List<OrderResponse> getOrdersOfUser(@PathVariable int id){
         return orderService.getOrdersOfUser(id);
     }
+    @GetMapping("/count-all")
+    public Long countAll(){
+        return orderService.countAll();
+    }
 }
