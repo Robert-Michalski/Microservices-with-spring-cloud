@@ -28,8 +28,10 @@ function Orders() {
       async function fetchData() {
         try {
           const response = await Axios.get(`/api/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          const responseOrders = await Axios.get(`/api/order/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           setState(draft => {
             draft.user = response.data
+            draft.orders = responseOrders.data
           })
         } catch (e) {
           console.log("there was a problem fetching the data")
@@ -44,29 +46,6 @@ function Orders() {
       navigate("/")
     }
   }, [])
-  useEffect(() => {
-    if (appState.loggedIn) {
-      const ourRequest = Axios.CancelToken.source()
-      async function fetchData() {
-        try {
-          const response = await Axios.get(`/api/order/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-          setState(draft => {
-            draft.orders = response.data
-          })
-        } catch (e) {
-          console.log("there was a problem fetching the data")
-        }
-      }
-
-      fetchData()
-      return () => {
-        ourRequest.cancel()
-      }
-    } else {
-      navigate("/")
-    }
-  }, [])
-
   function checkState() {
     console.log(state)
   }

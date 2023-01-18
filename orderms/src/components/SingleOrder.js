@@ -19,7 +19,6 @@ function SingleOrder(props) {
     try {
       const product = await Axios.get("api/product/" + props.order.productId)
       setProductDetails(product.data)
-      console.log(product.data)
     } catch (e) {
       console.log("Something wrong during get product details" + e)
     }

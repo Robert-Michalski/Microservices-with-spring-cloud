@@ -9,7 +9,6 @@ function Products() {
   const appState = useContext(StateContext)
   const navigate = useNavigate()
   const [state, setState] = useImmer({
-    orders: [],
     products: [],
     user: {
       id: "",
