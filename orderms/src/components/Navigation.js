@@ -29,7 +29,12 @@ function Navigation() {
         <div className="ms-3 mt-1">DASHBOARD</div>
       </div>
       <hr className="bg-white" />
-      <div className="d-flex p-2 mt-2">
+      <div
+        className="d-flex p-2 mt-2"
+        onClick={() => {
+          navigate("/products")
+        }}
+      >
         {/* Icon and text */}
         <div id="label-icon">
           <span className="material-symbols-outlined">label</span>
@@ -37,7 +42,12 @@ function Navigation() {
         <div className="ms-3 mt-2">PRODUCTS</div>
       </div>
       <hr className="bg-white" />
-      <div className="d-flex p-2 mt-2">
+      <div
+        className="d-flex p-2 mt-2"
+        onClick={() => {
+          navigate("/orders")
+        }}
+      >
         {/* Icon and text */}
         <div>
           <span className="material-symbols-outlined">inventory_2</span>

@@ -6,13 +6,16 @@ import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
 import { useImmerReducer } from "use-immer"
 import Axios from "axios"
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import Register from "./components/Register"
+import Products from "./components/Products"
 
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
 function App() {
+  const appState = useContext(StateContext)
+
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("userId")),
     user: {
@@ -57,6 +60,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/products" element={<Products />} />
           </Routes>
         </BrowserRouter>
       </DispatchContext.Provider>

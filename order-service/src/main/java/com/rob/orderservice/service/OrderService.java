@@ -71,11 +71,10 @@ public class OrderService {
         return setToReturn;
     }
 
-    public List<DetailedOrderResponse> getOrdersOfUser(int id){
-
+    public List<OrderResponse> getOrdersOfUser(int id){
         return orderRepository.findByCustomerId(id)
                 .stream()
-                .map(this::toDetailedDto)
+                .map(OrderUtil::toDto)
                 .toList();
     }
     private String getProductName(int id){

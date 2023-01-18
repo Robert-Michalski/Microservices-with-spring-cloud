@@ -1,17 +1,16 @@
-import React, { useContext, useEffect } from "react"
-import { useNavigate } from "react-router"
-import SingleOrder from "./SingleOrder"
-import StateContext from "../StateContext"
-import DispatchContext from "../DispatchContext"
+import React, { useEffect, useContext } from "react"
 import Navigation from "./Navigation"
+import StateContext from "../StateContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
-function Orders() {
+import { useNavigate } from "react-router"
+import SingleProduct from "./SingleProduct"
+function Products() {
   const appState = useContext(StateContext)
-  const appDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
   const [state, setState] = useImmer({
     orders: [],
+    products: [],
     user: {
       id: "",
       firstName: "",
@@ -28,14 +27,15 @@ function Orders() {
       async function fetchData() {
         try {
           const response = await Axios.get(`/api/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          const responseProducts = await Axios.get(`/api/product/all`, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           setState(draft => {
             draft.user = response.data
+            draft.products = responseProducts.data
           })
         } catch (e) {
           console.log("there was a problem fetching the data")
         }
       }
-
       fetchData()
       return () => {
         ourRequest.cancel()
@@ -44,41 +44,13 @@ function Orders() {
       navigate("/")
     }
   }, [])
-  useEffect(() => {
-    if (appState.loggedIn) {
-      const ourRequest = Axios.CancelToken.source()
-      async function fetchData() {
-        try {
-          const response = await Axios.get(`/api/order/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-          setState(draft => {
-            draft.orders = response.data
-          })
-        } catch (e) {
-          console.log("there was a problem fetching the data")
-        }
-      }
-
-      fetchData()
-      return () => {
-        ourRequest.cancel()
-      }
-    } else {
-      navigate("/")
-    }
-  }, [])
-
-  function checkState() {
-    console.log(state)
-  }
 
   return (
     <div className="d-flex container">
-      {/* Leftie and rightie */}
-      {/* <button onClick={checkState}>CHECK</button> */}
       <Navigation />
       <div className="col-11 mx-auto p-3 mt-4 bg-gray">
         <div className="d-flex orders-top p-4 align-items-center">
-          <div className="ms-4">Orders</div>
+          <div className="ms-4">Products</div>
           <span className="material-symbols-outlined ms-auto">search</span>
           <span className="material-symbols-outlined ms-3">notifications</span>
           <div className="ms-5">{state.user.firstName + " " + state.user.lastName}</div>
@@ -86,21 +58,22 @@ function Orders() {
         <hr />
         <div className="container p-3">
           <div className="d-flex">
-            <div className="ms-3 fs-2">My orders</div>
+            <div className="ms-3 fs-2">All products</div>
             <div className="ms-auto me-4 search-order">
-              <input type="text" placeholder="Find an order"></input>
+              <input type="text" placeholder="Find product"></input>
             </div>
           </div>
           <div className="bg-white row mt-4 ms-2 orders p-3">
-            <div className="col-sm grid-header">Order ID</div>
-            <div className="col-sm grid-header">Item</div>
-            <div className="col-sm grid-header">Date</div>
-            <div className="col-sm grid-header">Status</div>
-            <div className="col-sm grid-header">Total</div>
+            <div className="col-sm grid-header">Item ID</div>
+            <div className="col-sm grid-header">Name</div>
+            <div className="col-sm grid-header">Available</div>
+            <div className="col-sm grid-header">Price</div>
+            <div className="col-sm grid-header">Quantity</div>
+            <div className="col-sm grid-header">Action</div>
             <div className="w-100"></div>
             <hr className="mt-3" />
-            {state.orders.map(order => {
-              return <SingleOrder order={order} key={order.id} />
+            {state.products.map(product => {
+              return <SingleProduct product={product} key={product.id} />
             })}
           </div>
         </div>
@@ -109,4 +82,4 @@ function Orders() {
   )
 }
 
-export default Orders
+export default Products
