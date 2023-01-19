@@ -11,17 +11,20 @@ import Register from "./components/Register"
 import Products from "./components/Products"
 import MainView from "./components/MainView"
 import Dashboard from "./components/Dashboard"
+import Cookies from "universal-cookie"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
 function App() {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
+  const cookies = new Cookies()
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("userId")),
     user: {
       id: localStorage.getItem("userId"),
-      token: localStorage.getItem("userToken"),
+      // token: localStorage.getItem("userToken"),
+      token: cookies.get("jwt"),
       login: localStorage.getItem("userLogin"),
       firstName: localStorage.getItem("userFirstName"),
       lastName: localStorage.getItem("userLastName")
@@ -32,10 +35,11 @@ function App() {
       case "login":
         state.loggedIn = true
         state.user.id = action.data.id
-        state.user.token = action.data.accessToken
+        // state.user.token = action.data.accessToken
         state.user.login = action.data.login
         state.user.firstName = action.details.firstName
         state.user.lastName = action.details.lastName
+        cookies.set("jwt", action.data.accessToken)
         break
       case "logout":
         state.loggedIn = false
