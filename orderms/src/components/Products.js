@@ -44,9 +44,12 @@ function Products() {
       </div>
       <hr />
       <div className="container p-3">
-        <div className="d-flex">
+        <div className="d-flex align-items-center">
           <div className="ms-3 fs-2">All products</div>
-          <div className="ms-auto me-4 search-order">
+          <div className="ms-auto"></div>
+          {appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER" ? <div className=" me-3 btn btn-primary">Add new</div> : null}
+
+          <div className="me-4 search-order">
             <input type="text" placeholder="Find product"></input>
           </div>
         </div>
