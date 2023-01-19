@@ -10,7 +10,6 @@ function Navigation() {
     appDispatch({ type: "logout" })
     navigate("/")
   }
-
   return (
     <div className="d-flex flex-column nav mt-4 p-4 bg-dark fc-white">
       <button onClick={() => console.log(appState)}>check state</button>
@@ -21,6 +20,7 @@ function Navigation() {
         </div>
       </div>
       <hr className="bg-white" />
+      {appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER" ? console.log("tak") : console.log("nie")}
       <div className="d-flex mt-4 p-2 nav-item">
         {/* Icon and text */}
         <div>

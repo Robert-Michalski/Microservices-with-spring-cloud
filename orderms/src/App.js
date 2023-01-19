@@ -25,10 +25,11 @@ function App() {
     user: {
       id: localStorage.getItem("userId"),
       // token: localStorage.getItem("userToken"),
-      token: cookies.get("jwt"),
+      token: cookies.get("jwt", { path: "/" }),
       login: localStorage.getItem("userLogin"),
       firstName: localStorage.getItem("userFirstName"),
-      lastName: localStorage.getItem("userLastName")
+      lastName: localStorage.getItem("userLastName"),
+      role: cookies.get("roles", { path: "/" })
     }
   }
   function ourReducer(state, action) {
@@ -39,13 +40,23 @@ function App() {
         state.user.login = action.data.login
         state.user.firstName = action.details.firstName
         state.user.lastName = action.details.lastName
-        cookies.set("jwt", action.data.accessToken)
-        console.log(jwt(action.data.accessToken))
+        cookies.set("jwt", action.data.accessToken, { path: "/" })
+        cookies.set("roles", jwt(action.data.accessToken).roles, { path: "/" })
+        window.location.reload()
         break
       case "logout":
+        removeCookies()
+
         state.loggedIn = false
+        console.log(cookies.getAll())
+
         break
     }
+  }
+
+  async function removeCookies() {
+    cookies.remove("jwt", { path: "/" })
+    cookies.remove("roles", { path: "/" })
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState)
 
@@ -64,7 +75,6 @@ function App() {
       localStorage.removeItem("userLastName")
     }
   }, [state.loggedIn])
-
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
