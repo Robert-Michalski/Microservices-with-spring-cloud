@@ -61,9 +61,8 @@ public class UserController {
                         loginRequest.password()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.generateToken(authentication);
-        String username = jwtGenerator.getUsernameFromJWT(token);
-        Long id = userService.getUserIdByMail(username);
-        return new LoginResponse(id,token, username);
+        Long id = userService.getUserIdByMail(loginRequest.mail());
+        return new LoginResponse(id,token, loginRequest.mail());
     }
 
     @GetMapping("/count-all")

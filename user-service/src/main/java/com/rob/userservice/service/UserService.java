@@ -87,9 +87,10 @@ public class UserService implements UserDetailsService {
     }
 
     public Long getUserIdByMail(String mail){
-        if(userRepository.findByMailIgnoreCase(mail).get()!=null)
+        if(userRepository.findByMailIgnoreCase(mail).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO USER WITH MAIL " + mail);
+        }
         return userRepository.findByMailIgnoreCase(mail).get().getId();
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO USER WITH MAIL " + mail);
     }
 
     private boolean checkIfExistsAndThrowRse(Long id, HttpStatus httpStatus, String message) {

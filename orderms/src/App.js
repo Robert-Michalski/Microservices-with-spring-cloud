@@ -12,6 +12,7 @@ import Products from "./components/Products"
 import MainView from "./components/MainView"
 import Dashboard from "./components/Dashboard"
 import Cookies from "universal-cookie"
+import jwt from "jwt-decode"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -35,11 +36,11 @@ function App() {
       case "login":
         state.loggedIn = true
         state.user.id = action.data.id
-        // state.user.token = action.data.accessToken
         state.user.login = action.data.login
         state.user.firstName = action.details.firstName
         state.user.lastName = action.details.lastName
         cookies.set("jwt", action.data.accessToken)
+        console.log(jwt(action.data.accessToken))
         break
       case "logout":
         state.loggedIn = false
