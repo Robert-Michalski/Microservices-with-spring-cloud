@@ -10,15 +10,7 @@ function Dashboard() {
   const [state, setState] = useImmer({
     orderCount: 0,
     userCount: 0,
-    productCount: 0,
-    user: {
-      id: "",
-      firstName: "",
-      lastName: "",
-      mail: "",
-      phone: "",
-      role: ""
-    }
+    productCount: 0
   })
 
   useEffect(() => {
@@ -26,7 +18,6 @@ function Dashboard() {
       const ourRequest = Axios.CancelToken.source()
       async function fetchData() {
         try {
-          const response = await Axios.get(`/api/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           const orderCountResponse = await Axios.get("/api/order/count-all", { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           const productCountResponse = await Axios.get("/api/product/count-all", { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           const userCountResponse = await Axios.get("/api/user/count-all", { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
@@ -34,7 +25,6 @@ function Dashboard() {
             draft.orderCount = orderCountResponse.data
             draft.userCount = userCountResponse.data
             draft.productCount = productCountResponse.data
-            draft.user = response.data
           })
         } catch (e) {
           console.log("there was a problem fetching the data")
@@ -56,7 +46,7 @@ function Dashboard() {
         <div className="ms-4">Dashboard</div>
         <span className="material-symbols-outlined ms-auto">search</span>
         <span className="material-symbols-outlined ms-3">notifications</span>
-        <div className="ms-5">{state.user.firstName + " " + state.user.lastName}</div>
+        <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
       </div>
       <hr />
       <div className="container p-3">

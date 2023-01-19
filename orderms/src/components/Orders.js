@@ -11,15 +11,7 @@ function Orders() {
   const appDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
   const [state, setState] = useImmer({
-    orders: [],
-    user: {
-      id: "",
-      firstName: "",
-      lastName: "",
-      mail: "",
-      phone: "",
-      role: ""
-    }
+    orders: []
   })
 
   useEffect(() => {
@@ -27,10 +19,8 @@ function Orders() {
       const ourRequest = Axios.CancelToken.source()
       async function fetchData() {
         try {
-          const response = await Axios.get(`/api/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           const responseOrders = await Axios.get(`/api/order/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           setState(draft => {
-            draft.user = response.data
             draft.orders = responseOrders.data
           })
         } catch (e) {
@@ -56,7 +46,7 @@ function Orders() {
         <div className="ms-4">Orders</div>
         <span className="material-symbols-outlined ms-auto">search</span>
         <span className="material-symbols-outlined ms-3">notifications</span>
-        <div className="ms-5">{state.user.firstName + " " + state.user.lastName}</div>
+        <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
       </div>
       <hr />
       <div className="container p-3">

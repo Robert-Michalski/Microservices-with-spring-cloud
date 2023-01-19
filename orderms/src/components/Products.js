@@ -9,15 +9,7 @@ function Products() {
   const appState = useContext(StateContext)
   const navigate = useNavigate()
   const [state, setState] = useImmer({
-    products: [],
-    user: {
-      id: "",
-      firstName: "",
-      lastName: "",
-      mail: "",
-      phone: "",
-      role: ""
-    }
+    products: []
   })
 
   useEffect(() => {
@@ -25,10 +17,8 @@ function Products() {
       const ourRequest = Axios.CancelToken.source()
       async function fetchData() {
         try {
-          const response = await Axios.get(`/api/user/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           const responseProducts = await Axios.get(`/api/product/all`, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           setState(draft => {
-            draft.user = response.data
             draft.products = responseProducts.data
           })
         } catch (e) {
@@ -50,7 +40,7 @@ function Products() {
         <div className="ms-4">Products</div>
         <span className="material-symbols-outlined ms-auto">search</span>
         <span className="material-symbols-outlined ms-3">notifications</span>
-        <div className="ms-5">{state.user.firstName + " " + state.user.lastName}</div>
+        <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
       </div>
       <hr />
       <div className="container p-3">

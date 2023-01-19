@@ -14,8 +14,10 @@ function Login() {
     const ourRequest = Axios.CancelToken.source()
     try {
       const response = await Axios.post("api/user/login", { mail, password }, { cancelToken: ourRequest.token })
+      const userDetailsResponse = await Axios.get(`/api/user/` + response.data.id, { headers: { Authorization: `Bearer ${response.data.accessToken}` } }, { cancelToken: ourRequest.token })
+
       if (response.data) {
-        appDispatch({ type: "login", data: response.data })
+        appDispatch({ type: "login", data: response.data, details: userDetailsResponse.data })
         navigate("/orders")
       }
     } catch (e) {

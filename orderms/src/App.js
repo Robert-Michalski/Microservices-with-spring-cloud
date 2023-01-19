@@ -16,13 +16,15 @@ Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
 function App() {
   const appState = useContext(StateContext)
-
+  const appDispatch = useContext(DispatchContext)
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("userId")),
     user: {
       id: localStorage.getItem("userId"),
       token: localStorage.getItem("userToken"),
-      login: localStorage.getItem("userLogin")
+      login: localStorage.getItem("userLogin"),
+      firstName: localStorage.getItem("userFirstName"),
+      lastName: localStorage.getItem("userLastName")
     }
   }
   function ourReducer(state, action) {
@@ -32,13 +34,14 @@ function App() {
         state.user.id = action.data.id
         state.user.token = action.data.accessToken
         state.user.login = action.data.login
+        state.user.firstName = action.details.firstName
+        state.user.lastName = action.details.lastName
         break
       case "logout":
         state.loggedIn = false
         break
     }
   }
-
   const [state, dispatch] = useImmerReducer(ourReducer, initialState)
 
   useEffect(() => {
@@ -46,10 +49,14 @@ function App() {
       localStorage.setItem("userId", state.user.id)
       localStorage.setItem("userLogin", state.user.login)
       localStorage.setItem("userToken", state.user.token)
+      localStorage.setItem("userFirstName", state.user.firstName)
+      localStorage.setItem("userLastName", state.user.lastName)
     } else {
       localStorage.removeItem("userId")
       localStorage.removeItem("userLogin")
       localStorage.removeItem("userToken")
+      localStorage.removeItem("userFirstName")
+      localStorage.removeItem("userLastName")
     }
   }, [state.loggedIn])
 
