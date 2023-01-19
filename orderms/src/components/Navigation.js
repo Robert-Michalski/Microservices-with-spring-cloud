@@ -12,29 +12,34 @@ function Navigation() {
   }
   return (
     <div className="d-flex flex-column nav mt-4 p-4 bg-dark fc-white">
-      <button onClick={() => console.log(appState)}>check state</button>
+      {/* <button onClick={() => console.log(appState)}>check state</button> */}
       <div className="d-flex">
         {/* Icon and text */}
         <div>
           <span className="material-symbols-outlined">shopping_cart</span>
         </div>
       </div>
-      <hr className="bg-white" />
-      {appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER" ? console.log("tak") : console.log("nie")}
-      <div className="d-flex mt-4 p-2 nav-item">
-        {/* Icon and text */}
-        <div>
-          <span className="material-symbols-outlined">speed</span>
-        </div>
-        <div
-          className="ms-3 mt-1"
-          onClick={() => {
-            navigate("/dashboard")
-          }}
-        >
-          DASHBOARD
-        </div>
-      </div>
+
+      {appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER" ? (
+        <>
+          <hr className="bg-white" />
+          <div className="d-flex mt-4 p-2 nav-item">
+            {/* Icon and text */}
+            <div>
+              <span className="material-symbols-outlined">speed</span>
+            </div>
+            <div
+              className="ms-3 mt-1"
+              onClick={() => {
+                navigate("/dashboard")
+              }}
+            >
+              DASHBOARD
+            </div>
+          </div>
+        </>
+      ) : null}
+
       <hr className="bg-white" />
       <div
         className="d-flex p-2 mt-2 nav-item"

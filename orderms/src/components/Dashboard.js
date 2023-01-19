@@ -14,7 +14,7 @@ function Dashboard() {
   })
 
   useEffect(() => {
-    if (appState.loggedIn) {
+    if (appState.loggedIn && (appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER")) {
       const ourRequest = Axios.CancelToken.source()
       async function fetchData() {
         try {
