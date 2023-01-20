@@ -2,8 +2,10 @@ import React, { useContext, useEffect } from "react"
 import StateContext from "../StateContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
+import { useNavigate } from "react-router"
 function AddProductPage() {
   const appState = useContext(StateContext)
+  const navigate = useNavigate()
   const [state, setState] = useImmer({
     product: {
       name: "",
@@ -14,15 +16,28 @@ function AddProductPage() {
     },
     categories: []
   })
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
+    const ourRequest = Axios.CancelToken.source()
+    try {
+      const response = await Axios.post("/api/product", { name: state.product.name, categoryId: state.product.categoryId, price: state.product.price, details: state.product.details, quantity: state.product.quantity }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      if (response.request.status == 201) {
+        navigate("/products")
+      }
+    } catch (e) {
+      console.log("Something wrong adding new product " + e)
+    }
   }
 
   useEffect(() => {
     const ourRequest = Axios.CancelToken.source()
     try {
-      const response = Axios.get("/api/categories/all", { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-      setState(draft => (draft.categories = response.data))
+      const response = Axios.get("/api/category/all", { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      response.then(res =>
+        setState(draft => {
+          draft.categories = res.data
+        })
+      )
     } catch (e) {
       console.log("Something wrong during GET categories " + e)
     }
@@ -50,30 +65,79 @@ function AddProductPage() {
           <div className="row col-6 ">
             <div className="col-sm fs-3">Product name</div>
             <div className="col-sm">
-              <input type="text" className="product-add-input" placeholder="Steel wire" />
+              <input
+                type="text"
+                className="product-add-input"
+                onChange={e =>
+                  setState(draft => {
+                    draft.product.name = e.target.value
+                  })
+                }
+                placeholder="Steel wire"
+              />
             </div>
             <div className="w-100 mt-3"></div>
             <div className="col-sm fs-3">Category</div>
             <div className="col-sm">
-              <select className="col-9 product-add-input">
-                <option>Category 1</option>
-                <option>Category 2</option>
+              <select
+                className="col-9 product-add-input"
+                onChange={e =>
+                  setState(draft => {
+                    draft.product.categoryId = e.target.value
+                  })
+                }
+              >
+                <option value="">Please select</option>
+                {state.categories.map(category => {
+                  return (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  )
+                })}
               </select>
             </div>
             <div className="w-100 mt-3"></div>
             <div className="col-sm fs-3">Price</div>
             <div className="col-sm input-container">
-              <input type="text" className="product-add-input" placeholder="1200.00" />
+              <input
+                type="text"
+                className="product-add-input"
+                onChange={e =>
+                  setState(draft => {
+                    draft.product.price = e.target.value
+                  })
+                }
+                placeholder="1200.00"
+              />
             </div>
             <div className="w-100 mt-3"></div>
             <div className="col-sm fs-3">Details</div>
             <div className="col-sm">
-              <input type="text" className="product-add-input" placeholder="20x30" />
+              <input
+                type="text"
+                className="product-add-input"
+                onChange={e =>
+                  setState(draft => {
+                    draft.product.details = e.target.value
+                  })
+                }
+                placeholder="20x30"
+              />
             </div>
             <div className="w-100 mt-3"></div>
             <div className="col-sm fs-3">Quantity</div>
             <div className="col-sm">
-              <input type="text" className="product-add-input" placeholder="100" />
+              <input
+                type="number"
+                className="product-add-input"
+                onChange={e =>
+                  setState(draft => {
+                    draft.product.quantity = e.target.value
+                  })
+                }
+                placeholder="100"
+              />
             </div>
             <div className="w-100 mt-3"></div>
             <div className="col-5 mt-3 mx-auto">
