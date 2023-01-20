@@ -113,3 +113,24 @@
 .action-icon {
   margin-top: -0.7rem;
 }
+.product-add-input {
+  border: none;
+  padding: 0.3rem 1rem 0.3rem 0.1rem;
+  background-color: inherit;
+  border-bottom: 1px solid black;
+  outline: none;
+}
+.product-add-input:focus {
+  outline: none;
+}
+.input-container {
+  position: relative;
+  float: left;
+}
+
+.input-container:after {
+  position: absolute;
+  right: 25px;
+  top: 6px;
+  content: "PLN";
+}

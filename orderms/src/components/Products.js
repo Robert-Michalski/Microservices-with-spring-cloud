@@ -5,6 +5,7 @@ import { useImmer } from "use-immer"
 import Axios from "axios"
 import { useNavigate } from "react-router"
 import SingleProduct from "./SingleProduct"
+import { Link } from "react-router-dom"
 function Products() {
   const appState = useContext(StateContext)
   const navigate = useNavigate()
@@ -47,7 +48,11 @@ function Products() {
         <div className="d-flex align-items-center">
           <div className="ms-3 fs-2">All products</div>
           <div className="ms-auto"></div>
-          {appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER" ? <div className=" me-3 btn btn-primary">Add new</div> : null}
+          {appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER" ? (
+            <Link to="/products/add" className="me-3 btn btn-primary">
+              Add new
+            </Link>
+          ) : null}
 
           <div className="me-4 search-order">
             <input type="text" placeholder="Find product"></input>

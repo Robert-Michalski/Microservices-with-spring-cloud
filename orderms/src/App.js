@@ -13,6 +13,7 @@ import MainView from "./components/MainView"
 import Dashboard from "./components/Dashboard"
 import Cookies from "universal-cookie"
 import jwt from "jwt-decode"
+import AddProductPage from "./components/AddProductPage"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -84,6 +85,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/orders" element={<MainView view={Orders} />} />
             <Route path="/products" element={<MainView view={Products} />} />
+            <Route path="/products/add" element={<MainView view={AddProductPage} />} />
             <Route path="/dashboard" element={<MainView view={Dashboard} />} />
           </Routes>
         </BrowserRouter>
