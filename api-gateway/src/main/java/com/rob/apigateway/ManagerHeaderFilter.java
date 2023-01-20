@@ -7,17 +7,13 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
 
 @Component
-public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
+public class ManagerHeaderFilter extends AbstractGatewayFilterFactory<ManagerHeaderFilter.Config> {
 
-
-    public AuthorizationHeaderFilter(){
-        super(Config.class);
+    public ManagerHeaderFilter(){
+        super(ManagerHeaderFilter.Config.class);
     }
     public static class Config {}
     @Value("${jwt_secret}")
@@ -31,26 +27,25 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             }
             String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
             String jwt = authorizationHeader.replace("Bearer", "");
-            if(!isJwtValid(jwt)){
+            if(!isManagerOrAdmin(jwt)){
                 AuthUtils.onError(exchange, "JWT is not valid", HttpStatus.UNAUTHORIZED);
             }
             return chain.filter(exchange);
         });
     }
 
-    private  boolean isJwtValid(String jwt) {
-        boolean returnValue = true;
-        String subject = Jwts.parser()
+    private boolean isManagerOrAdmin(String jwt){
+        boolean returnValue = false;
+        Object claims = Jwts.parser()
                 .setSigningKey(JWT_SECRET)
                 .parseClaimsJws(jwt)
                 .getBody()
-                .getSubject();
-        if (subject == null || subject.isEmpty()) {
-            returnValue = false;
+                .get("roles");
+        if(claims instanceof String role){
+            if(role.equals("ROLE_ADMIN") || role.equals("ROLE_MANAGER")){
+                returnValue=true;
+            }
         }
         return returnValue;
     }
-
-
-
 }
