@@ -28,24 +28,26 @@ public class ManagerHeaderFilter extends AbstractGatewayFilterFactory<ManagerHea
             String authorizationHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
             String jwt = authorizationHeader.replace("Bearer", "");
             if(!isManagerOrAdmin(jwt)){
-                AuthUtils.onError(exchange, "JWT is not valid", HttpStatus.UNAUTHORIZED);
+                System.out.println("NOT ADMIN !");
+                return AuthUtils.onError(exchange, "JWT is not valid", HttpStatus.FORBIDDEN);
+
             }
             return chain.filter(exchange);
         });
     }
 
     private boolean isManagerOrAdmin(String jwt){
-        boolean returnValue = false;
         Object claims = Jwts.parser()
                 .setSigningKey(JWT_SECRET)
                 .parseClaimsJws(jwt)
                 .getBody()
                 .get("roles");
+        System.out.println(claims);
         if(claims instanceof String role){
             if(role.equals("ROLE_ADMIN") || role.equals("ROLE_MANAGER")){
-                returnValue=true;
+                return true;
             }
         }
-        return returnValue;
+        return false;
     }
 }
