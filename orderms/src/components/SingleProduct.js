@@ -31,9 +31,17 @@ function SingleProduct(props) {
       <div className="col-sm p-3">
         <input type="number" className="col-5" onChange={e => setAmount(e.target.value)} />
       </div>
-      <div className="col-sm p-3 btn btn-primary" onClick={handleOrder}>
-        ORDER NOW
-      </div>
+      {appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER" ? (
+        <div className="col-sm p-3" onClick={handleOrder}>
+          <span class="material-symbols-outlined me-3 btn btn-primary action-icon">edit</span>
+          <span class="material-symbols-outlined action-icon btn btn-danger">delete</span>
+        </div>
+      ) : (
+        <div className="col-sm p-3 btn btn-primary" onClick={handleOrder}>
+          ORDER NOW
+        </div>
+      )}
+
       <hr className="mt-2" />
       <div className="w-100"></div>
     </>

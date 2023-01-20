@@ -4,7 +4,7 @@ function DashboardInfoBox(props) {
   return (
     <div className={"dash-info-box me-5 col-3 d-flex flex-column bg-" + props.background}>
       <div className="fs-2 d-flex align-items-center">
-        <span class="material-symbols-outlined me-3">{props.icon}</span>
+        <span className="material-symbols-outlined me-3">{props.icon}</span>
         {props.title}
       </div>
       <hr />
