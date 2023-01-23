@@ -30,7 +30,7 @@ function SingleProduct(props) {
     const ourRequest = Axios.CancelToken.source()
     try {
       const response = await Axios.delete("/api/product/" + props.product.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-      if (response.request.status == 200) {
+      if (response.request.status === 200) {
         props.refresh()
       }
     } catch (e) {
@@ -50,7 +50,7 @@ function SingleProduct(props) {
       <div className="col-sm p-3">
         <input type="number" className="col-5" onChange={e => setAmount(e.target.value)} />
       </div>
-      {appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER" ? (
+      {appState.user.role === "ROLE_ADMIN" || appState.user.role === "ROLE_MANAGER" ? (
         <div className="col-sm p-3">
           <Link to={props.product.id + `/edit`}>
             <button className="material-symbols-outlined me-3 btn btn-primary action-icon">edit</button>

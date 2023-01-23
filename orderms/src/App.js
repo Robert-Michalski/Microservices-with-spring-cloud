@@ -14,12 +14,12 @@ import Dashboard from "./components/Dashboard"
 import Cookies from "universal-cookie"
 import jwt from "jwt-decode"
 import AddProductPage from "./components/AddProductPage"
+import { CSSTransition } from "react-transition-group"
+import FlashMessages from "./components/FlashMessages"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
 function App() {
-  const appState = useContext(StateContext)
-  const appDispatch = useContext(DispatchContext)
   const cookies = new Cookies()
   const COOKIE_EXPIRATION_MS = 86400000
   const initialState = {
@@ -32,7 +32,8 @@ function App() {
       firstName: localStorage.getItem("userFirstName"),
       lastName: localStorage.getItem("userLastName"),
       role: cookies.get("roles", { path: "/" })
-    }
+    },
+    flashMessages: []
   }
   function ourReducer(state, action) {
     switch (action.type) {
@@ -42,17 +43,21 @@ function App() {
         state.user.login = action.data.login
         state.user.firstName = action.details.firstName
         state.user.lastName = action.details.lastName
+        state.user.token = action.data.accessToken
+        state.user.role = jwt(action.data.accessToken).roles
         cookies.set("jwt", action.data.accessToken, { path: "/", expires: new Date(Date.now() + COOKIE_EXPIRATION_MS) })
         cookies.set("roles", jwt(action.data.accessToken).roles, { path: "/", expires: new Date(Date.now() + COOKIE_EXPIRATION_MS) })
-        window.location.reload()
-        break
+        return
       case "logout":
         removeCookies()
-
         state.loggedIn = false
         console.log(cookies.getAll())
-
-        break
+        return
+      case "flashMessage":
+        state.flashMessages.push({
+          value: action.value
+        })
+        return
     }
   }
 
@@ -81,6 +86,7 @@ function App() {
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
         <BrowserRouter>
+          <FlashMessages messages={state.flashMessages} />
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />

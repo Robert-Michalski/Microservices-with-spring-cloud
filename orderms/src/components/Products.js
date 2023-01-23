@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react"
+import React, { useEffect, useContext } from "react"
 import StateContext from "../StateContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
@@ -37,7 +37,7 @@ function Products() {
 
   function refresh() {
     setState(draft => {
-      draft.reloadCounter += 2
+      draft.reloadCounter++
     })
   }
 
@@ -54,7 +54,7 @@ function Products() {
         <div className="d-flex align-items-center">
           <div className="ms-3 fs-2">All products</div>
           <div className="ms-auto"></div>
-          {appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER" ? (
+          {appState.user.role === "ROLE_ADMIN" || appState.user.role === "ROLE_MANAGER" ? (
             <Link to="/products/add" className="me-3 btn btn-primary">
               Add new
             </Link>

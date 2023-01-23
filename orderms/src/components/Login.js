@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import Axios from "axios"
-import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 function Login() {
   const [mail, setMail] = useState("")
@@ -17,11 +16,12 @@ function Login() {
       const userDetailsResponse = await Axios.get(`/api/user/` + response.data.id, { headers: { Authorization: `Bearer ${response.data.accessToken}` } }, { cancelToken: ourRequest.token })
 
       if (response.data) {
+        appDispatch({ type: "flashMessage", value: "Succesfully logged in !" })
         appDispatch({ type: "login", data: response.data, details: userDetailsResponse.data })
         navigate("/orders")
       }
     } catch (e) {
-      if (e.response.status == 403) {
+      if (e.response.status === 403) {
         console.log("Wrong credentials")
       } else {
         console.log("Something went wrong :" + e)
@@ -38,7 +38,7 @@ function Login() {
       <form className="d-flex flex-column login" onSubmit={handleSubmit}>
         <div className="mx-auto fs-login">User Login</div>
         <span className="material-symbols-outlined mx-auto mt-4">login</span>
-        <input type="text" className="col-3 mx-auto mt-4 p-2" placeholder="Email" onChange={e => setMail(e.target.value)} />
+        <input type="text" className="col-3 mx-auto mt-4 p-2" placeholder="Email" onChange={e => setMail(e.target.value)} autoFocus />
         <input type="password" className="col-3 mx-auto mt-3 p-2" placeholder="Password" onChange={e => setPassword(e.target.value)} />
         <button type="submit" className="col-3 mx-auto mt-3 mb-5 ">
           LOGIN
