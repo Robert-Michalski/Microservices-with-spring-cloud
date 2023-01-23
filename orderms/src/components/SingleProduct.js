@@ -9,7 +9,7 @@ function SingleProduct(props) {
   function handleOrder() {
     const ourRequest = Axios.CancelToken.source()
     try {
-      Axios.post("api/order", { productId: props.product.id, quantity: amount, customerId: appState.user.id }, { cancelToken: ourRequest.token })
+      Axios.post("api/order", { productId: props.product.id, quantity: amount, customerId: appState.user.id }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
     } catch (e) {
       console.log("Error during order placement " + e)
     }
@@ -26,6 +26,21 @@ function SingleProduct(props) {
     return formatted.format(props.product.price) + " PLN"
   }
 
+  async function handleDelete() {
+    const ourRequest = Axios.CancelToken.source()
+    try {
+      const response = await Axios.delete("/api/product/" + props.product.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      if (response.request.status == 200) {
+        props.refresh()
+      }
+    } catch (e) {
+      console.log("something wrong during product delete " + e)
+    }
+
+    return () => {
+      ourRequest.cancel()
+    }
+  }
   return (
     <>
       <div className="col-sm p-3">{props.product.id}</div>
@@ -40,7 +55,9 @@ function SingleProduct(props) {
           <Link to={props.product.id + `/edit`}>
             <button className="material-symbols-outlined me-3 btn btn-primary action-icon">edit</button>
           </Link>
-          <button className="material-symbols-outlined action-icon btn btn-danger">delete</button>
+          <button className="material-symbols-outlined action-icon btn btn-danger" onClick={handleDelete}>
+            delete
+          </button>
         </div>
       ) : (
         <div className="col-sm p-3 btn btn-primary" onClick={handleOrder}>

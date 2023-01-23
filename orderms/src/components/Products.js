@@ -1,5 +1,4 @@
-import React, { useEffect, useContext } from "react"
-import Navigation from "./Navigation"
+import React, { useEffect, useContext, useState } from "react"
 import StateContext from "../StateContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
@@ -10,7 +9,8 @@ function Products() {
   const appState = useContext(StateContext)
   const navigate = useNavigate()
   const [state, setState] = useImmer({
-    products: []
+    products: [],
+    reloadCounter: 0
   })
 
   useEffect(() => {
@@ -33,7 +33,13 @@ function Products() {
     } else {
       navigate("/")
     }
-  }, [])
+  }, [state.reloadCounter])
+
+  function refresh() {
+    setState(draft => {
+      draft.reloadCounter += 2
+    })
+  }
 
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
@@ -68,7 +74,7 @@ function Products() {
           <div className="w-100"></div>
           <hr className="mt-3" />
           {state.products.map(product => {
-            return <SingleProduct product={product} key={product.id} />
+            return <SingleProduct product={product} key={product.id} refresh={refresh} />
           })}
         </div>
       </div>
