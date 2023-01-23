@@ -86,6 +86,7 @@ function App() {
             <Route path="/orders" element={<MainView view={Orders} />} />
             <Route path="/products" element={<MainView view={Products} />} />
             <Route path="/products/add" element={<MainView view={AddProductPage} />} />
+            <Route path="/products/:id/edit" element={<MainView view={AddProductPage} />} />
             <Route path="/dashboard" element={<MainView view={Dashboard} />} />
           </Routes>
         </BrowserRouter>

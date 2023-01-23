@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext } from "react"
 import StateContext from "../StateContext"
 import { useNavigate } from "react-router"
 import DispatchContext from "../DispatchContext"
@@ -12,7 +12,7 @@ function Navigation() {
   }
   return (
     <div className="d-flex flex-column nav mt-4 p-4 bg-dark fc-white">
-      <button onClick={() => console.log(appState)}>check state</button>
+      {/* <button onClick={() => console.log(appState)}>check state</button> */}
       <div className="d-flex">
         {/* Icon and text */}
         <div>
@@ -20,7 +20,7 @@ function Navigation() {
         </div>
       </div>
 
-      {appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER" ? (
+      {appState.user.role === "ROLE_ADMIN" || appState.user.role === "ROLE_MANAGER" ? (
         <>
           <hr className="bg-white" />
           <div className="d-flex mt-4 p-2 nav-item">

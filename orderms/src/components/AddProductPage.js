@@ -3,18 +3,27 @@ import StateContext from "../StateContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
 import { useNavigate } from "react-router"
+import { useParams } from "react-router"
 function AddProductPage() {
   const appState = useContext(StateContext)
   const navigate = useNavigate()
+  const { id } = useParams()
   const [state, setState] = useImmer({
     product: {
       name: "",
-      categoryId: 0,
+      category: {
+        id: "",
+        name: ""
+      },
       price: 0,
       details: "",
       quantity: 0
     },
     categories: []
+  })
+  const formatted = Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
   })
   async function handleSubmit(e) {
     e.preventDefault()
@@ -38,6 +47,14 @@ function AddProductPage() {
           draft.categories = res.data
         })
       )
+      if (id) {
+        const productResponse = Axios.get("/api/product/" + id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+        productResponse.then(res =>
+          setState(draft => {
+            draft.product = res.data
+          })
+        )
+      }
     } catch (e) {
       console.log("Something wrong during GET categories " + e)
     }
@@ -73,6 +90,7 @@ function AddProductPage() {
                     draft.product.name = e.target.value
                   })
                 }
+                value={state.product.name}
                 placeholder="Steel wire"
               />
             </div>
@@ -86,8 +104,11 @@ function AddProductPage() {
                     draft.product.categoryId = e.target.value
                   })
                 }
+                value={state.product.category.id}
               >
-                <option value="">Please select</option>
+                <option value="" disabled>
+                  Please select
+                </option>
                 {state.categories.map(category => {
                   return (
                     <option key={category.id} value={category.id}>
@@ -108,6 +129,7 @@ function AddProductPage() {
                     draft.product.price = e.target.value
                   })
                 }
+                value={state.product.price}
                 placeholder="1200.00"
               />
             </div>
@@ -122,6 +144,7 @@ function AddProductPage() {
                     draft.product.details = e.target.value
                   })
                 }
+                value={state.product.details}
                 placeholder="20x30"
               />
             </div>
@@ -136,6 +159,7 @@ function AddProductPage() {
                     draft.product.quantity = e.target.value
                   })
                 }
+                value={state.product.quantity}
                 placeholder="100"
               />
             </div>
@@ -143,6 +167,9 @@ function AddProductPage() {
             <div className="col-5 mt-3 mx-auto">
               <button type="submit" className="btn btn-primary container">
                 ADD
+              </button>
+              <button type="button" onClick={() => console.log(state.product)} className="btn btn-primary container">
+                STATE
               </button>
             </div>
             <div className="w-100 mt-3"></div>

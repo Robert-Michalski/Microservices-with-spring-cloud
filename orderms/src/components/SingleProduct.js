@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react"
 import Axios from "axios"
 import StateContext from "../StateContext"
+import { Link } from "react-router-dom"
 function SingleProduct(props) {
   const [amount, setAmount] = useState(0)
   const appState = useContext(StateContext)
+
   function handleOrder() {
     const ourRequest = Axios.CancelToken.source()
     try {
@@ -15,6 +17,7 @@ function SingleProduct(props) {
       ourRequest.cancel()
     }
   }
+
   function getFormattedPrice() {
     const formatted = Intl.NumberFormat("en-US", {
       minimumFractionDigits: 2,
@@ -22,6 +25,7 @@ function SingleProduct(props) {
     })
     return formatted.format(props.product.price) + " PLN"
   }
+
   return (
     <>
       <div className="col-sm p-3">{props.product.id}</div>
@@ -32,9 +36,11 @@ function SingleProduct(props) {
         <input type="number" className="col-5" onChange={e => setAmount(e.target.value)} />
       </div>
       {appState.user.role == "ROLE_ADMIN" || appState.user.role == "ROLE_MANAGER" ? (
-        <div className="col-sm p-3" onClick={handleOrder}>
-          <span className="material-symbols-outlined me-3 btn btn-primary action-icon">edit</span>
-          <span className="material-symbols-outlined action-icon btn btn-danger">delete</span>
+        <div className="col-sm p-3">
+          <Link to={props.product.id + `/edit`}>
+            <button className="material-symbols-outlined me-3 btn btn-primary action-icon">edit</button>
+          </Link>
+          <button className="material-symbols-outlined action-icon btn btn-danger">delete</button>
         </div>
       ) : (
         <div className="col-sm p-3 btn btn-primary" onClick={handleOrder}>
