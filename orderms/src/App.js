@@ -42,8 +42,8 @@ function App() {
         state.user.login = action.data.login
         state.user.firstName = action.details.firstName
         state.user.lastName = action.details.lastName
-        cookies.set("jwt", action.data.accessToken, { path: "/", expires: new Date(COOKIE_EXPIRATION_MS) })
-        cookies.set("roles", jwt(action.data.accessToken).roles, { path: "/", expires: new Date(COOKIE_EXPIRATION_MS) })
+        cookies.set("jwt", action.data.accessToken, { path: "/", expires: new Date(Date.now() + COOKIE_EXPIRATION_MS) })
+        cookies.set("roles", jwt(action.data.accessToken).roles, { path: "/", expires: new Date(Date.now() + COOKIE_EXPIRATION_MS) })
         window.location.reload()
         break
       case "logout":
