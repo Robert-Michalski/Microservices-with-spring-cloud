@@ -21,17 +21,21 @@ function AddProductPage() {
     },
     categories: []
   })
-  const formatted = Intl.NumberFormat("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  })
+
   async function handleSubmit(e) {
     e.preventDefault()
     const ourRequest = Axios.CancelToken.source()
     try {
-      const response = await Axios.post("/api/product", { name: state.product.name, categoryId: state.product.categoryId, price: state.product.price, details: state.product.details, quantity: state.product.quantity }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-      if (response.request.status == 201) {
-        navigate("/products")
+      if (!id) {
+        const response = await Axios.post("/api/product", { name: state.product.name, categoryId: state.product.category.id, price: state.product.price, details: state.product.details, quantity: state.product.quantity }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+        if (response.request.status == 201) {
+          navigate("/products")
+        }
+      } else {
+        const response = await Axios.put("/api/product/" + id, { name: state.product.name, categoryId: state.product.category.id, price: state.product.price, details: state.product.details, quantity: state.product.quantity }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+        if (response.request.status == 200) {
+          navigate("/products")
+        }
       }
     } catch (e) {
       console.log("Something wrong adding new product " + e)
@@ -101,7 +105,7 @@ function AddProductPage() {
                 className="col-9 product-add-input"
                 onChange={e =>
                   setState(draft => {
-                    draft.product.categoryId = e.target.value
+                    draft.product.category.id = e.target.value
                   })
                 }
                 value={state.product.category.id}
@@ -167,9 +171,6 @@ function AddProductPage() {
             <div className="col-5 mt-3 mx-auto">
               <button type="submit" className="btn btn-primary container">
                 ADD
-              </button>
-              <button type="button" onClick={() => console.log(state.product)} className="btn btn-primary container">
-                STATE
               </button>
             </div>
             <div className="w-100 mt-3"></div>
