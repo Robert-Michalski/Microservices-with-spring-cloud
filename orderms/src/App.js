@@ -21,6 +21,7 @@ function App() {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   const cookies = new Cookies()
+  const COOKIE_EXPIRATION_MS = 86400000
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("userId")),
     user: {
@@ -41,8 +42,8 @@ function App() {
         state.user.login = action.data.login
         state.user.firstName = action.details.firstName
         state.user.lastName = action.details.lastName
-        cookies.set("jwt", action.data.accessToken, { path: "/" })
-        cookies.set("roles", jwt(action.data.accessToken).roles, { path: "/" })
+        cookies.set("jwt", action.data.accessToken, { path: "/", expires: new Date(COOKIE_EXPIRATION_MS) })
+        cookies.set("roles", jwt(action.data.accessToken).roles, { path: "/", expires: new Date(COOKIE_EXPIRATION_MS) })
         window.location.reload()
         break
       case "logout":
