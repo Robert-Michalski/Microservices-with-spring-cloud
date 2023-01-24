@@ -24,6 +24,13 @@ function Register() {
       iconController: {
         icon: "cancel",
         color: "red"
+      },
+      rulesController: {
+        lowerCase: false,
+        upperCase: false,
+        digit: false,
+        special: false,
+        length: false
       }
     },
     firstName: {
@@ -67,13 +74,17 @@ function Register() {
         }
         return
       case "passwordImmediately":
-        //TODO
-        // WHY IT ALWAYS RETURNS FALSE
-        // const passwordRegExp = /^.*(?=.{7,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!&$%&? "]).*$/
-        // passwordRegExp.test(draft.password.value)
-        //
         draft.password.value = action.value
-        draft.password.hasErrors = draft.password.value.length < 8
+        draft.password.rulesController.lowerCase = /.*[a-z].*/.test(draft.password.value)
+        draft.password.rulesController.upperCase = /.*[A-Z].*/.test(draft.password.value)
+        draft.password.rulesController.digit = /.*[0-9].*/.test(draft.password.value)
+        draft.password.rulesController.special = /[*@!#%&()^~{}]+/.test(draft.password.value)
+        draft.password.rulesController.length = draft.password.value.length >= 8
+        if (draft.password.rulesController.length && draft.password.rulesController.lowerCase && draft.password.rulesController.upperCase && draft.password.rulesController.digit && draft.password.rulesController.special) {
+          draft.password.hasErrors = false
+        } else {
+          draft.password.hasErrors = true
+        }
         if (draft.password.hasErrors) {
           draft.password.iconController.icon = "cancel"
           draft.password.iconController.color = "red"
@@ -169,9 +180,9 @@ function Register() {
                     dispatch({ type: "emailImmediately", value: e.target.value })
                   }}
                 />
-                <div className="material-symbols-outlined" style={{ color: state.mail.iconController.color }}>
+                <span className="material-symbols-outlined register-icon" style={{ color: state.mail.iconController.color }}>
                   {state.mail.iconController.icon}
-                </div>
+                </span>
               </div>
               <div className="d-flex input-group input-group-register mb-4 ">
                 <input
@@ -182,10 +193,19 @@ function Register() {
                   }}
                   className="container"
                 />
-                <div className="material-symbols-outlined" style={{ color: state.password.iconController.color }}>
+                <span className="material-symbols-outlined register-icon" style={{ color: state.password.iconController.color }}>
                   {state.password.iconController.icon}
+                </span>
+                <div className="d-flex flex-column password-rules">
+                  Password should:
+                  <span style={{ color: state.password.rulesController.length ? "green" : "red" }}>Be over 8 characters long</span>
+                  <span style={{ color: state.password.rulesController.lowerCase ? "green" : "red" }}>Have at least 1 lower case</span>
+                  <span style={{ color: state.password.rulesController.upperCase ? "green" : "red" }}>Have at least 1 upper case</span>
+                  <span style={{ color: state.password.rulesController.digit ? "green" : "red" }}>Have at least 1 digit</span>
+                  <span style={{ color: state.password.rulesController.special ? "green" : "red" }}>Have at least 1 special character</span>
                 </div>
               </div>
+
               <div className="d-flex input-group input-group-register mb-4 ">
                 <input
                   type="text"
@@ -195,9 +215,9 @@ function Register() {
                   }}
                   className="container"
                 />
-                <div className="material-symbols-outlined" style={{ color: state.firstName.iconController.color }}>
+                <span className="material-symbols-outlined register-icon" style={{ color: state.firstName.iconController.color }}>
                   {state.firstName.iconController.icon}
-                </div>
+                </span>
               </div>
               <div className="d-flex input-group input-group-register mb-4 ">
                 <input
@@ -208,11 +228,11 @@ function Register() {
                   }}
                   className="container"
                 />
-                <div className="material-symbols-outlined" style={{ color: state.lastName.iconController.color }}>
+                <span className="material-symbols-outlined register-icon" style={{ color: state.lastName.iconController.color }}>
                   {state.lastName.iconController.icon}
-                </div>
+                </span>
               </div>
-              <div className="d-flex input-group input-group-register mb-4 ">
+              <div className="d-flex input-group input-group-register mb-5 ">
                 <input
                   type="text"
                   placeholder="Phone"
@@ -221,9 +241,9 @@ function Register() {
                   }}
                   className="container"
                 />
-                <div className="material-symbols-outlined" style={{ color: state.phone.iconController.color }}>
+                <span className="material-symbols-outlined register-icon" style={{ color: state.phone.iconController.color }}>
                   {state.phone.iconController.icon}
-                </div>
+                </span>
               </div>
               <div className="d-flex">
                 <button type="input" className="btn btn-primary fs-5">

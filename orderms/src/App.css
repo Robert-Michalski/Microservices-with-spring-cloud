@@ -227,8 +227,13 @@ img {
 .input-group-register {
   position: relative;
 }
-.input-group-register div {
+.input-group-register .register-icon {
   position: absolute;
   top: 0px;
   right: 0px;
+}
+.password-rules {
+  font-size: 0.9rem;
+  padding: 0.1rem 0.5rem;
+  font-weight: bold;
 }
