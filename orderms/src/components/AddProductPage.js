@@ -2,8 +2,7 @@ import React, { useContext, useEffect } from "react"
 import StateContext from "../StateContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
-import { useNavigate } from "react-router"
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 function AddProductPage() {
   const appState = useContext(StateContext)
   const navigate = useNavigate()

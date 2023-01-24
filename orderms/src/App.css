@@ -3,7 +3,9 @@
   --bg-white: #fff;
   --bg-gray: #f4f4f4;
 }
-
+img {
+  width: 100%;
+}
 .grid-header {
   font-size: 1.5rem;
 }
@@ -18,6 +20,9 @@
 }
 .fc-white {
   color: var(--bg-white);
+}
+.fc-blue {
+  color: blue;
 }
 .fs-login {
   font-size: 4rem;
@@ -57,8 +62,7 @@
 .login .material-symbols-outlined {
   font-size: 6rem;
 }
-.login input,
-.register input {
+.login input {
   padding-left: 10px;
   border-radius: 10px;
   outline: none;
@@ -97,9 +101,6 @@
   color: white;
 }
 
-#register-btn {
-  padding: 0.5rem 5rem;
-}
 .dash-info-box {
   padding: 0.5rem 1rem;
   border-radius: 10px;
@@ -208,4 +209,26 @@
     visibility: hidden;
     transform: translateX(-50%) scale(1.2);
   }
+}
+
+#register-btn {
+  padding: 0.5rem 5rem;
+}
+.register-right {
+  padding-left: 10rem;
+  padding-right: 11rem;
+}
+.register input {
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  background-color: inherit;
+}
+.input-group-register {
+  position: relative;
+}
+.input-group-register div {
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }
