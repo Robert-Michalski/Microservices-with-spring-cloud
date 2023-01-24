@@ -129,6 +129,7 @@ function Register() {
           draft.phone.iconController.icon = "check_circle"
           draft.phone.iconController.color = "green"
         }
+
         return
       case "submit":
         draft.requestCount++
@@ -234,8 +235,10 @@ function Register() {
               </div>
               <div className="d-flex input-group input-group-register mb-5 ">
                 <input
-                  type="text"
+                  type="number"
+                  value={state.phone.value}
                   placeholder="Phone"
+                  max={9}
                   onChange={e => {
                     dispatch({ type: "phoneImmediately", value: e.target.value })
                   }}
