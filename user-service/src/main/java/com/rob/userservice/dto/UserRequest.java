@@ -19,7 +19,7 @@ public record UserRequest(
         @NotEmpty(message = "Mail cannot be empty") @Email String mail,
         @NotEmpty(message = "Password cannot be empty")
                 @Size(min = 8, message = "Password must be longer than 8 characters")
-                @Pattern(regexp = "/^(?=.*\\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{7,}$/",
-                        message = "Password must contain at least : 1 digit, 1 lower case, 1 upper case")
+                @Pattern(regexp = "^(?=\\P{Ll}*\\p{Ll})(?=\\P{Lu}*\\p{Lu})(?=\\P{N}*\\p{N})(?=[\\p{L}\\p{N}]*[^\\p{L}\\p{N}])[\\s\\S]{8,}$",
+                        message = "Password must contain at least : 1 digit, 1 lower case, 1 upper case, 1 special character")
         String password) {
 }
