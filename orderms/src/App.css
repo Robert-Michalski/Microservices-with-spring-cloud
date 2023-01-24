@@ -137,6 +137,7 @@
 
 .floating-alert {
   border-color: green;
+  border-radius: 10px;
   padding: 1rem 2rem;
   font-size: 1.3rem;
   display: none;
