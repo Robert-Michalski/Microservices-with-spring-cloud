@@ -1,10 +1,10 @@
 package com.rob.orderservice.controller;
 
-import com.rob.orderservice.dto.DetailedOrderResponse;
 import com.rob.orderservice.dto.OrderRequest;
 import com.rob.orderservice.dto.OrderResponse;
 import com.rob.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,12 +18,12 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public OrderResponse saveOrder(@RequestBody OrderRequest orderRequest){
-        return orderService.saveOrder(orderRequest);
+    public OrderResponse saveOrder(@RequestBody OrderRequest orderRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        return orderService.saveOrder(orderRequest, token);
     }
     @PostMapping("multiple")
-    public Set<OrderResponse> saveOrder(@RequestBody Set<OrderRequest> orderRequests){
-        return orderService.saveOrder(orderRequests);
+    public Set<OrderResponse> saveOrder(@RequestBody Set<OrderRequest> orderRequests, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        return orderService.saveOrder(orderRequests, token);
     }
 
     @GetMapping("/user/{id}")

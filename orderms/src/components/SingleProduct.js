@@ -9,7 +9,7 @@ function SingleProduct(props) {
   function handleOrder() {
     const ourRequest = Axios.CancelToken.source()
     try {
-      Axios.post("api/order", { productId: props.product.id, quantity: amount, customerId: appState.user.id }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      Axios.post("api/order", { productId: props.product.id, quantity: amount, customerId: appState.user.id, token: appState.user.token }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
     } catch (e) {
       console.log("Error during order placement " + e)
     }

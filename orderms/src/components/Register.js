@@ -5,6 +5,7 @@ import { useNavigate } from "react-router"
 import warehousebg from "./img/register-warehouse.jpg"
 import { useContext } from "react"
 import DispatchContext from "../DispatchContext"
+import { Link } from "react-router-dom"
 function Register() {
   const navigate = useNavigate()
   const appDispatch = useContext(DispatchContext)
@@ -170,7 +171,9 @@ function Register() {
             <div className="container d-flex flex-column">
               <div className="d-flex mb-5 mt-4">
                 <span className="fs-5 fw-bolder">Sign up</span>
-                <span className="ms-4 fs-5 fc-blue ">Log in</span>
+                <Link to="/" className="ms-4 fs-5 fc-blue ">
+                  Log in
+                </Link>
               </div>
               <div className="d-flex input-group input-group-register mb-4 ">
                 <input
@@ -238,7 +241,6 @@ function Register() {
                   type="number"
                   value={state.phone.value}
                   placeholder="Phone"
-                  max={9}
                   onChange={e => {
                     dispatch({ type: "phoneImmediately", value: e.target.value })
                   }}

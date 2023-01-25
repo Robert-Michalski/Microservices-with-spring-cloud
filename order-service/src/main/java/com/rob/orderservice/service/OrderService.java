@@ -1,20 +1,18 @@
 package com.rob.orderservice.service;
 
-import com.rob.orderservice.dto.DetailedOrderResponse;
 import com.rob.orderservice.dto.OrderRequest;
 import com.rob.orderservice.dto.OrderResponse;
 import com.rob.orderservice.entity.Order;
 import com.rob.orderservice.entity.Status;
 import com.rob.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +25,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final WebClient webClient;
 
-    public OrderResponse saveOrder(OrderRequest orderRequest) {
+    public OrderResponse saveOrder(OrderRequest orderRequest, String token) {
         Order orderToSave = Order.builder()
                 .productId(orderRequest.productId())
                 .quantity(orderRequest.quantity())
@@ -37,6 +35,7 @@ public class OrderService {
                 .build();
         Boolean result = webClient.post()
                 .uri("http://localhost:8011/api/product/is-in-stock")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+token)
                 .bodyValue(orderRequest)
                 .retrieve()
                 .bodyToMono(Boolean.class)
@@ -49,10 +48,11 @@ public class OrderService {
         }
     }
 
-    public Set<OrderResponse> saveOrder(Set<OrderRequest> orderRequests) {
+    public Set<OrderResponse> saveOrder(Set<OrderRequest> orderRequests, String token) {
         Set<OrderResponse> setToReturn = new HashSet<>();
         Boolean result = webClient.post()
                 .uri("http://localhost:8011/api/product/are-in-stock")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+token)
                 .bodyValue(orderRequests)
                 .retrieve()
                 .bodyToMono(Boolean.class)
@@ -84,17 +84,6 @@ public class OrderService {
                 .bodyToMono(String.class)
                 .block();
         return productName;
-    }
-
-    private DetailedOrderResponse toDetailedDto(Order order){
-        return DetailedOrderResponse.builder()
-                .id(order.getId())
-                .productName(getProductName(order.getProductId()))
-                .quantity(order.getQuantity())
-                .customerId(order.getCustomerId())
-                .orderDate(order.getOrderDate())
-                .status(order.getStatus())
-                .build();
     }
 
     public Long countAll() {

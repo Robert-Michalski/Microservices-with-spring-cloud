@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react"
 import Axios from "axios"
+import { useContext } from "react"
+import StateContext from "../StateContext"
 function SingleOrder(props) {
+  const appState = useContext(StateContext)
   const [productDetails, setProductDetails] = useState({
     id: "",
     name: "",
@@ -16,8 +19,9 @@ function SingleOrder(props) {
     }
   }
   async function getProduct() {
+    const ourRequest = Axios.CancelToken.source()
     try {
-      const product = await Axios.get("api/product/" + props.order.productId)
+      const product = await Axios.get("api/product/" + props.order.productId, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
       setProductDetails(product.data)
     } catch (e) {
       console.log("Something wrong during get product details" + e)
