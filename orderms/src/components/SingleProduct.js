@@ -1,15 +1,19 @@
 import React, { useContext, useState } from "react"
 import Axios from "axios"
 import StateContext from "../StateContext"
+import DispatchContext from "../DispatchContext"
 import { Link } from "react-router-dom"
 function SingleProduct(props) {
   const [amount, setAmount] = useState(0)
   const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
 
-  function handleOrder() {
+  function handleOrder(e) {
     const ourRequest = Axios.CancelToken.source()
     try {
       Axios.post("api/order", { productId: props.product.id, quantity: amount, customerId: appState.user.id, token: appState.user.token }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      setAmount(prev => (prev = 0))
+      appDispatch({ type: "flashMessage", value: "Order placed succesfully" })
     } catch (e) {
       console.log("Error during order placement " + e)
     }
@@ -48,7 +52,7 @@ function SingleProduct(props) {
       <div className="col-sm p-3 ">{props.product.quantity}</div>
       <div className="col-sm p-3">{getFormattedPrice()}</div>
       <div className="col-sm p-3">
-        <input type="number" className="col-5" onChange={e => setAmount(e.target.value)} />
+        <input type="number" className="col-5" onChange={e => setAmount(e.target.value)} value={amount == 0 ? "" : amount} />
       </div>
       {appState.user.role === "ROLE_ADMIN" || appState.user.role === "ROLE_MANAGER" ? (
         <div className="col-sm p-3">
