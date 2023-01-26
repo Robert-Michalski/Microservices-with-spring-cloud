@@ -6,7 +6,7 @@ import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
 import { useImmerReducer } from "use-immer"
 import Axios from "axios"
-import { useContext, useEffect } from "react"
+import { useEffect } from "react"
 import Register from "./components/Register"
 import Products from "./components/Products"
 import MainView from "./components/MainView"
@@ -14,8 +14,8 @@ import Dashboard from "./components/Dashboard"
 import Cookies from "universal-cookie"
 import jwt from "jwt-decode"
 import AddProductPage from "./components/AddProductPage"
-import { CSSTransition } from "react-transition-group"
 import FlashMessages from "./components/FlashMessages"
+import NotFound from "./components/NotFound"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -51,11 +51,11 @@ function App() {
       case "logout":
         removeCookies()
         state.loggedIn = false
-        console.log(cookies.getAll())
         return
       case "flashMessage":
         state.flashMessages.push({
-          value: action.value
+          value: action.value,
+          bg: action.bg
         })
         return
     }
@@ -95,6 +95,7 @@ function App() {
             <Route path="/products/add" element={<MainView view={AddProductPage} />} />
             <Route path="/products/:id/edit" element={<MainView view={AddProductPage} />} />
             <Route path="/dashboard" element={<MainView view={Dashboard} />} />
+            <Route path="/notFound" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </DispatchContext.Provider>

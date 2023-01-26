@@ -146,9 +146,8 @@ input[type="number"] {
   top: 6px;
   content: "PLN";
 }
-
 .floating-alert {
-  border-color: green;
+  color: white;
   border-radius: 10px;
   padding: 1rem 2rem;
   font-size: 1.3rem;
