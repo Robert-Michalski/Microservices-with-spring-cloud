@@ -1,8 +1,5 @@
 package com.rob.userservice.service;
 
-import com.rob.userservice.config.JWTGenerator;
-import com.rob.userservice.dto.LoginRequest;
-import com.rob.userservice.dto.LoginResponse;
 import com.rob.userservice.dto.UserRequest;
 import com.rob.userservice.dto.UserResponse;
 import com.rob.userservice.entity.User;
@@ -10,10 +7,6 @@ import com.rob.userservice.entity.UserRole;
 import com.rob.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,14 +24,10 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder encoder;
 
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userOpt = userRepository.findByMailIgnoreCase(username);
-        if(userOpt.isEmpty()){
-            throw new UsernameNotFoundException("User with mail " + username + " not found");
-        }
-        User user = userOpt.get();
+        User user = userRepository.findByMailIgnoreCase(username).orElseThrow(() -> new UsernameNotFoundException("User with mail " + username + " not found"));
+
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getMail())
                 .password(user.getPassword())
@@ -66,13 +54,11 @@ public class UserService implements UserDetailsService {
     }
 
     public UserResponse getUserById(Long id) {
-        checkIfExistsAndThrowRse(id, HttpStatus.BAD_REQUEST, UserUtils.badIdErrorMessage(id));
-        return UserUtils.toDto(userRepository.findById(id).get());
+        return UserUtils.toDto(userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)));
     }
 
     public UserResponse updateUserById(Long id, UserRequest userRequest) {
-        checkIfExistsAndThrowRse(id, HttpStatus.BAD_REQUEST, UserUtils.badIdErrorMessage(id));
-        User userToSave = userRepository.findById(id).get();
+        User userToSave = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         userToSave.setFirstName(userRequest.firstName());
         userToSave.setLastName(userRequest.lastName());
         userToSave.setMail(userRequest.mail());
@@ -86,11 +72,8 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    public Long getUserIdByMail(String mail){
-        if(userRepository.findByMailIgnoreCase(mail).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "NO USER WITH MAIL " + mail);
-        }
-        return userRepository.findByMailIgnoreCase(mail).get().getId();
+    public Long getUserIdByMail(String mail) {
+        return userRepository.findByMailIgnoreCase(mail).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)).getId();
     }
 
     private boolean checkIfExistsAndThrowRse(Long id, HttpStatus httpStatus, String message) {

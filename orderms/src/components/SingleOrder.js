@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import Axios from "axios"
-import { useContext } from "react"
 import StateContext from "../StateContext"
 function SingleOrder(props) {
   const appState = useContext(StateContext)

@@ -27,7 +27,8 @@ public class ProductService {
         if (categoryRepository.findById(productRequest.categoryId()).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        Category category = categoryRepository.findById(productRequest.categoryId()).get();
+        Category category = categoryRepository.findById(productRequest.categoryId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         Product productToSave = Product.builder()
                 .name(productRequest.name())
                 .category(category)
@@ -39,11 +40,8 @@ public class ProductService {
     }
 
     public ProductResponse getProductById(Long id) {
-        Optional<Product> optionalProduct = productRepository.findById(id);
-        if (optionalProduct.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-        return ProductUtil.toDto(optionalProduct.get());
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        return ProductUtil.toDto(product);
     }
 
     public List<ProductResponse> getAllProducts() {
@@ -54,20 +52,15 @@ public class ProductService {
     }
 
     public ProductResponse updateProductById(Long id, ProductRequest productRequest) {
-        Optional<Product> optionalProduct = productRepository.findById(id);
-        if (optionalProduct.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-        if (categoryRepository.findById(productRequest.categoryId()).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-        Category category = categoryRepository.findById(productRequest.categoryId()).get();
-        Product productToUpdate = optionalProduct.get();
+        Category category = categoryRepository.findById(productRequest.categoryId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        Product productToUpdate = productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
         productToUpdate.setName(productRequest.name());
         productToUpdate.setCategory(category);
         productToUpdate.setPrice(productRequest.price());
         productToUpdate.setDetails(productRequest.details());
         productToUpdate.setQuantity(productRequest.quantity());
+
         return ProductUtil.toDto(productRepository.save(productToUpdate));
     }
 
@@ -81,36 +74,30 @@ public class ProductService {
     }
 
     public boolean isInStock(ProductOrder productOrder) {
-        if (productRepository.findById(productOrder.productId()).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
-        Product productToCheck = productRepository.findById(productOrder.productId()).get();
+        Product productToCheck = productRepository.findById(productOrder.productId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         boolean result = productToCheck.getQuantity() >= productOrder.quantity();
-        if(result) {
+        if (result) {
             decreaseQuantity(productOrder.productId(), productOrder.quantity());
         }
         return result;
     }
 
     public boolean areInStock(Set<ProductOrder> productOrders) {
-       return productOrders.stream().allMatch(this::isInStock);
+        return productOrders.stream().allMatch(this::isInStock);
     }
 
     public ProductResponse decreaseQuantity(Long id, int amount) {
         Optional<Product> byId = productRepository.findById(id);
-        if(byId.isEmpty()){
+        if (byId.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         Product product = byId.get();
-        product.setQuantity(product.getQuantity()-amount);
+        product.setQuantity(product.getQuantity() - amount);
         return ProductUtil.toDto(productRepository.save(product));
     }
 
     public String getNameOfProduct(Long id) {
-        if(productRepository.findById(id).get()!=null) {
-            return productRepository.findById(id).get().getName();
-        }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        return productRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST)).getName();
     }
 
     public long countAll() {

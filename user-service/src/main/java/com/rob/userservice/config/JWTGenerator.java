@@ -1,8 +1,6 @@
 package com.rob.userservice.config;
 
-import com.rob.userservice.entity.UserRole;
 import com.rob.userservice.service.UserService;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +32,6 @@ public class JWTGenerator {
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + JWT_EXPIRATION);
         Map<String, Object> claims = new HashMap<>();
-        System.out.println("auth here ## "+authentication);
         List<String> roles = authentication.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
