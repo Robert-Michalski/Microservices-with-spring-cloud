@@ -1,4 +1,6 @@
 package com.rob.orderservice.dto;
 
-public record OrderRequest(int productId, int quantity, int customerId) {
+import jakarta.validation.constraints.Positive;
+
+public record OrderRequest(int productId, @Positive int quantity, int customerId) {
 }

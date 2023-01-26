@@ -5,6 +5,8 @@ import com.rob.orderservice.dto.OrderResponse;
 import com.rob.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +20,12 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    public OrderResponse saveOrder(@RequestBody OrderRequest orderRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderResponse saveOrder(@RequestBody @Validated OrderRequest orderRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         return orderService.saveOrder(orderRequest, token);
     }
     @PostMapping("multiple")
+    @ResponseStatus(HttpStatus.CREATED)
     public Set<OrderResponse> saveOrder(@RequestBody Set<OrderRequest> orderRequests, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         return orderService.saveOrder(orderRequests, token);
     }
