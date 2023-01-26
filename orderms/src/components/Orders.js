@@ -56,16 +56,16 @@ function Orders() {
             <input type="text" placeholder="Find an order"></input>
           </div>
         </div>
-        <div className="bg-white row mt-4 ms-2 orders p-3">
-          <div className="col-sm grid-header">Order ID</div>
-          <div className="col-sm grid-header">Item</div>
-          <div className="col-sm grid-header">Date</div>
-          <div className="col-sm grid-header">Status</div>
-          <div className="col-sm grid-header">Total</div>
+        <div className="bg-white row mt-4 ms-2 orders ">
+          <div className="col-sm grid-header items-row">Order ID</div>
+          <div className="col-sm grid-header items-row">Item</div>
+          <div className="col-sm grid-header items-row">Date</div>
+          <div className="col-sm grid-header items-row">Status</div>
+          <div className="col-sm grid-header items-row">Total</div>
           <div className="w-100"></div>
-          <hr className="mt-3" />
-          {state.orders.map(order => {
-            return <SingleOrder order={order} key={order.id} />
+          <hr className="p-2" />
+          {state.orders.map((order, index) => {
+            return <SingleOrder order={order} key={order.id} bgIndex={index} />
           })}
         </div>
       </div>

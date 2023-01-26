@@ -6,6 +6,9 @@
 img {
   width: 100%;
 }
+hr {
+  margin: 0;
+}
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -246,4 +249,7 @@ input[type="number"] {
   font-size: 0.9rem;
   padding: 0.1rem 0.5rem;
   font-weight: bold;
+}
+.items-row {
+  padding: 1.8rem 1.5rem;
 }
