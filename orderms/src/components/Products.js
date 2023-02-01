@@ -52,7 +52,7 @@ function Products() {
       <hr />
       <div className="container p-3">
         <div className="d-flex align-items-center">
-          <div className="ms-3 fs-2">All products</div>
+          <div className="ms-3 fs-2">All categories</div>
           <div className="ms-auto"></div>
           {appState.user.role === "ROLE_ADMIN" || appState.user.role === "ROLE_MANAGER" ? (
             <Link to="/products/add" className="me-3 btn btn-primary">
@@ -64,6 +64,7 @@ function Products() {
             <input type="text" placeholder="Find product"></input>
           </div>
         </div>
+
         <div className="bg-white row mt-4 ms-2 orders p-3">
           <div className="col-sm grid-header">Item ID</div>
           <div className="col-sm grid-header">Name</div>
