@@ -1,10 +1,27 @@
 import { useContext } from "react"
 import StateContext from "../StateContext"
+import ProductView from "./ProductView"
 
 function Cart() {
   const appState = useContext(StateContext)
 
-  const shoppingCart = {}
+  const shoppingCart = [
+    {
+      name: "Steel pipe",
+      price: 365,
+      quantity: 5
+    },
+    {
+      name: "10m wire",
+      price: 99,
+      quantity: 4
+    },
+    {
+      name: "10x40 Steel Sheet",
+      price: 149,
+      quantity: 10
+    }
+  ]
 
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
@@ -20,56 +37,10 @@ function Cart() {
           <div className="ms-3 fs-2">My cart</div>
         </div>
         <div className="d-flex container mt-4">
-          <div className="bg-white row ms-2 orders p-3 col-5">
-            <div className="col-3">Steel pipe</div>
-            <div className="col-3">1032365.00$</div>
-            <div className="col-1">10</div>
-            <div className="col-1 ms-auto">
-              <span className="material-symbols-outlined">delete</span>
-            </div>
-            <div className="w-100"></div>
-            <div className="col-3">Steel pipe</div>
-            <div className="col-3">365.00$</div>
-            <div className="col-1">10</div>
-            <div className="col-1  ms-auto">
-              <span className="material-symbols-outlined">delete</span>
-            </div>
-            <div className="w-100"></div>
-            <div className="col-3">Steel pipe</div>
-            <div className="col-3">1032365.00$</div>
-            <div className="col-1">10</div>
-            <div className="col-1 ms-auto">
-              <span className="material-symbols-outlined">delete</span>
-            </div>
-            <div className="w-100"></div>
-            <div className="col-3">Steel pipe</div>
-            <div className="col-3">1032365.00$</div>
-            <div className="col-1">10</div>
-            <div className="col-1 ms-auto">
-              <span className="material-symbols-outlined">delete</span>
-            </div>
-            <div className="w-100"></div>
-            <div className="col-3">Steel pipe</div>
-            <div className="col-3">1032365.00$</div>
-            <div className="col-1">10</div>
-            <div className="col-1 ms-auto">
-              <span className="material-symbols-outlined">delete</span>
-            </div>
-            <div className="w-100"></div>
-            <div className="col-3">Steel pipe</div>
-            <div className="col-3">1032365.00$</div>
-            <div className="col-1">10</div>
-            <div className="col-1 ms-auto">
-              <span className="material-symbols-outlined">delete</span>
-            </div>
-            <div className="w-100"></div>
-            <div className="col-3">Steel pipe</div>
-            <div className="col-3">1032365.00$</div>
-            <div className="col-1">10</div>
-            <div className="col-1 ms-auto">
-              <span className="material-symbols-outlined">delete</span>
-            </div>
-            <div className="w-100"></div>
+          <div className="bg-white row ms-2 orders p-3 col-7">
+            {shoppingCart.map(product => {
+              return <ProductView item={product} />
+            })}
           </div>
           {/* -------------- */}
           <div className="ms-auto col-3">
