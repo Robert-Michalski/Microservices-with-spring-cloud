@@ -48,16 +48,6 @@ public class ProductController {
         return productService.deleteProductById(id);
     }
 
-//    @PostMapping("is-in-stock")
-//    public boolean isInStock(@RequestBody ProductOrder productOrder){
-//        return productService.isInStock(productOrder);
-//    }
-//
-//    @PostMapping("are-in-stock")
-//    public boolean areInStock(@RequestBody Set<ProductOrder> productOrders){
-//        return productService.areInStock(productOrders);
-//    }
-
     @PatchMapping("{id}")
     public ProductResponse decreaseQuantity(@PathVariable Long id, @RequestParam int amount){
         return productService.decreaseQuantity(id, amount);

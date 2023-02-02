@@ -100,13 +100,13 @@ public class ProductService {
             Product product = productRepository.findById(productId)
                     .orElseThrow(() -> {
                         log.info("Product with id: {} doesn't exist", productId);
-                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product with id "+productId+" doesn't exist");
                     });
             log.info("{} amount of {} was requested", product.getName(), productRequestNew.productIdsToQuantity().get(productId));
             if (product.getQuantity() < productRequestNew.productIdsToQuantity().get(productId)) {
                 log.info("{} has {} quantity but {} was requested",
                         product.getName(), product.getQuantity(), productRequestNew.productIdsToQuantity().get(productId));
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough stock for this products");
             }
             decreaseQuantity(productId, productRequestNew.productIdsToQuantity().get(productId));
         });

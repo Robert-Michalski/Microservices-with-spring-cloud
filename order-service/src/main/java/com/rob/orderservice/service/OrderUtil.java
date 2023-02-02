@@ -13,7 +13,5 @@ public class OrderUtil {
                 .orderDate(order.getOrderDate())
                 .status(order.getStatus())
                 .build();
-
     }
-
 }
