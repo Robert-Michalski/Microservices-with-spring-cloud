@@ -4,7 +4,6 @@ function ProductView(props) {
     else return " bg-white "
   }
   function getTotal() {
-    console.log(props)
     return props.item.price * props.item.quantity
   }
   //  TODO: Maybe do it better somehow

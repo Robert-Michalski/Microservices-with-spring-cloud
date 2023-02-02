@@ -1,15 +1,7 @@
-import React, { useEffect, useState, useContext } from "react"
-import Axios from "axios"
+import React, { useState, useContext } from "react"
 import StateContext from "../StateContext"
 function SingleOrder(props) {
   const appState = useContext(StateContext)
-  const [productDetails, setProductDetails] = useState({
-    id: "",
-    name: "",
-    category: "",
-    price: "",
-    details: ""
-  })
 
   function getStatusBg(status) {
     if (status === "RECEIVED") return "bg-green"
@@ -17,26 +9,14 @@ function SingleOrder(props) {
       return "bg-red"
     }
   }
-  async function getProduct() {
-    const ourRequest = Axios.CancelToken.source()
-    try {
-      const product = await Axios.get("api/product/" + props.order.productId, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-      setProductDetails(product.data)
-    } catch (e) {
-      console.log("Something wrong during get product details" + e)
-    }
-  }
-  useEffect(() => {
-    getProduct()
-  }, [])
 
   function getFormattedTotal() {
-    const total = props.order.quantity * productDetails.price
+    const total = 10 * 5 //price and quantity here
     const formatted = Intl.NumberFormat("en-US", {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     })
-    return formatted.format(total) + " PLN"
+    return formatted.format(total) + " $"
   }
   function getBackground() {
     if (props.bgIndex % 2 === 0) return " bg-gray"
@@ -45,7 +25,6 @@ function SingleOrder(props) {
   return (
     <>
       <div className={"col-sm items-row " + getBackground()}>{props.order.id}</div>
-      <div className={"col-sm items-row " + getBackground()}>{productDetails.name}</div>
       <div className={"col-sm items-row " + getBackground()}>17 January 2023</div>
       <div className={"col-sm items-row " + getBackground()}>
         <span className={getStatusBg(props.order.status) + " p-2 "} id="status">

@@ -58,7 +58,6 @@ function Orders() {
         </div>
         <div className="bg-white row mt-4 ms-2 orders ">
           <div className="col-sm grid-header items-row">Order ID</div>
-          <div className="col-sm grid-header items-row">Item</div>
           <div className="col-sm grid-header items-row">Date</div>
           <div className="col-sm grid-header items-row">Status</div>
           <div className="col-sm grid-header items-row">Total</div>

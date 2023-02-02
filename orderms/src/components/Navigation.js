@@ -16,7 +16,14 @@ function Navigation() {
       <div className="d-flex">
         {/* Icon and text */}
         <div>
-          <span className="material-symbols-outlined">shopping_cart</span>
+          <span
+            className="material-symbols-outlined"
+            onClick={() => {
+              navigate("/cart")
+            }}
+          >
+            shopping_cart
+          </span>
         </div>
       </div>
 
