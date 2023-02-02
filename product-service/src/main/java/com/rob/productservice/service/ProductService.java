@@ -110,10 +110,11 @@ public class ProductService {
 
     public boolean areInStockNew(ProductRequestNew productRequestNew) {
         log.info("INSIDE ProductService/areInStockNew START");
+        log.info("REQUEST: {}", productRequestNew);
         productRequestNew.productIdsToQuantity().keySet().forEach(productId -> {
             Product product = productRepository.findById(productId)
                     .orElseThrow(() -> {
-                        log.info("Product with id: {} doesnt exist", productId);
+                        log.info("Product with id: {} doesn't exist", productId);
                         throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
                     });
             log.info("{} amount of {} was requested", product.getName(), productRequestNew.productIdsToQuantity().get(productId));
@@ -126,8 +127,5 @@ public class ProductService {
         });
         log.info("INSIDE ProductService/areInStockNew END");
         return true;
-        //Check if there is product with given ID
-        //Check if available quantity > requested
-        //Decrease and return true
     }
 }

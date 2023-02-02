@@ -95,17 +95,14 @@ public class OrderService {
     }
 
     public NewOrderResponse saveOrderNew(NewOrderRequest orderRequest, String token) {
-        log.info("Request: {}", orderRequest);
-        orderRequest.productIdsToQuantity().keySet().forEach(productId -> {
-            log.info("ProductToQuantity: {}", orderRequest);
-            log.info("Response = {}", webClient.post()
-                    .uri("http://localhost:8011/api/product/are-in-stock")
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                    .bodyValue(orderRequest)
-                    .retrieve()
-                    .bodyToMono(Boolean.class)
-                    .block());
-        });
+
+        log.info("Response = {}", webClient.post()
+                .uri("http://localhost:8011/api/product/are-in-stock")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .bodyValue(orderRequest)
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block());
         return null;
     }
 }
