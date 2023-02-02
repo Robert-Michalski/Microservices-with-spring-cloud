@@ -76,20 +76,6 @@ public class ProductService {
         productRepository.deleteById(id);
         return "Product id: " + id + " deleted successfully";
     }
-
-//    public boolean isInStock(ProductOrder productOrder) {
-//        Product productToCheck = productRepository.findById(productOrder.()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-//        boolean result = productToCheck.getQuantity() >= productOrder.quantity();
-//        if (result) {
-//            decreaseQuantity(productOrder.productId(), productOrder.quantity());
-//        }
-//        return result;
-//    }
-
-//    public boolean areInStock(Set<ProductOrder> productOrders) {
-//        return productOrders.stream().allMatch(this::isInStock);
-//    }
-
     public ProductResponse decreaseQuantity(Long id, int amount) {
         Optional<Product> byId = productRepository.findById(id);
         if (byId.isEmpty()) {
@@ -108,9 +94,8 @@ public class ProductService {
         return productRepository.count();
     }
 
-    public boolean areInStockNew(ProductRequestNew productRequestNew) {
+    public boolean areInStock(ProductRequestNew productRequestNew) {
         log.info("INSIDE ProductService/areInStockNew START");
-        log.info("REQUEST: {}", productRequestNew);
         productRequestNew.productIdsToQuantity().keySet().forEach(productId -> {
             Product product = productRepository.findById(productId)
                     .orElseThrow(() -> {

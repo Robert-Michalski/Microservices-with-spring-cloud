@@ -1,8 +1,6 @@
 package com.rob.orderservice.dto;
 
-import jakarta.validation.constraints.Positive;
-import lombok.Builder;
+import java.util.Map;
 
-@Builder
-public record OrderRequest(int productId, @Positive int quantity, long customerId) {
+public record OrderRequest(Map<Long, Integer> productIdsToQuantity, Long customerId) {
 }

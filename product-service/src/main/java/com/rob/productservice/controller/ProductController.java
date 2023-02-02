@@ -75,7 +75,7 @@ public class ProductController {
 
     @PostMapping("/are-in-stock")
     @ResponseStatus(HttpStatus.CREATED)
-    public boolean areInStockNew(@RequestBody ProductRequestNew productRequestNew){
-        return productService.areInStockNew(productRequestNew);
+    public boolean areInStock(@RequestBody ProductRequestNew productRequestNew){
+        return productService.areInStock(productRequestNew);
     }
 }

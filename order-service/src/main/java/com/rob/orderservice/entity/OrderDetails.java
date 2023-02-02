@@ -11,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 @ToString
+@EqualsAndHashCode
 public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

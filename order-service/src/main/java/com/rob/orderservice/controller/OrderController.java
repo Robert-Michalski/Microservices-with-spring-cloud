@@ -1,7 +1,5 @@
 package com.rob.orderservice.controller;
 
-import com.rob.orderservice.dto.NewOrderRequest;
-import com.rob.orderservice.dto.NewOrderResponse;
 import com.rob.orderservice.dto.OrderRequest;
 import com.rob.orderservice.dto.OrderResponse;
 import com.rob.orderservice.service.OrderService;
@@ -12,7 +10,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,18 +20,19 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public NewOrderResponse saveOrderNew(@RequestBody @Validated NewOrderRequest orderRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    public OrderResponse saveOrderNew(@RequestBody @Validated OrderRequest orderRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return orderService.saveOrder(orderRequest, token);
     }
-//    @GetMapping("/user/{id}")
-//    public List<OrderResponse> getOrdersOfUser(@PathVariable int id){
-//        return orderService.getOrdersOfUser(id);
-//    }
-    @GetMapping("/count-all")
-    public Long countAll(){
-        return orderService.countAll();
+
+    @GetMapping("/user/{id}")
+    public List<OrderResponse> getOrdersOfUser(@PathVariable int id) {
+        return orderService.getOrdersOfUser(id);
     }
 
+    @GetMapping("/count-all")
+    public Long countAll() {
+        return orderService.countAll();
+    }
 
 
 }
