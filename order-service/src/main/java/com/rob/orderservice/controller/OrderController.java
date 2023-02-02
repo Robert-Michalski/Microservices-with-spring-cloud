@@ -23,28 +23,18 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderResponse saveOrder(@RequestBody @Validated OrderRequest orderRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    public NewOrderResponse saveOrderNew(@RequestBody @Validated NewOrderRequest orderRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         return orderService.saveOrder(orderRequest, token);
     }
-    @PostMapping("multiple")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Set<OrderResponse> saveOrder(@RequestBody Set<OrderRequest> orderRequests, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
-        return orderService.saveOrder(orderRequests, token);
-    }
-
-    @GetMapping("/user/{id}")
-    public List<OrderResponse> getOrdersOfUser(@PathVariable int id){
-        return orderService.getOrdersOfUser(id);
-    }
+//    @GetMapping("/user/{id}")
+//    public List<OrderResponse> getOrdersOfUser(@PathVariable int id){
+//        return orderService.getOrdersOfUser(id);
+//    }
     @GetMapping("/count-all")
     public Long countAll(){
         return orderService.countAll();
     }
 
 
-    @PostMapping("/new")
-    @ResponseStatus(HttpStatus.CREATED)
-    public NewOrderResponse saveOrderNew(@RequestBody @Validated NewOrderRequest orderRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
-        return orderService.saveOrderNew(orderRequest, token);
-    }
+
 }
