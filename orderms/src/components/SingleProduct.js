@@ -22,10 +22,10 @@ function SingleProduct(props) {
         .catch(err => {
           if (err.response) {
             // client received an error response (5xx, 4xx)
-            if (err.response.status == 404) {
+            if (err.response.status === 404) {
               navigate("/notFound")
             }
-            if (err.response.status == 400) {
+            if (err.response.status === 400) {
               appDispatch({ type: "flashMessage", value: "Something went wrong", bg: "red" })
               console.log("400 from 400")
             }

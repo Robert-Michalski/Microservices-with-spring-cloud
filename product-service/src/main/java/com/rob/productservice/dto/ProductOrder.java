@@ -2,6 +2,8 @@ package com.rob.productservice.dto;
 
 import lombok.Builder;
 
+import java.util.Map;
+
 @Builder
-public record ProductOrder(Long productId, int quantity) {
+public record ProductOrder(Map<Integer, Integer> productToQuantity) {
 }

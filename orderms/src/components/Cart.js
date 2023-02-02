@@ -20,6 +20,21 @@ function Cart() {
       name: "10x40 Steel Sheet",
       price: 149,
       quantity: 10
+    },
+    {
+      name: "10m wire",
+      price: 99,
+      quantity: 4
+    },
+    {
+      name: "10m wire",
+      price: 99,
+      quantity: 4
+    },
+    {
+      name: "10m wire",
+      price: 99,
+      quantity: 4
     }
   ]
 

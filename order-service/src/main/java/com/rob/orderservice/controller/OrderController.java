@@ -1,5 +1,7 @@
 package com.rob.orderservice.controller;
 
+import com.rob.orderservice.dto.NewOrderRequest;
+import com.rob.orderservice.dto.NewOrderResponse;
 import com.rob.orderservice.dto.OrderRequest;
 import com.rob.orderservice.dto.OrderResponse;
 import com.rob.orderservice.service.OrderService;
@@ -37,5 +39,12 @@ public class OrderController {
     @GetMapping("/count-all")
     public Long countAll(){
         return orderService.countAll();
+    }
+
+
+    @PostMapping("/new")
+    @ResponseStatus(HttpStatus.CREATED)
+    public NewOrderResponse saveOrderNew(@RequestBody @Validated NewOrderRequest orderRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        return orderService.saveOrderNew(orderRequest, token);
     }
 }

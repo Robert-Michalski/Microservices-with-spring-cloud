@@ -2,10 +2,12 @@ package com.rob.productservice.controller;
 
 import com.rob.productservice.dto.ProductOrder;
 import com.rob.productservice.dto.ProductRequest;
+import com.rob.productservice.dto.ProductRequestNew;
 import com.rob.productservice.dto.ProductResponse;
 import com.rob.productservice.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,15 +48,15 @@ public class ProductController {
         return productService.deleteProductById(id);
     }
 
-    @PostMapping("is-in-stock")
-    public boolean isInStock(@RequestBody ProductOrder productOrder){
-        return productService.isInStock(productOrder);
-    }
-
-    @PostMapping("are-in-stock")
-    public boolean areInStock(@RequestBody Set<ProductOrder> productOrders){
-        return productService.areInStock(productOrders);
-    }
+//    @PostMapping("is-in-stock")
+//    public boolean isInStock(@RequestBody ProductOrder productOrder){
+//        return productService.isInStock(productOrder);
+//    }
+//
+//    @PostMapping("are-in-stock")
+//    public boolean areInStock(@RequestBody Set<ProductOrder> productOrders){
+//        return productService.areInStock(productOrders);
+//    }
 
     @PatchMapping("{id}")
     public ProductResponse decreaseQuantity(@PathVariable Long id, @RequestParam int amount){
@@ -69,5 +71,11 @@ public class ProductController {
     @GetMapping("/count-all")
     public long countProducts(){
         return productService.countAll();
+    }
+
+    @PostMapping("/are-in-stock")
+    @ResponseStatus(HttpStatus.CREATED)
+    public boolean areInStockNew(@RequestBody ProductRequestNew productRequestNew){
+        return productService.areInStockNew(productRequestNew);
     }
 }

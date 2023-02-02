@@ -1,20 +1,22 @@
 package com.rob.productservice.service;
 
-import com.rob.productservice.dto.ProductOrder;
 import com.rob.productservice.dto.ProductRequest;
+import com.rob.productservice.dto.ProductRequestNew;
 import com.rob.productservice.dto.ProductResponse;
 import com.rob.productservice.entity.Category;
 import com.rob.productservice.entity.Product;
 import com.rob.productservice.repository.CategoryRepository;
 import com.rob.productservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,8 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+
+    private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 
     public ProductResponse addProduct(ProductRequest productRequest) {
         if (categoryRepository.findById(productRequest.categoryId()).isEmpty()) {
@@ -73,18 +77,18 @@ public class ProductService {
         return "Product id: " + id + " deleted successfully";
     }
 
-    public boolean isInStock(ProductOrder productOrder) {
-        Product productToCheck = productRepository.findById(productOrder.productId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-        boolean result = productToCheck.getQuantity() >= productOrder.quantity();
-        if (result) {
-            decreaseQuantity(productOrder.productId(), productOrder.quantity());
-        }
-        return result;
-    }
+//    public boolean isInStock(ProductOrder productOrder) {
+//        Product productToCheck = productRepository.findById(productOrder.()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+//        boolean result = productToCheck.getQuantity() >= productOrder.quantity();
+//        if (result) {
+//            decreaseQuantity(productOrder.productId(), productOrder.quantity());
+//        }
+//        return result;
+//    }
 
-    public boolean areInStock(Set<ProductOrder> productOrders) {
-        return productOrders.stream().allMatch(this::isInStock);
-    }
+//    public boolean areInStock(Set<ProductOrder> productOrders) {
+//        return productOrders.stream().allMatch(this::isInStock);
+//    }
 
     public ProductResponse decreaseQuantity(Long id, int amount) {
         Optional<Product> byId = productRepository.findById(id);
@@ -97,10 +101,33 @@ public class ProductService {
     }
 
     public String getNameOfProduct(Long id) {
-        return productRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST)).getName();
+        return productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)).getName();
     }
 
     public long countAll() {
         return productRepository.count();
+    }
+
+    public boolean areInStockNew(ProductRequestNew productRequestNew) {
+        log.info("INSIDE ProductService/areInStockNew START");
+        productRequestNew.productIdsToQuantity().keySet().forEach(productId -> {
+            Product product = productRepository.findById(productId)
+                    .orElseThrow(() -> {
+                        log.info("Product with id: {} doesnt exist", productId);
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+                    });
+            log.info("{} amount of {} was requested", product.getName(), productRequestNew.productIdsToQuantity().get(productId));
+            if (product.getQuantity() < productRequestNew.productIdsToQuantity().get(productId)) {
+                log.info("{} has {} quantity but {} was requested",
+                        product.getName(), product.getQuantity(), productRequestNew.productIdsToQuantity().get(productId));
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
+            decreaseQuantity(productId, productRequestNew.productIdsToQuantity().get(productId));
+        });
+        log.info("INSIDE ProductService/areInStockNew END");
+        return true;
+        //Check if there is product with given ID
+        //Check if available quantity > requested
+        //Decrease and return true
     }
 }
