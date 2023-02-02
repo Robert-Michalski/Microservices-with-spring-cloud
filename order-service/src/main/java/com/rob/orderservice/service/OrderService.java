@@ -43,25 +43,34 @@ public class OrderService {
     }
 
     public NewOrderResponse saveOrder(NewOrderRequest orderRequest, String token) {
-
-        Order order = orderRepository.save(Order.builder()
-                .orderDate(Date.from(Instant.now()))
-                .customerId(orderRequest.customerId())
-                .status(Status.RECEIVED).build());
-        log.info("Saved order: {}", order);
-        orderRequest.productIdsToQuantity().keySet().forEach(productId->{
-            OrderDetails orderDetailsToSave = orderDetailsRepository.save(OrderDetails.builder().productId(productId).quantity(orderRequest.productIdsToQuantity().get(productId))
-                    .orderId(order.getId()).build());
-            log.info("Saved orderDetails: {}", orderDetailsToSave);
-        });
-        log.info("Response = {}", webClient.post()
+        Boolean response =  webClient.post()
                 .uri("http://localhost:8011/api/product/are-in-stock")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .bodyValue(orderRequest)
                 .retrieve()
                 .bodyToMono(Boolean.class)
-                .block());
+                .block();
+        if(response){
+            Order order = orderRepository.save(Order.builder()
+                    .orderDate(Date.from(Instant.now()))
+                    .customerId(orderRequest.customerId())
+                    .status(Status.RECEIVED).build());
+            log.info("Saved order: {}", order);
+            orderRequest.productIdsToQuantity().keySet().forEach(productId->{
+                OrderDetails orderDetailsToSave = orderDetailsRepository.save(OrderDetails.builder().productId(productId).quantity(orderRequest.productIdsToQuantity().get(productId))
+                        .orderId(order.getId()).build());
+                log.info("Saved orderDetails: {}", orderDetailsToSave);
+            });
+            return NewOrderResponse.builder()
+                    .id(order.getId())
+                    .customerId(order.getCustomerId())
+                    .orderDate(order.getOrderDate())
+                    .status(order.getStatus())
+                    .build();
 
-        return null;
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }
