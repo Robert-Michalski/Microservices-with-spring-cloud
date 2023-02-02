@@ -253,3 +253,18 @@ input[type="number"] {
 .items-row {
   padding: 1.8rem 1.5rem;
 }
+.cart-product {
+  padding: 1rem 1rem;
+}
+.cart-product-radius-top-left {
+  border-top-left-radius: 10px;
+}
+.cart-product-radius-bottom-left {
+  border-bottom-right-radius: 10px;
+}
+.cart-product-radius-bottom-left {
+  border-bottom-left-radius: 10px;
+}
+.cart-product-radius-top-right {
+  border-top-right-radius: 10px;
+}

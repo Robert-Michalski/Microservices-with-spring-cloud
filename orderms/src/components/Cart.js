@@ -7,31 +7,37 @@ function Cart() {
 
   const shoppingCart = [
     {
+      id: 1,
       name: "Steel pipe",
       price: 365,
       quantity: 5
     },
     {
+      id: 2,
       name: "10m wire",
       price: 99,
       quantity: 4
     },
     {
+      id: 3,
       name: "10x40 Steel Sheet",
       price: 149,
       quantity: 10
     },
     {
+      id: 4,
       name: "10m wire",
       price: 99,
       quantity: 4
     },
     {
+      id: 5,
       name: "10m wire",
       price: 99,
       quantity: 4
     },
     {
+      id: 6,
       name: "10m wire",
       price: 99,
       quantity: 4
@@ -52,9 +58,9 @@ function Cart() {
           <div className="ms-3 fs-2">My cart</div>
         </div>
         <div className="d-flex container mt-4">
-          <div className="bg-white row ms-2 orders p-3 col-7">
-            {shoppingCart.map(product => {
-              return <ProductView item={product} />
+          <div className="bg-white row ms-2 orders col-8">
+            {shoppingCart.map((product, index) => {
+              return <ProductView item={product} key={product.id} bgIndex={index} max={shoppingCart.length} />
             })}
           </div>
           {/* -------------- */}
