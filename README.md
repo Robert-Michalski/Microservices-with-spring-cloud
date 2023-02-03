@@ -6,8 +6,8 @@
 5. Run in order Eureka -> config-server -> user-service -> product-service -> order-service -> api-gateway
 ## HOW TO RUN FRONTEND
 1. Run backend
-2. Inside orderms using terminal type >npm install 
-3. Inside orderms using terminal type >npm start 
+2. Inside orderms using terminal type > npm install 
+3. Inside orderms using terminal type > npm start 
 
 # Order Management System Application
 This is a fullstack application with primary goal being to learn microservice architecture.
