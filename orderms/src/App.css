@@ -272,3 +272,6 @@ input[type="number"] {
   padding-inline: 4rem;
   border-bottom: 2px solid black;
 }
+.fc-green {
+  color: green;
+}
