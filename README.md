@@ -1,8 +1,19 @@
-## Order Management System Application
+## HOW TO RUN BACKEND
+1. Clone repository
+2. Make sure you have any MySQL service running on port 3306, password set in project is **root**
+3. Add JWT_SECRET environmental variable to api-gateway and user-service
+4. Download all dependencies
+5. Run in order Eureka -> config-server -> user-service -> product-service -> order-service -> api-gateway
+## HOW TO RUN FRONTEND
+1. Run backend
+2. Inside orderms using terminal type >npm install 
+3. Inside orderms using terminal type >npm start 
+
+# Order Management System Application
 This is a fullstack application with primary goal being to learn microservice architecture.
 I was modeling this project https://1000projects.org/order-management-system-for-steel-fabrication-factory-java-project.html
 
-### TECH STACK
+# TECH STACK
 
 | Database | Backend       | Fronted | Testing      |
 |----------|---------------|---------|--------------|
