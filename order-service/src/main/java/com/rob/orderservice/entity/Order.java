@@ -12,13 +12,13 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Table(name = "t_order")
+@EqualsAndHashCode
 @ToString
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany(cascade = CascadeType.MERGE)
-    @JoinColumn(name="orderId")
     private Set<OrderDetails> orderDetails;
     private long customerId;
     private Date orderDate;
