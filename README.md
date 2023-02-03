@@ -1,12 +1,14 @@
 ## HOW TO RUN BACKEND
-1. Clone repository
-2. Make sure you have any MySQL service running on port 3306, password set in project is **root**
-3. Add JWT_SECRET environmental variable to api-gateway and user-service
-4. Download all dependencies
-5. Run in order Eureka -> config-server -> user-service -> product-service -> order-service -> api-gateway
+1. Have JDK installed
+2. Clone repository
+3. Make sure you have any MySQL service running on port 3306, password set in project is **root**
+4. Add JWT_SECRET environmental variable to api-gateway and user-service
+5. Download all dependencies
+6. Run in order Eureka -> config-server -> user-service -> product-service -> order-service -> api-gateway
 ## HOW TO RUN FRONTEND
-1. Run backend
-2. Inside orderms using terminal type
+1. Have node.js installed
+2. Run backend
+3. Inside orderms using terminal type
 > npm install 
 4. Inside orderms using terminal type 
 > npm start 
