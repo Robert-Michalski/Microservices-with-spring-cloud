@@ -1,49 +1,26 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import StateContext from "../StateContext"
 import ProductView from "./ProductView"
-
+import Axios from "axios"
+import { useEffect } from "react"
 function Cart() {
   const appState = useContext(StateContext)
 
-  const shoppingCart = [
-    {
-      id: 1,
-      name: "Steel pipe",
-      price: 365,
-      quantity: 5
-    },
-    {
-      id: 2,
-      name: "10m wire",
-      price: 99,
-      quantity: 4
-    },
-    {
-      id: 3,
-      name: "10x40 Steel Sheet",
-      price: 149,
-      quantity: 10
-    },
-    {
-      id: 4,
-      name: "10m wire",
-      price: 99,
-      quantity: 4
-    },
-    {
-      id: 5,
-      name: "10m wire",
-      price: 99,
-      quantity: 4
-    },
-    {
-      id: 6,
-      name: "10m wire",
-      price: 99,
-      quantity: 4
-    }
-  ]
+  const [shoppingCart, setShoppingCart] = useState([])
 
+  const getCartItems = async () => {
+    const ourRequest = Axios.CancelToken.source()
+    try {
+      const response = await Axios.get(`/api/order/show/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      console.log(response.data)
+    } catch (e) {
+      console.log("Something wrong during cart items loading " + e)
+    }
+  }
+
+  useEffect(() => {
+    getCartItems()
+  }, [])
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
       <div className="d-flex orders-top p-4 align-items-center">
