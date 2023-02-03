@@ -4,18 +4,22 @@ import Axios from "axios"
 import { useEffect } from "react"
 import CartView from "./CartView"
 import DeliveryView from "./DeliveryView"
+import { useImmer } from "use-immer"
 function Cart() {
   const appState = useContext(StateContext)
-
-  const [shoppingCart, setShoppingCart] = useState([])
-  const [showing, setShowing] = useState("cart")
+  const [state, setState] = useImmer({
+    shoppingCart: [],
+    showing: "cart"
+  })
 
   useEffect(() => {
     async function fetchCartItems() {
       const ourRequest = Axios.CancelToken.source()
       try {
         const response = await Axios.get(`/api/order/show/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-        setShoppingCart(response.data)
+        setState(draft => {
+          draft.shoppingCart = response.data
+        })
       } catch (e) {
         console.log("Something wrong during cart items loading " + e)
       }
@@ -24,11 +28,15 @@ function Cart() {
   }, [])
 
   function nextStep() {
-    if (showing === "cart") {
-      setShowing("delivery")
+    if (state.showing === "cart") {
+      setState(draft => {
+        draft.showing = "delivery"
+      })
     }
-    if (showing === "delivery") {
-      setShowing("payment")
+    if (state.showing === "delivery") {
+      setState(draft => {
+        draft.showing = "payment"
+      })
     }
   }
   return (
@@ -40,7 +48,7 @@ function Cart() {
         <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
       </div>
       <hr />
-      <div className="container p-3 d-flex flex-column">{showing === "cart" ? <CartView shoppingCart={shoppingCart} nextView={nextStep} /> : showing === "delivery" ? <DeliveryView shoppingCart={shoppingCart} nextView={nextStep} /> : "payment"}</div>
+      <div className="container p-3 d-flex flex-column">{state.showing === "cart" ? <CartView shoppingCart={state.shoppingCart} nextView={nextStep} /> : state.showing === "delivery" ? <DeliveryView shoppingCart={state.shoppingCart} nextView={nextStep} /> : "payment"}</div>
     </div>
   )
 }
