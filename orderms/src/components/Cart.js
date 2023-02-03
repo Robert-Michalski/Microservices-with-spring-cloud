@@ -12,7 +12,7 @@ function Cart() {
     const ourRequest = Axios.CancelToken.source()
     try {
       const response = await Axios.get(`/api/order/show/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-      console.log(response.data)
+      setShoppingCart(response.data)
     } catch (e) {
       console.log("Something wrong during cart items loading " + e)
     }
@@ -37,7 +37,7 @@ function Cart() {
         <div className="d-flex container mt-4">
           <div className="bg-white row ms-2 orders col-8">
             {shoppingCart.map((product, index) => {
-              return <ProductView item={product} key={product.id} bgIndex={index} max={shoppingCart.length} />
+              return <ProductView item={product} key={index} bgIndex={index} max={shoppingCart.length} />
             })}
           </div>
           {/* -------------- */}

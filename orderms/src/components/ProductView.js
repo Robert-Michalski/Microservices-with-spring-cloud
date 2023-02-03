@@ -17,7 +17,7 @@ function ProductView(props) {
   }
   return (
     <>
-      <div className={"col-xl-4 cart-product" + getBackground() + getRadiusLeft()}>{props.item.name}</div>
+      <div className={"col-xl-4 cart-product" + getBackground() + getRadiusLeft()}>{props.item.productName}</div>
       <div className={"col-sm text-right cart-product" + getBackground()}>{props.item.price + "$"}</div>
       <div className={"col-sm cart-product" + getBackground()}>Quantity: {props.item.quantity}</div>
       <div className={"col-sm cart-product" + getBackground()}>Total: {getTotal()}$</div>
