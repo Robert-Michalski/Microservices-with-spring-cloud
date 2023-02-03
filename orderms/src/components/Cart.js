@@ -33,6 +33,20 @@ function Cart() {
         <div className="d-flex align-items-center">
           <div className="ms-3 fs-2">My cart</div>
         </div>
+        <div className="d-flex justify-content-around align-items-center fs-5">
+          <div className="fw-bold d-flex align-items-center cart-order">
+            <div>Cart</div>
+            <span className="material-symbols-outlined ms-2">cancel</span>
+          </div>
+          <div className=" d-flex align-items-center">
+            <div>Delivery</div>
+            <span className="material-symbols-outlined ms-2">cancel</span>
+          </div>
+          <div className="d-flex align-items-center">
+            <div>Payment</div>
+            <span className="material-symbols-outlined ms-2">cancel</span>
+          </div>
+        </div>
         <div className="d-flex container mt-4">
           <div className="bg-white row ms-2 orders col-8">
             {shoppingCart.map((product, index) => {
