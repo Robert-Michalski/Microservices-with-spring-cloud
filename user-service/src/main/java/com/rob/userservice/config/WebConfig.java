@@ -42,6 +42,7 @@ public class WebConfig {
                 .requestMatchers(HttpMethod.POST, "/api/user").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/user/login").permitAll()
                 .requestMatchers("/api/user/*").authenticated()
+                .requestMatchers(HttpMethod.GET,"/api/user/{id}/addresses").authenticated()
                 .requestMatchers("/api/address").authenticated()
                 .anyRequest().denyAll()
                 .and()

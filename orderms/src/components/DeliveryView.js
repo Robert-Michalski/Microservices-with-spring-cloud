@@ -1,14 +1,30 @@
 import Axios from "axios"
+import { useContext } from "react"
+import { useEffect } from "react"
 import { useState } from "react"
+import StateContext from "../StateContext"
 function DeliveryView(props) {
-  const [address, setAddress] = useState([
-    {
-      address: "Warszawska 10/1",
-      city: "Warsaw",
-      country: "Poland",
-      postalCode: "72-467"
+  const appState = useContext(StateContext)
+
+  const [state, setState] = useState({
+    addresses: []
+  })
+
+  useEffect(() => {
+    async function fetchAddresses() {
+      const ourRequest = Axios.CancelToken.source()
+      try {
+        const response = await Axios.get(`api/user/` + appState.user.id + `/addresses`, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+        console.log(response.data)
+        setState(draft => {
+          draft.addresses = response.data
+        })
+      } catch (e) {
+        console.log("Something wrong during addresses loading " + e)
+      }
     }
-  ])
+    fetchAddresses()
+  }, [])
 
   return (
     <>

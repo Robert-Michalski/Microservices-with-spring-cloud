@@ -5,6 +5,7 @@ import com.rob.userservice.dto.LoginRequest;
 import com.rob.userservice.dto.LoginResponse;
 import com.rob.userservice.dto.UserRequest;
 import com.rob.userservice.dto.UserResponse;
+import com.rob.userservice.entity.Address;
 import com.rob.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -68,5 +70,10 @@ public class UserController {
     @GetMapping("/count-all")
     public Long countAll(){
         return userService.countAll();
+    }
+
+    @GetMapping("/{id}/addresses")
+    public Set<Address> getAddresesById(@PathVariable Long id){
+        return userService.getAddressesById(id);
     }
 }

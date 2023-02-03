@@ -2,8 +2,10 @@ package com.rob.userservice.service;
 
 import com.rob.userservice.dto.UserRequest;
 import com.rob.userservice.dto.UserResponse;
+import com.rob.userservice.entity.Address;
 import com.rob.userservice.entity.User;
 import com.rob.userservice.entity.UserRole;
+import com.rob.userservice.repository.AddressRepository;
 import com.rob.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +25,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+    private final AddressRepository addressRepository;
 
 
     @Override
@@ -86,5 +90,9 @@ public class UserService implements UserDetailsService {
 
     public Long countAll() {
         return userRepository.count();
+    }
+
+    public Set<Address> getAddressesById(Long id) {
+        return addressRepository.findByUserId(id);
     }
 }
