@@ -9,7 +9,13 @@ function Cart() {
   const appState = useContext(StateContext)
   const [state, setState] = useImmer({
     shoppingCart: [],
-    showing: "cart"
+    showing: "cart",
+    addressToDeliver: {
+      address: "",
+      city: "",
+      country: "",
+      postalCode: ""
+    }
   })
 
   useEffect(() => {
@@ -39,6 +45,13 @@ function Cart() {
       })
     }
   }
+
+  function updateAddressToDeliver(address) {
+    setState(draft => {
+      draft.addressToDeliver = address
+    })
+  }
+
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
       <div className="d-flex orders-top p-4 align-items-center">
@@ -48,7 +61,7 @@ function Cart() {
         <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
       </div>
       <hr />
-      <div className="container p-3 d-flex flex-column">{state.showing === "cart" ? <CartView shoppingCart={state.shoppingCart} nextView={nextStep} /> : state.showing === "delivery" ? <DeliveryView shoppingCart={state.shoppingCart} nextView={nextStep} /> : "payment"}</div>
+      <div className="container p-3 d-flex flex-column">{state.showing === "cart" ? <CartView shoppingCart={state.shoppingCart} nextView={nextStep} /> : state.showing === "delivery" ? <DeliveryView shoppingCart={state.shoppingCart} nextView={nextStep} updateAddress={updateAddressToDeliver} /> : "payment"}</div>
     </div>
   )
 }
