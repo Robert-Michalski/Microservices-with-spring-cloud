@@ -71,7 +71,7 @@ function Products() {
           <div className="col-sm grid-header">Available</div>
           <div className="col-sm grid-header">Price</div>
           <div className="col-sm grid-header">Quantity</div>
-          <div className="col-sm grid-header">Action</div>
+          <div className="col-sm grid-header"></div>
           <div className="w-100"></div>
           <hr className="mt-3" />
           {state.products.map(product => {

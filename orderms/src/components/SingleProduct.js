@@ -96,8 +96,10 @@ function SingleProduct(props) {
           </button>
         </div>
       ) : (
-        <div className="col-sm p-3 btn btn-primary" onClick={handleOrder}>
-          ORDER NOW
+        <div className="col-sm p-3">
+          <span className="material-symbols-outlined" onClick={handleOrder}>
+            add_shopping_cart
+          </span>
         </div>
       )}
 
