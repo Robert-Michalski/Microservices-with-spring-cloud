@@ -8,18 +8,17 @@ function Cart() {
 
   const [shoppingCart, setShoppingCart] = useState([])
 
-  const getCartItems = async () => {
-    const ourRequest = Axios.CancelToken.source()
-    try {
-      const response = await Axios.get(`/api/order/show/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-      setShoppingCart(response.data)
-    } catch (e) {
-      console.log("Something wrong during cart items loading " + e)
-    }
-  }
-
   useEffect(() => {
-    getCartItems()
+    async function fetchCartItems() {
+      const ourRequest = Axios.CancelToken.source()
+      try {
+        const response = await Axios.get(`/api/order/show/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+        setShoppingCart(response.data)
+      } catch (e) {
+        console.log("Something wrong during cart items loading " + e)
+      }
+    }
+    fetchCartItems()
   }, [])
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
