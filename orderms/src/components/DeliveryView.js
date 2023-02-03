@@ -6,7 +6,8 @@ function DeliveryView(props) {
   const appState = useContext(StateContext)
 
   const [state, setState] = useImmer({
-    addresses: []
+    addresses: [],
+    selectedAddres: {}
   })
 
   useEffect(() => {
@@ -48,7 +49,15 @@ function DeliveryView(props) {
           {state.addresses.map((address, index) => {
             return (
               <div key={index} className="mb-3">
-                <div className="col-sm text-right cart-product fw-bold address-box">
+                <div
+                  className="col-sm text-right cart-product fw-bold address-box"
+                  tabIndex={index}
+                  onClick={() =>
+                    setState(draft => {
+                      draft.selectedAddres = address
+                    })
+                  }
+                >
                   <span>{address.address}</span>
                   <br />
                   {address.city + ", " + address.country}

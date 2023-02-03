@@ -282,3 +282,8 @@ input[type="number"] {
   box-shadow: 1px 1px 5px black;
   margin-right: 1rem;
 }
+.address-box:focus {
+  position: relative;
+  background-color: green;
+  color: white;
+}
