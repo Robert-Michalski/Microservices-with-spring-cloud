@@ -5,7 +5,7 @@ function CartView(props) {
       <div className="d-flex align-items-center">
         <div className="ms-3 fs-2">My cart</div>
       </div>
-      <div className="d-flex justify-content-around align-items-center fs-5 mt-4">
+      <div className="d-flex justify-content-around align-items-center fs-5 mt-5">
         <div className="fw-bold d-flex align-items-center cart-order">
           <div>Cart</div>
           <span className="material-symbols-outlined ms-2">cancel</span>

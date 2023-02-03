@@ -1,12 +1,11 @@
 import Axios from "axios"
-import { useContext } from "react"
-import { useEffect } from "react"
-import { useState } from "react"
+import { useContext, useEffect } from "react"
+import { useImmer } from "use-immer"
 import StateContext from "../StateContext"
 function DeliveryView(props) {
   const appState = useContext(StateContext)
 
-  const [state, setState] = useState({
+  const [state, setState] = useImmer({
     addresses: []
   })
 
@@ -15,7 +14,6 @@ function DeliveryView(props) {
       const ourRequest = Axios.CancelToken.source()
       try {
         const response = await Axios.get(`api/user/` + appState.user.id + `/addresses`, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-        console.log(response.data)
         setState(draft => {
           draft.addresses = response.data
         })
@@ -29,9 +27,9 @@ function DeliveryView(props) {
   return (
     <>
       <div className="d-flex align-items-center">
-        <div className="ms-3 fs-2">My cart</div>
+        <div className="ms-3 fs-2">Delivery</div>
       </div>
-      <div className="d-flex justify-content-around align-items-center fs-5 mt-4">
+      <div className="d-flex justify-content-around align-items-center fs-5 mt-5">
         <div className="d-flex align-items-center fc-green">
           <div>Cart</div>
           <span className="material-symbols-outlined ms-2">check_circle</span>
@@ -46,12 +44,21 @@ function DeliveryView(props) {
         </div>
       </div>
       <div className="d-flex container mt-4">
-        <div className="bg-white row ms-2 orders col-8">
-          <div className="col-sm">Known addresses</div>
-          <div className="w-100"></div>
-          <div className="col-sm text-right cart-product">Warszawska 10/1, 72-467 Warsaw, Poland</div>
-          <div className="w-100"></div>
-          <div className="col-sm text-right cart-product">Warszawska 10/1, 72-467 Warsaw, Poland</div>
+        <div className="d-flex flex-wrap ms-2 col-8">
+          {state.addresses.map((address, index) => {
+            return (
+              <div key={index} className="mb-3">
+                <div className="col-sm text-right cart-product fw-bold address-box">
+                  <span>{address.address}</span>
+                  <br />
+                  {address.city + ", " + address.country}
+                  <br />
+                  <span>{address.postalCode}</span>
+                </div>
+                <div className="w-100"></div>
+              </div>
+            )
+          })}
         </div>
         <div className="ms-auto col-3">
           <div className="bg-white d-flex flex-column orders p-3">
@@ -65,6 +72,9 @@ function DeliveryView(props) {
             </div>
           </div>
         </div>
+      </div>
+      <div className="mt-3 ms-3">
+        <button className="btn btn-primary">Add new address</button>
       </div>
     </>
   )
