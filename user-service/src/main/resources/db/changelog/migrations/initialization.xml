@@ -19,5 +19,27 @@
             <column name="phone" type="varchar(250)"/>
             <column name="role" type="int"/>
         </createTable>
+        <createTable tableName="address">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="address" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postal_code" type="varchar(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="address" baseColumnNames="user_id" constraintName="FK_address_user_id" referencedTableName="user"
+                                 referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>

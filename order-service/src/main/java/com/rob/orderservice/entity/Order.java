@@ -24,5 +24,4 @@ public class Order {
     private Date orderDate;
     private Status status;
 
-
 }
