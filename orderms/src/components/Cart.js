@@ -18,7 +18,7 @@ function Cart() {
     async function fetchCartItems() {
       const ourRequest = Axios.CancelToken.source()
       try {
-        const response = await Axios.get(`/api/order/show/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+        const response = await Axios.get(`/api/order/cart/` + appState.user.id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
         setState(draft => {
           draft.shoppingCart = response.data
         })
@@ -48,8 +48,16 @@ function Cart() {
     })
   }
 
-  function handleOrder() {
-    console.log(state)
+  async function handleOrder() {
+    const ourRequest = Axios.CancelToken.source()
+    try {
+      console.log(state.shoppingCart[0].orderId)
+      console.log(state.addressToDeliver.id)
+      const response = await Axios.patch(`/api/order/status`, { orderId: state.shoppingCart[0].orderId, addressId: state.addressToDeliver.id, status: 1 }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      console.log(response.data)
+    } catch (e) {
+      console.log("Something wrong during cart items loading " + e)
+    }
   }
 
   return (
@@ -61,9 +69,7 @@ function Cart() {
         <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
       </div>
       <hr />
-      {/*prettier-ignore {*/}
       <div className="container p-3 d-flex flex-column">{state.showing === "cart" ? <CartView shoppingCart={state.shoppingCart} nextView={nextStep} /> : state.showing === "delivery" ? <DeliveryView shoppingCart={state.shoppingCart} nextView={nextStep} updateAddress={updateAddressToDeliver} /> : <SummaryView shoppingCart={state.shoppingCart} addressToDeliver={state.addressToDeliver} handleOrder={handleOrder} />}</div>
-      {/* } */}
     </div>
   )
 }

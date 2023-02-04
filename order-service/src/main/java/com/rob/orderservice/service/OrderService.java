@@ -3,6 +3,7 @@ package com.rob.orderservice.service;
 import com.rob.orderservice.dto.CartItemResponse;
 import com.rob.orderservice.dto.OrderRequest;
 import com.rob.orderservice.dto.OrderResponse;
+import com.rob.orderservice.dto.OrderUpdateStatusRequest;
 import com.rob.orderservice.entity.Order;
 import com.rob.orderservice.entity.OrderDetails;
 import com.rob.orderservice.entity.Status;
@@ -86,6 +87,13 @@ public class OrderService {
             cartItemResponses.add(cartItemResponse);
         });
         return cartItemResponses;
+    }
+
+    public OrderResponse updateOrderStatus(OrderUpdateStatusRequest request) {
+        Order orderToUpdate = orderRepository.findById(request.orderId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        orderToUpdate.setStatus(request.status());
+        orderToUpdate.setAddressId(request.addressId());
+        return OrderUtil.toDto(orderRepository.save(orderToUpdate));
     }
 }
 

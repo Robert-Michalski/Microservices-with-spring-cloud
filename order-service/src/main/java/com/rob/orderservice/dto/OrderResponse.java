@@ -8,5 +8,5 @@ import java.util.Date;
 import java.util.Set;
 
 @Builder
-public record OrderResponse(Long id, Set<OrderDetails> orderDetails, long customerId, Date orderDate, Status status) {
+public record OrderResponse(Long id, Set<OrderDetails> orderDetails, long customerId, Date orderDate, Status status, long addressId) {
 }

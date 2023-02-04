@@ -21,6 +21,7 @@ public class Order {
     @OneToMany(cascade = CascadeType.MERGE)
     private Set<OrderDetails> orderDetails;
     private long customerId;
+    private long addressId;
     private Date orderDate;
     private Status status;
 

@@ -3,6 +3,7 @@ package com.rob.orderservice.controller;
 import com.rob.orderservice.dto.CartItemResponse;
 import com.rob.orderservice.dto.OrderRequest;
 import com.rob.orderservice.dto.OrderResponse;
+import com.rob.orderservice.dto.OrderUpdateStatusRequest;
 import com.rob.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -36,8 +37,13 @@ public class OrderController {
         return orderService.countAll();
     }
 
-    @GetMapping("show/{customerId}")
-    public Set<CartItemResponse> show(@PathVariable Long customerId){
+    @GetMapping("cart/{customerId}")
+    public Set<CartItemResponse> showCartItems(@PathVariable Long customerId){
         return orderService.showCartItems(customerId);
+    }
+
+    @PatchMapping("status")
+    public OrderResponse updateOrderStatus(@RequestBody OrderUpdateStatusRequest request){
+        return orderService.updateOrderStatus(request);
     }
 }
