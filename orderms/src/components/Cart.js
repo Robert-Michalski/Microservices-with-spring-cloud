@@ -6,8 +6,13 @@ import CartView from "./CartView"
 import DeliveryView from "./DeliveryView"
 import { useImmer } from "use-immer"
 import SummaryView from "./SummaryView"
+import DispatchContext from "../DispatchContext"
+import { useNavigate } from "react-router"
 function Cart() {
   const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
+  const navigate = useNavigate()
+
   const [state, setState] = useImmer({
     shoppingCart: [],
     showing: "cart",
@@ -51,10 +56,9 @@ function Cart() {
   async function handleOrder() {
     const ourRequest = Axios.CancelToken.source()
     try {
-      console.log(state.shoppingCart[0].orderId)
-      console.log(state.addressToDeliver.id)
-      const response = await Axios.patch(`/api/order/status`, { orderId: state.shoppingCart[0].orderId, addressId: state.addressToDeliver.id, status: 1 }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-      console.log(response.data)
+      await Axios.patch(`/api/order/status`, { orderId: state.shoppingCart[0].orderId, addressId: state.addressToDeliver.id, status: 1 }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      appDispatch({ type: "flashMessage", value: "Order received !" })
+      navigate("/orders")
     } catch (e) {
       console.log("Something wrong during cart items loading " + e)
     }
