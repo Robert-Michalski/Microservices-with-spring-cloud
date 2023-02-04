@@ -17,11 +17,11 @@ function ProductView(props) {
   }
   return (
     <>
-      <div className={"col-xl-4 cart-product" + getBackground() + getRadiusLeft()}>{props.item.productName}</div>
-      <div className={"col-sm text-right cart-product" + getBackground()}>{props.item.price + "$"}</div>
+      <div className={"col-sm cart-product" + getBackground() + getRadiusLeft()}>{props.item.productName}</div>
+      <div className={"col-sm cart-product" + getBackground()}>{props.item.price + "$"}</div>
       <div className={"col-sm cart-product" + getBackground()}>Quantity: {props.item.quantity}</div>
       <div className={"col-sm cart-product" + getBackground()}>Total: {getTotal()}$</div>
-      <div className={"col-sm-1 ms-auto cart-product" + getBackground() + getRadiusRight()}>
+      <div className={"col-sm ms-auto cart-product" + getBackground() + getRadiusRight()}>
         <span className="material-symbols-outlined">delete</span>
       </div>
       <div className="w-100"></div>

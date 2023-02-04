@@ -6,8 +6,7 @@ function DeliveryView(props) {
   const appState = useContext(StateContext)
 
   const [state, setState] = useImmer({
-    addresses: [],
-    selectedAddres: {}
+    addresses: []
   })
 
   useEffect(() => {
@@ -31,16 +30,16 @@ function DeliveryView(props) {
         <div className="ms-3 fs-2">Delivery</div>
       </div>
       <div className="d-flex justify-content-around align-items-center fs-5 mt-5">
-        <div className="d-flex align-items-center fc-green">
+        <div className=" d-flex align-items-center cart-order fc-green">
           <div>Cart</div>
           <span className="material-symbols-outlined ms-2">check_circle</span>
         </div>
-        <div className="fw-bold d-flex align-items-center cart-order">
+        <div className="fw-bold d-flex align-items-center cart-order cart-order-active">
           <div>Delivery</div>
           <span className="material-symbols-outlined ms-2">cancel</span>
         </div>
-        <div className="d-flex align-items-center">
-          <div>Payment</div>
+        <div className="d-flex align-items-center cart-order">
+          <div>Summary</div>
           <span className="material-symbols-outlined ms-2">cancel</span>
         </div>
       </div>
@@ -49,15 +48,7 @@ function DeliveryView(props) {
           {state.addresses.map((address, index) => {
             return (
               <div key={index} className="mb-3">
-                <div
-                  className="col-sm text-right cart-product fw-bold address-box"
-                  tabIndex={index}
-                  onClick={() =>
-                    setState(draft => {
-                      draft.selectedAddres = address
-                    })
-                  }
-                >
+                <div className="col-sm text-right cart-product fw-bold address-box" tabIndex={index} onClick={() => props.updateAddress(address)}>
                   <span>{address.address}</span>
                   <br />
                   {address.city + ", " + address.country}

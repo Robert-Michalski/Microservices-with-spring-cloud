@@ -6,16 +6,16 @@ function CartView(props) {
         <div className="ms-3 fs-2">My cart</div>
       </div>
       <div className="d-flex justify-content-around align-items-center fs-5 mt-5">
-        <div className="fw-bold d-flex align-items-center cart-order">
+        <div className="fw-bold d-flex align-items-center cart-order cart-order-active">
           <div>Cart</div>
           <span className="material-symbols-outlined ms-2">cancel</span>
         </div>
-        <div className=" d-flex align-items-center">
+        <div className=" d-flex align-items-center cart-order">
           <div>Delivery</div>
           <span className="material-symbols-outlined ms-2">cancel</span>
         </div>
-        <div className="d-flex align-items-center">
-          <div>Payment</div>
+        <div className="d-flex align-items-center cart-order">
+          <div>Summary</div>
           <span className="material-symbols-outlined ms-2">cancel</span>
         </div>
       </div>

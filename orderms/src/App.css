@@ -270,6 +270,9 @@ input[type="number"] {
 }
 .cart-order {
   padding-inline: 4rem;
+}
+.cart-order-active {
+  padding-bottom: 6px;
   border-bottom: 2px solid black;
 }
 .fc-green {
