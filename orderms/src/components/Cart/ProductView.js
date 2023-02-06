@@ -4,7 +4,7 @@ function ProductView(props) {
     else return " bg-white "
   }
   function getTotal() {
-    return props.item.price * props.item.quantity
+    return (props.item.price * props.item.quantity).toFixed(2) + " $"
   }
   //  TODO: Maybe do it better somehow
   function getRadiusLeft() {
@@ -18,9 +18,9 @@ function ProductView(props) {
   return (
     <>
       <div className={"col-sm cart-product" + getBackground() + getRadiusLeft()}>{props.item.productName}</div>
-      <div className={"col-sm cart-product" + getBackground()}>{props.item.price + "$"}</div>
+      <div className={"col-sm cart-product" + getBackground()}>{props.item.price.toFixed(2) + " $"}</div>
       <div className={"col-sm cart-product" + getBackground()}>Quantity: {props.item.quantity}</div>
-      <div className={"col-sm cart-product" + getBackground()}>Total: {getTotal()}$</div>
+      <div className={"col-sm cart-product" + getBackground()}>Total: {getTotal()}</div>
       <div className={"col-sm ms-auto cart-product" + getBackground() + getRadiusRight()}>
         <span className="material-symbols-outlined">delete</span>
       </div>

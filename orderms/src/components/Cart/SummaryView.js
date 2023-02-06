@@ -1,5 +1,5 @@
 import ProductView from "./ProductView"
-import StateContext from "../StateContext"
+import StateContext from "../../StateContext"
 import { useContext } from "react"
 function SummaryView(props) {
   const appState = useContext(StateContext)

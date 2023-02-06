@@ -1,7 +1,7 @@
 import Axios from "axios"
 import { useContext, useEffect } from "react"
 import { useImmer } from "use-immer"
-import StateContext from "../StateContext"
+import StateContext from "../../StateContext"
 function DeliveryView(props) {
   const appState = useContext(StateContext)
 

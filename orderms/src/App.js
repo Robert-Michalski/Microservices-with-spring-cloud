@@ -16,7 +16,7 @@ import jwt from "jwt-decode"
 import AddProductPage from "./components/AddProductPage"
 import FlashMessages from "./components/FlashMessages"
 import NotFound from "./components/NotFound"
-import Cart from "./components/Cart"
+import Cart from "./components/Cart/Cart.js"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 

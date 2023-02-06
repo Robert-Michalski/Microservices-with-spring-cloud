@@ -1,12 +1,12 @@
 import { useContext, useState } from "react"
-import StateContext from "../StateContext"
+import StateContext from "../../StateContext"
 import Axios from "axios"
 import { useEffect } from "react"
 import CartView from "./CartView"
 import DeliveryView from "./DeliveryView"
 import { useImmer } from "use-immer"
 import SummaryView from "./SummaryView"
-import DispatchContext from "../DispatchContext"
+import DispatchContext from "../../DispatchContext"
 import { useNavigate } from "react-router"
 function Cart() {
   const appState = useContext(StateContext)
