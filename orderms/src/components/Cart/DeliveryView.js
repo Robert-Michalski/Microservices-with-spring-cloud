@@ -9,6 +9,14 @@ function DeliveryView(props) {
     addresses: []
   })
 
+  function getTotal() {
+    let total = 0
+    props.shoppingCart.forEach(product => {
+      total += product.quantity * product.price
+    })
+    return total.toFixed(2) + " $"
+  }
+
   useEffect(() => {
     async function fetchAddresses() {
       const ourRequest = Axios.CancelToken.source()
@@ -63,7 +71,7 @@ function DeliveryView(props) {
         <div className="ms-auto col-3">
           <div className="bg-white d-flex flex-column orders p-3">
             <div>
-              Total: <span className="fw-bold ms-2">365.00$</span>
+              Total: <span className="fw-bold ms-2">{getTotal()}</span>
             </div>
             <div>
               <button className="btn bg-green fc-white col-12 mt-4" onClick={props.nextView}>
