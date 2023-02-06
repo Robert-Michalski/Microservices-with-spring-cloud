@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -76,6 +78,7 @@ public class ProductService {
         productRepository.deleteById(id);
         return "Product id: " + id + " deleted successfully";
     }
+
     public ProductResponse decreaseQuantity(Long id, int amount) {
         Optional<Product> byId = productRepository.findById(id);
         if (byId.isEmpty()) {
@@ -94,23 +97,17 @@ public class ProductService {
         return productRepository.count();
     }
 
-    public boolean areInStock(ProductRequestNew productRequestNew) {
-        log.info("INSIDE ProductService/areInStockNew START");
-        productRequestNew.productIdsToQuantity().keySet().forEach(productId -> {
-            Product product = productRepository.findById(productId)
-                    .orElseThrow(() -> {
-                        log.info("Product with id: {} doesn't exist", productId);
-                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Product with id "+productId+" doesn't exist");
-                    });
-            log.info("{} amount of {} was requested", product.getName(), productRequestNew.productIdsToQuantity().get(productId));
-            if (product.getQuantity() < productRequestNew.productIdsToQuantity().get(productId)) {
-                log.info("{} has {} quantity but {} was requested",
-                        product.getName(), product.getQuantity(), productRequestNew.productIdsToQuantity().get(productId));
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough stock for this products");
+    public boolean areInStock(Map<Long, Integer> productIdsToQuantity) {
+        log.info("Request: {}", productIdsToQuantity);
+        productIdsToQuantity.forEach((productId, quantity)-> {
+            Product product = productRepository.findById(productId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+            if(product.getQuantity()<quantity){
+                log.info("{} has {} available amount but {} was requested",
+                        product.getName(), product.getQuantity(), quantity);
+                throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough stock for this product");
             }
-            decreaseQuantity(productId, productRequestNew.productIdsToQuantity().get(productId));
+            decreaseQuantity(productId, quantity);
         });
-        log.info("INSIDE ProductService/areInStockNew END");
         return true;
     }
 }

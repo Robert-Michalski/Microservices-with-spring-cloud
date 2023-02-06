@@ -43,7 +43,7 @@ public class OrderController {
     }
 
     @PatchMapping("status")
-    public OrderResponse updateOrderStatus(@RequestBody OrderUpdateStatusRequest request){
-        return orderService.updateOrderStatus(request);
+    public OrderResponse updateOrderStatus(@RequestBody OrderUpdateStatusRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        return orderService.updateOrderStatus(request, token);
     }
 }

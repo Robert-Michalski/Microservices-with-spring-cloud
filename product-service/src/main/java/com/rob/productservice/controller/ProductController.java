@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -65,7 +66,7 @@ public class ProductController {
 
     @PostMapping("/are-in-stock")
     @ResponseStatus(HttpStatus.CREATED)
-    public boolean areInStock(@RequestBody ProductRequestNew productRequestNew){
-        return productService.areInStock(productRequestNew);
+    public boolean areInStock(@RequestBody Map<Long, Integer> productIdsToQuantity){
+        return productService.areInStock(productIdsToQuantity);
     }
 }

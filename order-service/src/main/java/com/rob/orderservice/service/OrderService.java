@@ -12,6 +12,7 @@ import com.rob.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -43,14 +44,6 @@ public class OrderService {
 
     public OrderResponse saveOrder(OrderRequest orderRequest, String token) {
         log.info("Request: {}", orderRequest);
-//        Boolean response = webClient.post()
-//                .uri("http://localhost:8011/api/product/are-in-stock")
-//                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-//                .bodyValue(orderRequest)
-//                .retrieve()
-//                .bodyToMono(Boolean.class)
-//                .block();
-//        if (response) {
 
         Long orderId = orderRepository.findOrdersByUserId(orderRequest.customerId()).orElseGet(() -> 0L);
         if (orderId == 0) {
@@ -121,17 +114,33 @@ public class OrderService {
         return cartItemResponses;
     }
 
-    public OrderResponse updateOrderStatus(OrderUpdateStatusRequest request) {
-
-        log.info("Updating status of order {}", orderRepository.findById(request.orderId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)));
-
+    public OrderResponse updateOrderStatus(OrderUpdateStatusRequest request, String token) {
         Order orderToUpdate = orderRepository.findById(request.orderId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-
+        log.info("Updating status of order {}", orderToUpdate);
+        checkIfProductsAreAvailableAndDecreaseTheirQuantity(orderToUpdate.getOrderDetails(), token);
         orderToUpdate.setStatus(request.status());
         orderToUpdate.setAddressId(request.addressId());
         Order savedOrder = orderRepository.save(orderToUpdate);
         log.info("Order after updating status {}", savedOrder);
         return OrderUtil.toDto(savedOrder);
+    }
+
+    private boolean checkIfProductsAreAvailableAndDecreaseTheirQuantity(Set<OrderDetails> orderRequests, String token){
+        Map<Long, Integer> productsIdsToQuantity = new HashMap<>();
+        orderRequests.forEach(product -> {
+            log.info("Checking for availability of product id: {} quantity: {}", product.getProductId(), product.getQuantity());
+            productsIdsToQuantity.put(product.getProductId(), product.getQuantity());
+        });
+        log.info("Map to send: {}", productsIdsToQuantity);
+        Boolean result = webClient.post()
+                .uri("http://localhost:8011/api/product/are-in-stock")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .bodyValue(productsIdsToQuantity)
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+        log.info("Result: {}",result);
+        return result;
     }
 }
 
