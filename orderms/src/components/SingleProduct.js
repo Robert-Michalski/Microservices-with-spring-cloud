@@ -8,10 +8,15 @@ function SingleProduct(props) {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
-  function handleOrder(e) {
+  function handleOrder() {
     const ourRequest = Axios.CancelToken.source()
     try {
-      const response = Axios.post("api/order", { productId: props.product.id, quantity: amount, customerId: appState.user.id, token: appState.user.token }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      let productIdsToQuantity = new Map()
+      productIdsToQuantity.set(props.product.id, amount)
+
+      console.log(productIdsToQuantity.get(props.product.id))
+      console.log(JSON.stringify(productIdsToQuantity))
+      const response = Axios.post("api/order", { customerId: appState.user.id, productIdsToQuantity }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
       response
         .then(res => {
           if (res.request.status === 201) {

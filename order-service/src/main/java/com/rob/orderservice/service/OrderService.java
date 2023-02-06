@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigInteger;
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
@@ -45,6 +46,7 @@ public class OrderService {
     }
 
     public OrderResponse saveOrder(OrderRequest orderRequest, String token) {
+        log.info("Request: {}", orderRequest);
 //        Boolean response = webClient.post()
 //                .uri("http://localhost:8011/api/product/are-in-stock")
 //                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
@@ -53,25 +55,41 @@ public class OrderService {
 //                .bodyToMono(Boolean.class)
 //                .block();
 //        if (response) {
-        Order order = orderRepository.save(Order.builder()
-                .orderDetails(new HashSet<>())
-                .orderDate(Date.from(Instant.now()))
-                .customerId(orderRequest.customerId())
-                .status(Status.CART).build());
 
-        orderRequest.productIdsToQuantity().keySet().forEach(productId -> {
-            OrderDetails orderDetailsToSave = orderDetailsRepository.save(OrderDetails.builder().productId(productId).quantity(orderRequest.productIdsToQuantity().get(productId))
-                    .orderId(order.getId()).build());
-            order.getOrderDetails().add(orderDetailsToSave);
+        Long orderId = orderRepository.findOrdersByUserId(orderRequest.customerId()).orElseGet(() -> 0L);
+        if(orderId == 0){
+           log.info("New order will be handled");
+            Order order = orderRepository.save(Order.builder()
+                    .orderDetails(new HashSet<>())
+                    .orderDate(Date.from(Instant.now()))
+                    .customerId(orderRequest.customerId())
+                    .status(Status.CART).build());
+
+            OrderDetails orderDetails = OrderDetails.builder()
+                    .productId(orderRequest.productId())
+                    .orderId(order.getId())
+                    .quantity(orderRequest.quantity()).build();
+
+            OrderDetails savedOrderDetails = orderDetailsRepository.save(orderDetails);
+            order.getOrderDetails().add(savedOrderDetails);
             orderRepository.save(order);
+            log.info("Saved order: {}", orderRepository.findById(order.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)));
 
-            log.info("Saved orderDetails: {}", orderDetailsToSave);
-        });
-
-        log.info("Saved order: {}", orderRepository.findById(order.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)));
-
-        return OrderUtil.toDto(orderRepository.findById(order.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)));
-
+            return OrderUtil.toDto(orderRepository.findById(order.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)));
+        }
+        else {
+            Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+            log.info("Already existing order will be handled {}", order);
+            OrderDetails orderDetails = OrderDetails.builder()
+                    .productId(orderRequest.productId())
+                    .orderId(order.getId())
+                    .quantity(orderRequest.quantity()).build();
+            OrderDetails savedOrderDetails = orderDetailsRepository.save(orderDetails);
+            order.getOrderDetails().add(savedOrderDetails);
+            Order savedOrder = orderRepository.save(order);
+            log.info("Saved order: {}", savedOrder);
+            return OrderUtil.toDto(savedOrder);
+        }
     }
 
     public Set<CartItemResponse> showCartItems(Long customerId) {

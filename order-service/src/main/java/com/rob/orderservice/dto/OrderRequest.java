@@ -1,6 +1,4 @@
 package com.rob.orderservice.dto;
 
-import java.util.Map;
-
-public record OrderRequest(Map<Long, Integer> productIdsToQuantity, Long customerId) {
+public record OrderRequest(long productId, int quantity, Long customerId) {
 }

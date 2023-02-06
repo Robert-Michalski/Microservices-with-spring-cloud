@@ -1,11 +1,11 @@
 package com.rob.orderservice.repository;
 
-import com.rob.orderservice.dto.CartItemResponse;
 import com.rob.orderservice.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
 import java.util.Set;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
@@ -21,4 +21,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     )
     Set<String> getCartItemsByCustomerId(@Param("customerId") long customerId);
 
+    @Query(
+            value = "SELECT COALESCE(id, 0) FROM t_order WHERE customer_id=:customerId AND status = 'cart'",
+            nativeQuery = true
+    )
+    Optional<Long> findOrdersByUserId(@Param("customerId") long customerId);
 }

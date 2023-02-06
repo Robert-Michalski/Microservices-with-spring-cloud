@@ -23,6 +23,7 @@ public class Order {
     private long customerId;
     private long addressId;
     private Date orderDate;
+    @Enumerated(EnumType.STRING)
     private Status status;
 
 }
