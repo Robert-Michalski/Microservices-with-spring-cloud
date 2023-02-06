@@ -16,7 +16,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
                     " order_id AS order_id FROM product" +
                     " JOIN order_details ON order_details.product_id=product.id" +
                     " JOIN t_order ON order_details.order_id=t_order.id" +
-                    " JOIN user ON t_order.customer_id=user.id WHERE t_order.status=0 AND user.id=:customerId",
+                    " JOIN user ON t_order.customer_id=user.id WHERE t_order.status='CART' AND user.id=:customerId",
             nativeQuery = true
     )
     Set<String> getCartItemsByCustomerId(@Param("customerId") long customerId);

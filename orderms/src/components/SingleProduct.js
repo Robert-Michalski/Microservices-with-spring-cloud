@@ -11,12 +11,7 @@ function SingleProduct(props) {
   function handleOrder() {
     const ourRequest = Axios.CancelToken.source()
     try {
-      let productIdsToQuantity = new Map()
-      productIdsToQuantity.set(props.product.id, amount)
-
-      console.log(productIdsToQuantity.get(props.product.id))
-      console.log(JSON.stringify(productIdsToQuantity))
-      const response = Axios.post("api/order", { customerId: appState.user.id, productIdsToQuantity }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      const response = Axios.post("api/order", { customerId: appState.user.id, productId: props.product.id, quantity: amount }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
       response
         .then(res => {
           if (res.request.status === 201) {

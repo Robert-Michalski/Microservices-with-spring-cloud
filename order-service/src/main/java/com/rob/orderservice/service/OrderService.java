@@ -17,12 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.math.BigInteger;
 import java.time.Instant;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
@@ -57,8 +53,8 @@ public class OrderService {
 //        if (response) {
 
         Long orderId = orderRepository.findOrdersByUserId(orderRequest.customerId()).orElseGet(() -> 0L);
-        if(orderId == 0){
-           log.info("New order will be handled");
+        if (orderId == 0) {
+            log.info("New order will be handled");
             Order order = orderRepository.save(Order.builder()
                     .orderDetails(new HashSet<>())
                     .orderDate(Date.from(Instant.now()))
@@ -76,16 +72,34 @@ public class OrderService {
             log.info("Saved order: {}", orderRepository.findById(order.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)));
 
             return OrderUtil.toDto(orderRepository.findById(order.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)));
-        }
-        else {
+
+        } else {
             Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
             log.info("Already existing order will be handled {}", order);
+
             OrderDetails orderDetails = OrderDetails.builder()
                     .productId(orderRequest.productId())
                     .orderId(order.getId())
                     .quantity(orderRequest.quantity()).build();
-            OrderDetails savedOrderDetails = orderDetailsRepository.save(orderDetails);
-            order.getOrderDetails().add(savedOrderDetails);
+
+            if (order.getOrderDetails().stream().anyMatch(oDetails -> oDetails.getProductId() == orderDetails.getProductId())) {
+                Iterator<OrderDetails> iterator = order.getOrderDetails().iterator();
+                while (iterator.hasNext()) {
+                    OrderDetails orderDetailsToCheck = iterator.next();
+                    if (orderDetailsToCheck.getProductId() == orderRequest.productId()) {
+                        log.info("There are two same products, increasing quantity");
+                        OrderDetails orderDetails1 = orderDetailsRepository.findById(orderDetailsToCheck.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+                        log.info("Item before increasing quantity: {}", orderDetails1);
+                        int totalQuantity = orderDetails1.getQuantity() + orderRequest.quantity();
+                        orderDetailsRepository.setQuantityByIdAndUpdate(orderDetails1.getId(), totalQuantity);
+                        orderDetails1.setQuantity(totalQuantity);
+                        log.info("Item after increasing quantity: {}", orderDetailsRepository.findById(orderDetails1.getId()).get());
+                    }
+                }
+            } else {
+                OrderDetails savedOrderDetails = orderDetailsRepository.save(orderDetails);
+                order.getOrderDetails().add(savedOrderDetails);
+            }
             Order savedOrder = orderRepository.save(order);
             log.info("Saved order: {}", savedOrder);
             return OrderUtil.toDto(savedOrder);
@@ -108,10 +122,16 @@ public class OrderService {
     }
 
     public OrderResponse updateOrderStatus(OrderUpdateStatusRequest request) {
+
+        log.info("Updating status of order {}", orderRepository.findById(request.orderId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST)));
+
         Order orderToUpdate = orderRepository.findById(request.orderId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
         orderToUpdate.setStatus(request.status());
         orderToUpdate.setAddressId(request.addressId());
-        return OrderUtil.toDto(orderRepository.save(orderToUpdate));
+        Order savedOrder = orderRepository.save(orderToUpdate);
+        log.info("Order after updating status {}", savedOrder);
+        return OrderUtil.toDto(savedOrder);
     }
 }
 
