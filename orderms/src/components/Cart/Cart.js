@@ -16,7 +16,8 @@ function Cart() {
   const [state, setState] = useImmer({
     shoppingCart: [],
     showing: "cart",
-    addressToDeliver: {}
+    addressToDeliver: {},
+    refreshCount: 0
   })
 
   useEffect(() => {
@@ -32,7 +33,7 @@ function Cart() {
       }
     }
     fetchCartItems()
-  }, [])
+  }, [state.refreshCount])
 
   function nextStep() {
     if (state.showing === "cart") {
@@ -64,6 +65,12 @@ function Cart() {
     }
   }
 
+  function refresh() {
+    setState(draft => {
+      draft.refreshCount++
+    })
+  }
+
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
       <div className="d-flex orders-top p-4 align-items-center">
@@ -73,7 +80,7 @@ function Cart() {
         <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
       </div>
       <hr />
-      <div className="container p-3 d-flex flex-column">{state.showing === "cart" ? <CartView shoppingCart={state.shoppingCart} nextView={nextStep} /> : state.showing === "delivery" ? <DeliveryView shoppingCart={state.shoppingCart} nextView={nextStep} updateAddress={updateAddressToDeliver} /> : <SummaryView shoppingCart={state.shoppingCart} addressToDeliver={state.addressToDeliver} handleOrder={handleOrder} />}</div>
+      <div className="container p-3 d-flex flex-column">{state.showing === "cart" ? <CartView shoppingCart={state.shoppingCart} nextView={nextStep} refresh={refresh} /> : state.showing === "delivery" ? <DeliveryView shoppingCart={state.shoppingCart} nextView={nextStep} updateAddress={updateAddressToDeliver} /> : <SummaryView shoppingCart={state.shoppingCart} addressToDeliver={state.addressToDeliver} handleOrder={handleOrder} />}</div>
     </div>
   )
 }

@@ -25,6 +25,7 @@ function ProductView(props) {
     console.log(props)
     try {
       Axios.delete("/api/order/" + props.item.orderId, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      props.refresh()
     } catch (e) {
       console.log("There was a problem when trying to delete from cart: " + e)
     }

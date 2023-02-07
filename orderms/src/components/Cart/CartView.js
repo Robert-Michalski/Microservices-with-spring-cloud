@@ -30,7 +30,7 @@ function CartView(props) {
       <div className="d-flex container mt-4">
         <div className="bg-white row ms-2 orders col-8">
           {props.shoppingCart.map((product, index) => {
-            return <ProductView item={product} key={index} bgIndex={index} max={props.shoppingCart.length} />
+            return <ProductView item={product} key={index} bgIndex={index} max={props.shoppingCart.length} refresh={props.refresh} />
           })}
         </div>
         {/* -------------- */}
