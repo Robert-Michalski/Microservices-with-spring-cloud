@@ -125,7 +125,7 @@ public class OrderService {
         return OrderUtil.toDto(savedOrder);
     }
 
-    private boolean checkIfProductsAreAvailableAndDecreaseTheirQuantity(Set<OrderDetails> orderRequests, String token){
+    private boolean checkIfProductsAreAvailableAndDecreaseTheirQuantity(Set<OrderDetails> orderRequests, String token) {
         Map<Long, Integer> productsIdsToQuantity = new HashMap<>();
         orderRequests.forEach(product -> {
             log.info("Checking for availability of product id: {} quantity: {}", product.getProductId(), product.getQuantity());
@@ -139,8 +139,33 @@ public class OrderService {
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block();
-        log.info("Result: {}",result);
+        log.info("Result: {}", result);
         return result;
+    }
+    private boolean checkIfProductIsAvailable(OrderRequest orderRequest, String token){
+        log.info("Checking for availability of product id: {} quantity: {}", orderRequest.productId(), orderRequest.quantity());
+        Boolean result = webClient.post()
+                .uri("http://localhost:8011/api/product/is-in-stock")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+token)
+                .bodyValue(orderRequest)
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+        log.info("Result: {}", result);
+        return result;
+    }
+
+    public String deleteOrderById(long id) {
+        log.info("Deleting order id: {}", id);
+        if(orderRepository.findById(id).isPresent()){
+            orderRepository.deleteById(id);
+            log.info("Order with id: {} is present, deleting", id);
+            return "Delete success";
+        }
+        else {
+            log.info("Order with id: {} is not present", id);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cant delete order id: " + id);
+        }
     }
 }
 

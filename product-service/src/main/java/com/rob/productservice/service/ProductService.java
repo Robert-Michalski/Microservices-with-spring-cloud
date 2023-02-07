@@ -3,6 +3,7 @@ package com.rob.productservice.service;
 import com.rob.productservice.dto.ProductRequest;
 import com.rob.productservice.dto.ProductRequestNew;
 import com.rob.productservice.dto.ProductResponse;
+import com.rob.productservice.dto.ProductStockRequest;
 import com.rob.productservice.entity.Category;
 import com.rob.productservice.entity.Product;
 import com.rob.productservice.repository.CategoryRepository;
@@ -108,6 +109,18 @@ public class ProductService {
             }
             decreaseQuantity(productId, quantity);
         });
+        return true;
+    }
+
+    public boolean isInStock(ProductStockRequest request) {
+        log.info("Request: {}", request);
+        Product product = productRepository.findById(request.productId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        if(product.getQuantity()< request.quantity()){
+            log.info("{} has {} available amount but {} was requested",
+                    product.getName(), product.getQuantity(), request.quantity());
+            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough stock for this product");
+        }
+        decreaseQuantity(request.productId(), request.quantity());
         return true;
     }
 }

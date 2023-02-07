@@ -1,9 +1,6 @@
 package com.rob.productservice.controller;
 
-import com.rob.productservice.dto.ProductOrder;
-import com.rob.productservice.dto.ProductRequest;
-import com.rob.productservice.dto.ProductRequestNew;
-import com.rob.productservice.dto.ProductResponse;
+import com.rob.productservice.dto.*;
 import com.rob.productservice.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -68,5 +65,9 @@ public class ProductController {
     @ResponseStatus(HttpStatus.CREATED)
     public boolean areInStock(@RequestBody Map<Long, Integer> productIdsToQuantity){
         return productService.areInStock(productIdsToQuantity);
+    }
+    @PostMapping("is-in-stock")
+    public boolean isInStock(@RequestBody ProductStockRequest request){
+        return productService.isInStock(request);
     }
 }
