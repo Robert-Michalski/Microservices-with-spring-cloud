@@ -1,3 +1,4 @@
+import ProductsMap from "./ProductsMap"
 import ProductView from "./ProductView"
 function CartView(props) {
   function getTotal() {
@@ -7,15 +8,7 @@ function CartView(props) {
     })
     return total.toFixed(2) + " $"
   }
-  function getCartItems() {
-    return (
-      <div className="bg-white row ms-2 orders col-8">
-        {props.shoppingCart.map((product, index) => {
-          return <ProductView item={product} key={index} bgIndex={index} max={props.shoppingCart.length} refresh={props.refresh} />
-        })}{" "}
-      </div>
-    )
-  }
+
   return (
     <>
       <div className="d-flex align-items-center">
@@ -36,7 +29,13 @@ function CartView(props) {
         </div>
       </div>
       <div className="d-flex container mt-4">
-        {props.shoppingCart.length === 0 ? "There are no items in cart yet" : getCartItems()}
+        {props.shoppingCart.length === 0 ? (
+          "There are no items in cart yet"
+        ) : (
+          <div className="col-7">
+            <ProductsMap shoppingCart={props.shoppingCart} />
+          </div>
+        )}
         {/* -------------- */}
         <div className="ms-auto col-3">
           <div className="bg-white d-flex flex-column orders p-3">

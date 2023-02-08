@@ -38,7 +38,7 @@ function ProductView(props) {
       <div className={"col-sm cart-product" + getBackground()}>{props.item.price.toFixed(2) + " $"}</div>
       <div className={"col-sm cart-product" + getBackground()}>Quantity: {props.item.quantity}</div>
       <div className={"col-sm cart-product" + getBackground()}>Total: {getTotal()}</div>
-      <div className={"col-sm ms-auto cart-product" + getBackground() + getRadiusRight()}>
+      <div className={"col-sm-1 ms-auto cart-product" + getBackground() + getRadiusRight()}>
         <span className="material-symbols-outlined" onClick={handleDelete}>
           delete
         </span>

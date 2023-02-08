@@ -1,6 +1,7 @@
 import ProductView from "./ProductView"
 import StateContext from "../../StateContext"
 import { useContext } from "react"
+import ProductsMap from "./ProductsMap"
 function SummaryView(props) {
   const appState = useContext(StateContext)
   function getTotal() {
@@ -31,15 +32,11 @@ function SummaryView(props) {
         </div>
       </div>
       <div className="d-flex container mt-4">
-        <div>
-          <div className="bg-white row ms-2 orders col-11">
-            {props.shoppingCart.map((product, index) => {
-              return <ProductView item={product} key={index} bgIndex={index} max={props.shoppingCart.length} />
-            })}
-          </div>
+        <div className="col-7">
+          <ProductsMap shoppingCart={props.shoppingCart} />
         </div>
         {/* -------------- */}
-        <div className="ms-auto me-4 col-3 d-flex flex-column">
+        <div className="ms-auto me-5 col-3 d-flex flex-column">
           <div className="text-right cart-product fw-bold address-box mb-3">
             <span>{appState.user.firstName + " " + appState.user.lastName}</span>
             <br />
