@@ -5,6 +5,7 @@ function CartView(props) {
     props.shoppingCart.forEach(product => {
       total += product.quantity * product.price
     })
+    console.log(props.shoppingCart.length)
     return total.toFixed(2) + " $"
   }
 
