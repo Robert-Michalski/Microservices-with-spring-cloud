@@ -32,7 +32,7 @@ function CartView(props) {
           "There are no items in cart yet"
         ) : (
           <div className="col-7">
-            <ProductsMap shoppingCart={props.shoppingCart} />
+            <ProductsMap shoppingCart={props.shoppingCart} refresh={props.refresh} />
           </div>
         )}
         {/* -------------- */}

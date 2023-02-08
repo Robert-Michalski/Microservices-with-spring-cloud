@@ -13,7 +13,6 @@ function ProductView(props) {
   }
   //  TODO: Maybe do it better somehow
   function getRadiusLeft() {
-    console.log(props)
     if (props.bgIndex === 0) return " cart-product-radius-top-left "
     if (props.bgIndex === props.max - 1) return " cart-product-radius-bottom-left "
   }
@@ -24,10 +23,8 @@ function ProductView(props) {
   async function handleDelete() {
     const ourRequest = Axios.CancelToken.source()
     try {
-      const response = await Axios.delete("/api/order/" + props.item.orderId + "/product", { params: { productId: props.item.id }, headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-      if (response.request.status === 200) {
-        props.refresh()
-      }
+      const response = await Axios.delete("/api/order/" + props.item.orderId + "/product", { params: { productId: props.item.productId }, headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      props.refresh()
     } catch (e) {
       console.log("There was a problem when trying to delete from cart: " + e)
     }

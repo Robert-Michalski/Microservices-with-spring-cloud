@@ -103,11 +103,13 @@ public class OrderService {
         Set<CartItemResponse> cartItemResponses = new HashSet<>();
         orderRepository.getCartItemsByCustomerId(customerId).forEach(c -> {
             String[] values = c.split(Pattern.quote(","));
+
             CartItemResponse cartItemResponse = CartItemResponse.builder()
                     .productName(values[0])
                     .quantity(Integer.valueOf(values[1]))
                     .price(Double.valueOf(values[2]))
                     .orderId(Long.valueOf(values[3]))
+                    .productId(Long.valueOf(values[4]))
                     .build();
             cartItemResponses.add(cartItemResponse);
         });

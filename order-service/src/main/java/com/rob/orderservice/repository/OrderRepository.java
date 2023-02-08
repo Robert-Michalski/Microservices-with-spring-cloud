@@ -13,7 +13,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Query(
             value = "SELECT product.name, order_details.quantity, product.price, " +
-                    " order_id AS order_id FROM product" +
+                    " order_id AS order_id, product.id AS product_id FROM product" +
                     " JOIN order_details ON order_details.product_id=product.id" +
                     " JOIN t_order ON order_details.order_id=t_order.id" +
                     " JOIN user ON t_order.customer_id=user.id WHERE t_order.status='CART' AND user.id=:customerId",
