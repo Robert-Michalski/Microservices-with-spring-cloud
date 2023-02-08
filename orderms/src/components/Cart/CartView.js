@@ -1,5 +1,4 @@
 import ProductsMap from "./ProductsMap"
-import ProductView from "./ProductView"
 function CartView(props) {
   function getTotal() {
     let total = 0
