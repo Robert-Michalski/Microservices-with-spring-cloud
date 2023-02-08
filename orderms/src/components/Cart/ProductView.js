@@ -22,7 +22,6 @@ function ProductView(props) {
   }
   async function handleDelete() {
     const ourRequest = Axios.CancelToken.source()
-    console.log(props)
     try {
       const response = await Axios.delete("/api/order/" + props.item.orderId, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
       if (response.request.status === 200) {
@@ -34,6 +33,7 @@ function ProductView(props) {
   }
   return (
     <>
+      {props.bgIndex >= 1 ? <div className="w-100"></div> : null}
       <div className={"col-sm cart-product" + getBackground() + getRadiusLeft()}>{props.item.productName}</div>
       <div className={"col-sm cart-product" + getBackground()}>{props.item.price.toFixed(2) + " $"}</div>
       <div className={"col-sm cart-product" + getBackground()}>Quantity: {props.item.quantity}</div>
@@ -43,7 +43,6 @@ function ProductView(props) {
           delete
         </span>
       </div>
-      <div className="w-100"></div>
     </>
   )
 }

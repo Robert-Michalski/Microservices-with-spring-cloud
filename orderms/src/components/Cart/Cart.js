@@ -28,7 +28,6 @@ function Cart() {
         setState(draft => {
           draft.shoppingCart = response.data
         })
-        console.log(response.data)
       } catch (e) {
         console.log("Something wrong during cart items loading " + e)
       }
