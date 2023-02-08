@@ -36,12 +36,13 @@ function Cart() {
   }, [state.refreshCount])
 
   function nextStep() {
-    if (state.showing === "cart") {
+    console.log(state.addressToDeliver)
+    if (state.showing === "cart" && state.shoppingCart.length > 0) {
       setState(draft => {
         draft.showing = "delivery"
       })
     }
-    if (state.showing === "delivery") {
+    if (state.showing === "delivery" && Object.keys(state.addressToDeliver).length > 0) {
       setState(draft => {
         draft.showing = "payment"
       })
