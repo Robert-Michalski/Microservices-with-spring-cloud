@@ -56,7 +56,7 @@ public class OrderService {
 
             OrderDetails orderDetails = OrderDetails.builder()
                     .productId(orderRequest.productId())
-                    .orderId(order.getId())
+                    .order(order)
                     .quantity(orderRequest.quantity()).build();
 
             OrderDetails savedOrderDetails = orderDetailsRepository.save(orderDetails);
@@ -72,7 +72,7 @@ public class OrderService {
 
             OrderDetails orderDetails = OrderDetails.builder()
                     .productId(orderRequest.productId())
-                    .orderId(order.getId())
+                    .order(order)
                     .quantity(orderRequest.quantity()).build();
 
             if (order.getOrderDetails().stream().anyMatch(oDetails -> oDetails.getProductId() == orderDetails.getProductId())) {
@@ -165,6 +165,18 @@ public class OrderService {
         else {
             log.info("Order with id: {} is not present", id);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cant delete order id: " + id);
+        }
+    }
+
+    public String deleteProductFromOrder(long orderId, long productId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        long recordsDeleted = orderDetailsRepository.deleteByOrderIdAndProductId(order.getId(), productId);
+        log.info("Deleting productId: {}, deleted {} records", productId, recordsDeleted);
+        if(recordsDeleted>0) {
+            return "Delete";
+        }
+        else {
+            return "Something went wrong";
         }
     }
 }

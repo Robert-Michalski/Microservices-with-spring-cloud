@@ -51,4 +51,9 @@ public class OrderController {
     public String deleteOrder(@PathVariable long id){
         return orderService.deleteOrderById(id);
     }
+
+    @DeleteMapping("{id}/product")
+    public String deleteProductFromOrder(@PathVariable long id, @RequestParam long productId){
+        return orderService.deleteProductFromOrder(id, productId);
+    }
 }

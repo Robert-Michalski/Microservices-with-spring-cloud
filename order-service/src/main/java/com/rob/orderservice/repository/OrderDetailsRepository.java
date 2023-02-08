@@ -14,4 +14,10 @@ public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Long
     @Query(nativeQuery = true,
     value = "UPDATE order_details SET quantity = :amount WHERE id=:orderDetailsId")
     int setQuantityByIdAndUpdate(@Param("orderDetailsId")long orderDetailsId, @Param(("amount")) int amount);
+
+    @Transactional
+    @Modifying
+    long deleteByOrderIdAndProductId(long orderId, long productId);
+
+
 }

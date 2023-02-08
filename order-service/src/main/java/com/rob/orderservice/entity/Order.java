@@ -12,13 +12,11 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Table(name = "t_order")
-@EqualsAndHashCode
-@ToString
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "order")
     private Set<OrderDetails> orderDetails;
     private long customerId;
     private long addressId;
@@ -26,4 +24,15 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", customerId=" + customerId +
+                ", addressId=" + addressId +
+                ", orderDate=" + orderDate +
+                ", status=" + status +
+                '}';
+    }
 }

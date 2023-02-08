@@ -1,9 +1,6 @@
 package com.rob.orderservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -11,12 +8,12 @@ import lombok.*;
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 @ToString
-@EqualsAndHashCode
 public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private long productId;
     private int quantity;
-    private long orderId;
+    @ManyToOne
+    private Order order;
 }

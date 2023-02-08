@@ -8,7 +8,6 @@ public class OrderUtil {
     public static OrderResponse toDto(Order order){
         return OrderResponse.builder()
                 .id(order.getId())
-                .orderDetails(order.getOrderDetails())
                 .customerId(order.getCustomerId())
                 .orderDate(order.getOrderDate())
                 .status(order.getStatus())
