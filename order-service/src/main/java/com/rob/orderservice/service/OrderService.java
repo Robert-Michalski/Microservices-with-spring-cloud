@@ -106,10 +106,10 @@ public class OrderService {
 
             CartItemResponse cartItemResponse = CartItemResponse.builder()
                     .productName(values[0])
-                    .quantity(Integer.valueOf(values[1]))
-                    .price(Double.valueOf(values[2]))
-                    .orderId(Long.valueOf(values[3]))
-                    .productId(Long.valueOf(values[4]))
+                    .quantity(Integer.parseInt(values[1]))
+                    .price(Double.parseDouble(values[2]))
+                    .orderId(Long.parseLong(values[3]))
+                    .productId(Long.parseLong(values[4]))
                     .build();
             cartItemResponses.add(cartItemResponse);
         });
@@ -127,7 +127,7 @@ public class OrderService {
         return OrderUtil.toDto(savedOrder);
     }
 
-    private boolean checkIfProductsAreAvailableAndDecreaseTheirQuantity(Set<OrderDetails> orderRequests, String token) {
+    private void checkIfProductsAreAvailableAndDecreaseTheirQuantity(Set<OrderDetails> orderRequests, String token) {
         Map<Long, Integer> productsIdsToQuantity = new HashMap<>();
         orderRequests.forEach(product -> {
             log.info("Checking for availability of product id: {} quantity: {}", product.getProductId(), product.getQuantity());
@@ -142,19 +142,6 @@ public class OrderService {
                 .bodyToMono(Boolean.class)
                 .block();
         log.info("Result: {}", result);
-        return result;
-    }
-    private boolean checkIfProductIsAvailable(OrderRequest orderRequest, String token){
-        log.info("Checking for availability of product id: {} quantity: {}", orderRequest.productId(), orderRequest.quantity());
-        Boolean result = webClient.post()
-                .uri("http://localhost:8011/api/product/is-in-stock")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer "+token)
-                .bodyValue(orderRequest)
-                .retrieve()
-                .bodyToMono(Boolean.class)
-                .block();
-        log.info("Result: {}", result);
-        return result;
     }
 
     public String deleteOrderById(long id) {
