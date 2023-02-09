@@ -37,8 +37,7 @@ public class JWTGenerator {
         String username = authentication.getName();
         Date currentDate = new Date();
         Date expireDate = Date.from(Instant.now().plusSeconds(JWT_EXPIRATION));
-        log.info("JWT_EXPIRATION = {}", JWT_EXPIRATION);
-        log.info("Generating token for user {} valid untill {}", authentication.getName(), expireDate);
+        log.info("Generating token for user {} valid until {}", authentication.getName(), expireDate);
         Map<String, Object> claims = new HashMap<>();
         List<String> roles = authentication.getAuthorities()
                 .stream()
