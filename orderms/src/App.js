@@ -17,6 +17,7 @@ import AddProductPage from "./components/AddProductPage"
 import FlashMessages from "./components/FlashMessages"
 import NotFound from "./components/NotFound"
 import Cart from "./components/Cart/Cart.js"
+import Notification from "./components/Notification"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -98,6 +99,7 @@ function App() {
             <Route path="/cart" element={<MainView view={Cart} />} />
             <Route path="/dashboard" element={<MainView view={Dashboard} />} />
             <Route path="/notFound" element={<NotFound />} />
+            <Route path="notification" element={<Notification />} />
           </Routes>
         </BrowserRouter>
       </DispatchContext.Provider>

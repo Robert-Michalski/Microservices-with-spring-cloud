@@ -7,7 +7,6 @@ import com.rob.orderservice.dto.OrderUpdateStatusRequest;
 import com.rob.orderservice.entity.Order;
 import com.rob.orderservice.entity.OrderDetails;
 import com.rob.orderservice.entity.Status;
-import com.rob.orderservice.event.OrderPlacedEvent;
 import com.rob.orderservice.repository.OrderDetailsRepository;
 import com.rob.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,7 +29,6 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailsRepository orderDetailsRepository;
     private final WebClient webClient;
-    private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     public List<OrderResponse> getOrdersOfUser(int id) {
@@ -122,18 +119,15 @@ public class OrderService {
     public OrderResponse updateOrderStatus(OrderUpdateStatusRequest request, String token) {
         Order orderToUpdate = orderRepository.findById(request.orderId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         log.info("Updating status of order {}", orderToUpdate);
-        if(checkIfProductsAreAvailableAndDecreaseTheirQuantity(orderToUpdate.getOrderDetails(), token)) {
+        if (checkIfProductsAreAvailableAndDecreaseTheirQuantity(orderToUpdate.getOrderDetails(), token)) {
             orderToUpdate.setStatus(request.status());
             orderToUpdate.setAddressId(request.addressId());
             Order savedOrder = orderRepository.save(orderToUpdate);
             log.info("Order after updating status {}", savedOrder);
 
-            OrderPlacedEvent orderPlacedEvent = OrderPlacedEvent.builder().orderId(orderToUpdate.getId()).build();
-            kafkaTemplate.send("notificationTopic", orderPlacedEvent);
 
             return OrderUtil.toDto(savedOrder);
-        }
-        else {
+        } else {
             log.info("Not enough product in stock");
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -160,25 +154,23 @@ public class OrderService {
 
     public String deleteOrderById(long id) {
         log.info("Deleting order id: {}", id);
-        if(orderRepository.findById(id).isPresent()){
+        if (orderRepository.findById(id).isPresent()) {
             orderRepository.deleteById(id);
             log.info("Order with id: {} is present, deleting", id);
             return "Delete success";
-        }
-        else {
+        } else {
             log.info("Order with id: {} is not present", id);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cant delete order id: " + id);
         }
     }
 
     public String deleteProductFromOrder(long orderId, long productId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         long recordsDeleted = orderDetailsRepository.deleteByOrderIdAndProductId(order.getId(), productId);
         log.info("Deleting productId: {}, deleted {} records", productId, recordsDeleted);
-        if(recordsDeleted>0) {
+        if (recordsDeleted > 0) {
             return "Delete";
-        }
-        else {
+        } else {
             return "Something went wrong";
         }
     }
