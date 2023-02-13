@@ -5,22 +5,22 @@ import Axios from "axios"
 import { useNavigate, useParams } from "react-router"
 import SingleProduct from "./SingleProduct"
 import { Link } from "react-router-dom"
+import { useSearchParams } from "react-router-dom"
 function Products() {
   const appState = useContext(StateContext)
   const navigate = useNavigate()
-  const { category } = useParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [state, setState] = useImmer({
     products: [],
     reloadCounter: 0
   })
 
   useEffect(() => {
-    console.log(category)
     if (appState.loggedIn) {
       const ourRequest = Axios.CancelToken.source()
       async function fetchData() {
         try {
-          const responseProducts = await Axios.get(`/api/product/category/keyboards`, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          const responseProducts = await Axios.get(`/api/product?category=` + searchParams.get("category"), { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           setState(draft => {
             draft.products = responseProducts.data
           })
