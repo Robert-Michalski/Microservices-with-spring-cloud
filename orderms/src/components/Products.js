@@ -10,6 +10,7 @@ function Products() {
   const appState = useContext(StateContext)
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
+  const category = searchParams.get("category")
   const [state, setState] = useImmer({
     products: [],
     reloadCounter: 0
@@ -20,7 +21,7 @@ function Products() {
       const ourRequest = Axios.CancelToken.source()
       async function fetchData() {
         try {
-          const responseProducts = await Axios.get(`/api/product?category=` + searchParams.get("category"), { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          const responseProducts = await Axios.get(`/api/product?category=` + category, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           setState(draft => {
             draft.products = responseProducts.data
           })
@@ -54,7 +55,7 @@ function Products() {
       <hr />
       <div className="container p-3">
         <div className="d-flex align-items-center">
-          <div className="ms-3 fs-2">All categories</div>
+          <div className="ms-3 fs-2">{category}</div>
           <div className="ms-auto"></div>
           {appState.user.role === "ROLE_ADMIN" || appState.user.role === "ROLE_MANAGER" ? (
             <Link to="/products/add" className="me-3 btn btn-primary">
@@ -68,9 +69,7 @@ function Products() {
         </div>
 
         <div className="bg-white row mt-4 ms-2 orders p-3">
-          <div className="col-sm grid-header">Item ID</div>
           <div className="col-sm grid-header">Name</div>
-          <div className="col-sm grid-header">Available</div>
           <div className="col-sm grid-header">Price</div>
           <div className="col-sm grid-header">Quantity</div>
           <div className="col-sm grid-header"></div>

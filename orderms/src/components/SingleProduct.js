@@ -70,9 +70,7 @@ function SingleProduct(props) {
   }
   return (
     <>
-      <div className="col-sm p-3">{props.product.id}</div>
       <div className="col-sm p-3">{props.product.name}</div>
-      <div className="col-sm p-3 ">{props.product.quantity}</div>
       <div className="col-sm p-3">{getFormattedPrice()}</div>
       <div className="col-sm p-3">
         <input
