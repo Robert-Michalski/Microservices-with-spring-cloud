@@ -18,6 +18,7 @@ public class CategoryService {
                 .stream().map(category -> CategoryResponse.builder()
                         .id(category.getId())
                         .name(category.getName())
+                        .image(category.getImage())
                         .build())
                 .collect(Collectors.toList());
     }

@@ -34,7 +34,7 @@ function Categories() {
         </div>
         <div className="bg-white mt-4 ms-2 orders p-3 col-8">
           {categories.map((value, index) => {
-            return <SingleCategory category={value} index={index} key={value.id} />
+            return <SingleCategory category={value} index={index} key={value.id} img={value.image} />
           })}
         </div>
       </div>

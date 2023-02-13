@@ -13,6 +13,9 @@
             <column name="name" type="varchar(250)">
                 <constraints unique="true"/>
             </column>
+            <column name="image" type="longblob">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
         <createTable tableName="product">
             <column name="id" type="bigint" autoIncrement="true">
