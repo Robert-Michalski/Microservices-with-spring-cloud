@@ -123,4 +123,11 @@ public class ProductService {
         decreaseQuantity(request.productId(), request.quantity());
         return true;
     }
+
+    public List<ProductResponse> getProductsByCategory(String category) {
+        return productRepository.findByCategory_NameIgnoreCase(category)
+                .stream()
+                .map(ProductUtil::toDto)
+                .toList();
+    }
 }

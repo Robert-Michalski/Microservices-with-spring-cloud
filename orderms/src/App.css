@@ -6,6 +6,10 @@
 img {
   width: 100%;
 }
+a {
+  text-decoration: none;
+  color: black;
+}
 hr {
   margin: 0;
 }
