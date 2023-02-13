@@ -51,7 +51,7 @@ function Navigation() {
       <div
         className="d-flex p-2 mt-2 nav-item"
         onClick={() => {
-          navigate("/products")
+          navigate("/categories")
         }}
       >
         {/* Icon and text */}

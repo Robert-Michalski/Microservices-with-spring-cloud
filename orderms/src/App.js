@@ -17,6 +17,7 @@ import AddProductPage from "./components/AddProductPage"
 import FlashMessages from "./components/FlashMessages"
 import NotFound from "./components/NotFound"
 import Cart from "./components/Cart/Cart.js"
+import Categories from "./components/Categories/Categories"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -92,6 +93,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/orders" element={<MainView view={Orders} />} />
+            <Route path="/categories" element={<MainView view={Categories} />} />
             <Route path="/products" element={<MainView view={Products} />} />
             <Route path="/products/add" element={<MainView view={AddProductPage} />} />
             <Route path="/products/:id/edit" element={<MainView view={AddProductPage} />} />
