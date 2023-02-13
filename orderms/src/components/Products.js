@@ -2,23 +2,25 @@ import React, { useEffect, useContext } from "react"
 import StateContext from "../StateContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
-import { useNavigate } from "react-router"
+import { useNavigate, useParams } from "react-router"
 import SingleProduct from "./SingleProduct"
 import { Link } from "react-router-dom"
 function Products() {
   const appState = useContext(StateContext)
   const navigate = useNavigate()
+  const { category } = useParams()
   const [state, setState] = useImmer({
     products: [],
     reloadCounter: 0
   })
 
   useEffect(() => {
+    console.log(category)
     if (appState.loggedIn) {
       const ourRequest = Axios.CancelToken.source()
       async function fetchData() {
         try {
-          const responseProducts = await Axios.get(`/api/product/all`, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          const responseProducts = await Axios.get(`/api/product/category/keyboards`, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           setState(draft => {
             draft.products = responseProducts.data
           })

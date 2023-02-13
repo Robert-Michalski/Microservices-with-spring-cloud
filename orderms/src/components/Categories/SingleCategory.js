@@ -6,7 +6,7 @@ function SingleCategory(props) {
       <div className="category-img col-5">
         <img src="https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/geforce-rtx-turing/overview/shop-2080-ti-300@2x.jpg" />
       </div>
-      <Link to="/products" className="align-self-center fs-2 fw-bold ms-4">
+      <Link to={"/products?category=" + props.category.name} className="align-self-center fs-2 fw-bold ms-4">
         {props.category.name}
       </Link>
     </div>
