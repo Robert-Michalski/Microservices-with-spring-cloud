@@ -3,6 +3,7 @@ import Axios from "axios"
 import StateContext from "../StateContext"
 import DispatchContext from "../DispatchContext"
 import { Link, useNavigate } from "react-router-dom"
+import GetImage from "./GetImage"
 function SingleProduct(props) {
   const [amount, setAmount] = useState(0)
   const appState = useContext(StateContext)
@@ -68,9 +69,13 @@ function SingleProduct(props) {
       ourRequest.cancel()
     }
   }
+
   return (
     <>
-      <div className="col-sm p-3">{props.product.name}</div>
+      <div className="col-sm p-3 d-flex">
+        <div>{GetImage(props.product.image)}</div>
+        <div>{props.product.name}</div>
+      </div>
       <div className="col-sm p-3">{getFormattedPrice()}</div>
       <div className="col-sm p-3">
         <input
