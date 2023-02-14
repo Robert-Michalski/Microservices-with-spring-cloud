@@ -18,4 +18,7 @@ public class Product {
     private double price;
     private String details;
     private int quantity;
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] image;
 }

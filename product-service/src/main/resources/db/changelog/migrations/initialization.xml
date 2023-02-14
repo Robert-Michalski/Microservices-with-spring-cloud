@@ -26,6 +26,9 @@
             <column name="price" type="double"/>
             <column name="details" type="varchar(250)"/>
             <column name="quantity" type="bigint"/>
+            <column name="image" type="longblob">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="product" baseColumnNames="category_id"

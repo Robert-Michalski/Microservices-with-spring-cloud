@@ -3,9 +3,9 @@ import { Buffer } from "buffer"
 function SingleCategory(props) {
   function getImage() {
     if (props.img) {
-      const a = Buffer.from(props.img, "base64")
-      const b = a.toString("base64")
-      return <img src={"data:image/png;base64," + b} alt="Red dot" />
+      const buffer = Buffer.from(props.img, "base64")
+      const imgString = buffer.toString("base64")
+      return <img src={"data:image/png;base64," + imgString} alt="Red dot" />
     } else {
       return <img src="" alt="Red dot" />
     }

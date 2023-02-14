@@ -9,6 +9,7 @@
         <!-- insert into category -->
         <insert tableName="category">
             <column name="name" value="Smartphones"/>
+            <column name="image"
         </insert>
         <insert tableName="category">
             <column name="name" value="Graphics Cards"/>

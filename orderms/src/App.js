@@ -23,7 +23,7 @@ Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
 function App() {
   const cookies = new Cookies()
-  const COOKIE_EXPIRATION_MS = 86400
+  const COOKIE_EXPIRATION_MS = 864000
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("userId")),
     user: {

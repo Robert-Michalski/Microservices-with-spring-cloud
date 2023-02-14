@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react"
 import StateContext from "../StateContext"
 function SingleOrder(props) {
   const appState = useContext(StateContext)
-  console.log(props)
   function getStatusBg(status) {
     if (status === "RECEIVED") return "bg-green"
     else {
