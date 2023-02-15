@@ -9,18 +9,23 @@
         <!-- insert into category -->
         <insert tableName="category">
             <column name="name" value="Smartphones"/>
+            <column name="image" valueBlobFile="images/smartphone.jpg"/>
         </insert>
         <insert tableName="category">
             <column name="name" value="Graphics Cards"/>
+            <column name="image" valueBlobFile="images/graphics_card.jpg"/>
         </insert>
         <insert tableName="category">
             <column name="name" value="Processors"/>
+            <column name="image" valueBlobFile="images/processor.jpg"/>
         </insert>
         <insert tableName="category">
             <column name="name" value="Keyboards"/>
+            <column name="image" valueBlobFile="images/keyboard.jpg"/>
         </insert>
         <insert tableName="category">
             <column name="name" value="Mouses"/>
+            <column name="image" valueBlobFile="images/pc_mouse.jpeg"/>
         </insert>
         <!-- insert into product -->
         <!--        SMARTPHONES-->

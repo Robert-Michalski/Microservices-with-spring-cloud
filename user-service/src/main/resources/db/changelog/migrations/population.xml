@@ -30,5 +30,14 @@
             <column name="password" value="$2a$10$4Bl1s5eKevvhD0fwcyYh9.tOLyz7JnBZLFgRBjVjGZGICkUQKWQ2S"/>
             <column name="role" value="1"/>
         </insert>
+
+        <insert tableName="user">
+            <column name="first_name" value="Robur"/>
+            <column name="last_name" value="Michalski"/>
+            <column name="mail" value="rob2@test.com"/>
+            <column name="phone" value="123123123"/>
+            <column name="password" value="$2a$10$oKQjHwCP.bBHyI.R2ryUxOI3P6aU8XhenT.MkdE9ClreiDBvvGtT6"/>
+            <column name="role" value="2"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>
