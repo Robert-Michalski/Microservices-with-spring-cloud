@@ -8,16 +8,17 @@ import { useImmerReducer } from "use-immer"
 import Axios from "axios"
 import { useEffect } from "react"
 import Register from "./components/Register"
-import Products from "./components/Products"
+import Products from "./components/Products/Products"
 import MainView from "./components/MainView"
 import Dashboard from "./components/Dashboard"
 import Cookies from "universal-cookie"
 import jwt from "jwt-decode"
-import AddProductPage from "./components/AddProductPage"
+import AddProductPage from "./components/Products/AddProductPage"
 import FlashMessages from "./components/FlashMessages"
 import NotFound from "./components/NotFound"
 import Cart from "./components/Cart/Cart.js"
 import Categories from "./components/Categories/Categories"
+import SingleProductDetailed from "./components/Products/SingleProductDetailed"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -97,6 +98,7 @@ function App() {
             <Route path="/products" element={<MainView view={Products} />} />
             <Route path="/products/add" element={<MainView view={AddProductPage} />} />
             <Route path="/products/:id/edit" element={<MainView view={AddProductPage} />} />
+            <Route path="/products/:id" element={<MainView view={SingleProductDetailed} />} />
             <Route path="/cart" element={<MainView view={Cart} />} />
             <Route path="/dashboard" element={<MainView view={Dashboard} />} />
             <Route path="/notFound" element={<NotFound />} />

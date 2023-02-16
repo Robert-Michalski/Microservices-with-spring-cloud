@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react"
-import StateContext from "../StateContext"
+import StateContext from "../../StateContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
 import { useNavigate, useParams } from "react-router"

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import GetImage from "./GetImage"
+import GetImage from "../GetImage"
 function SingleProduct(props) {
   function getFormattedPrice() {
     const formatted = Intl.NumberFormat("en-US", {
@@ -9,7 +9,7 @@ function SingleProduct(props) {
     return formatted.format(props.product.price) + " PLN"
   }
   return (
-    <Link className="col-3 d-flex flex-column p-3 product-box">
+    <Link className="col-3 d-flex flex-column p-3 product-box" to={"/products/" + props.product.id}>
       <div className="container d-flex flex-column product-box-inside">
         <div>{GetImage(props.product.image)}</div>
         <div>{props.product.name}</div>

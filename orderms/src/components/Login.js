@@ -18,7 +18,7 @@ function Login() {
       if (response.data) {
         appDispatch({ type: "flashMessage", value: "Succesfully logged in !" })
         appDispatch({ type: "login", data: response.data, details: userDetailsResponse.data })
-        navigate("/orders")
+        navigate("/categories")
       }
     } catch (e) {
       if (e.response.status === 403) {

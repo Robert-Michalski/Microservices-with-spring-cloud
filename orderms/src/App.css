@@ -307,3 +307,11 @@ input[type="number"] {
 .product-box:hover {
   box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.3);
 }
+.product-buy-right :is(input, button) {
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+.product-buy-right :is(input) {
+  border: 1px solid black;
+}
