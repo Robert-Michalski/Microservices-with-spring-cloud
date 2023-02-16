@@ -68,13 +68,7 @@ function Products() {
           </div>
         </div>
 
-        <div className="bg-white row mt-4 ms-2 orders p-3">
-          <div className="col-sm grid-header">Name</div>
-          <div className="col-sm grid-header">Price</div>
-          <div className="col-sm grid-header">Quantity</div>
-          <div className="col-sm grid-header"></div>
-          <div className="w-100"></div>
-          <hr className="mt-3" />
+        <div className="bg-white container d-flex flex-wrap mt-4 ms-2 orders p-3 justify-content-between">
           {state.products.map(product => {
             return <SingleProduct product={product} key={product.id} refresh={refresh} />
           })}

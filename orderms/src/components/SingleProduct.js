@@ -71,44 +71,18 @@ function SingleProduct(props) {
   }
 
   return (
-    <>
-      <div className="col-sm p-3 d-flex">
+    <div className="col-3 d-flex flex-column p-3 product-box">
+      <div className="container d-flex flex-column product-box-inside">
         <div>{GetImage(props.product.image)}</div>
         <div>{props.product.name}</div>
       </div>
-      <div className="col-sm p-3">{getFormattedPrice()}</div>
-      <div className="col-sm p-3">
-        <input
-          type="number"
-          min="1"
-          step="1"
-          className="col-5"
-          onChange={e => {
-            if (e.target.value >= 1) setAmount(e.target.value)
-          }}
-          value={amount <= 0 ? "" : amount}
-        />
+      <div className="ms-3 mt-2 d-flex flex-column fw-light">
+        <span>Ram: 8GB</span>
+        <span>Space: 256GB</span>
+        <span>Snapdragon 420</span>
       </div>
-      {appState.user.role === "ROLE_ADMIN" || appState.user.role === "ROLE_MANAGER" ? (
-        <div className="col-sm p-3">
-          <Link to={props.product.id + `/edit`}>
-            <button className="material-symbols-outlined me-3 btn btn-primary action-icon">edit</button>
-          </Link>
-          <button className="material-symbols-outlined action-icon btn btn-danger" onClick={handleDelete}>
-            delete
-          </button>
-        </div>
-      ) : (
-        <div className="col-sm p-3">
-          <span className="material-symbols-outlined" onClick={handleOrder}>
-            add_shopping_cart
-          </span>
-        </div>
-      )}
-
-      <hr className="mt-2" />
-      <div className="w-100"></div>
-    </>
+      <div className="mt-3 ms-3 fw-bold">{getFormattedPrice()}</div>
+    </div>
   )
 }
 

@@ -294,3 +294,12 @@ input[type="number"] {
   background-color: green;
   color: white;
 }
+.product-box-inside {
+  min-height: 240px;
+}
+.product-box {
+  border-radius: 10px;
+}
+.product-box:hover {
+  box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.3);
+}
