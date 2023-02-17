@@ -1,4 +1,5 @@
 import { useContext } from "react"
+import { Link } from "react-router-dom"
 import StateContext from "../../StateContext"
 
 function SingleProductDetailed() {
@@ -12,7 +13,15 @@ function SingleProductDetailed() {
         <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
       </div>
       <hr />
-
+      <div className="mt-4 ms-5 fs-5">
+        <Link to="/categories" className="fc-blue">
+          products
+        </Link>
+        {" > "}
+        <Link to="/products?category=Smartphones" className="fc-blue">
+          smartphones
+        </Link>
+      </div>
       <div className="container mt-4 ms-2 p-3 d-flex bg-white orders">
         <div className="col-6">
           <img src="https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2022/3/pr_2022_3_4_12_11_12_900_00.jpg" />
