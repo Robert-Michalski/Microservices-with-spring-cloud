@@ -3,18 +3,19 @@ import { Link, useParams } from "react-router-dom"
 import StateContext from "../../StateContext"
 import Axios from "axios"
 import { useState } from "react"
+import GetImage from "../GetImage"
+import SmartphoneLabel from "./SmartphoneLabel"
 
 function SingleProductDetailed() {
   const appState = useContext(StateContext)
   const { id } = useParams()
   const [product, setProduct] = useState({})
   useEffect(() => {
-    const fetchProduct = async () => {
+    async function fetchProduct() {
       const ourRequest = Axios.CancelToken.source()
       try {
         const productResponse = await Axios.get("/api/product/" + id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
         setProduct(productResponse.data)
-        console.log(productResponse.data)
       } catch (e) {
         console.log("something went wrong during product loading " + e)
       }
@@ -41,38 +42,17 @@ function SingleProductDetailed() {
         </Link>
       </div>
       <div className="container mt-4 ms-2 p-3 d-flex bg-white orders">
-        <div className="col-6">
-          <img src="https://cdn.x-kom.pl/i/setup/images/prod/big/product-new-big,,2022/3/pr_2022_3_4_12_11_12_900_00.jpg" />
-        </div>
+        <div className="col-6">{GetImage(product.image)}</div>
         <div className="col-6 d-flex flex-column mt-4">
           <div>
             <span className="fs-4 fw-bold">{product.name}</span>
           </div>
           <div className="d-flex mt-5">
-            <div className="d-flex flex-column col-5">
-              <span>
-                <span className="fw-light">Display:</span> 6,43"
-              </span>
-              <span>
-                <span className="fw-light">Processor:</span> Snapdragon 420
-              </span>
-              <span>
-                <span className="fw-light">Ram:</span> 6 GB
-              </span>
-              <span>
-                <span className="fw-light">Storage:</span> 64 GB
-              </span>
-              <span>
-                <span className="fw-light">Color:</span> Gray
-              </span>
-              <span>
-                <span className="fw-light">Camera:</span> 20 mpx
-              </span>
-            </div>
+            {product.productDetails?.productSmartphoneDetails && <SmartphoneLabel product={product} />}
             <div className="container col-7 product-buy-right">
               <div className="d-flex flex-column orders p-3">
                 <div className="text-end">
-                  <span className="fs-4">999,00 PLN</span>
+                  <span className="fs-4">{product.price}.00 PLN</span>
                   <div className="d-flex mt-3">
                     <input type="number" className="col-2 text-center" value="1" />
                     <button className="ms-auto bg-green fc-white d-flex p-2 col-8 fs-5 align-items-center">
