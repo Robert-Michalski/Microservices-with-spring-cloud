@@ -15,6 +15,7 @@ public class ProductUtil {
                 .details(product.getDetails())
                 .quantity(product.getQuantity())
                 .image(product.getImage())
+                .productDetails(product.getProductDetails())
                 .build();
     }
 

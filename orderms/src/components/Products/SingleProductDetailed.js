@@ -14,6 +14,7 @@ function SingleProductDetailed() {
       try {
         const productResponse = await Axios.get("/api/product/" + id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
         setProduct(productResponse.data)
+        console.log(productResponse.data)
       } catch (e) {
         console.log("something went wrong during product loading " + e)
       }

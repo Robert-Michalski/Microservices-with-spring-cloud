@@ -48,6 +48,7 @@ public class ProductService {
 
     public ProductResponse getProductById(Long id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        log.info("product: {}", product);
         return ProductUtil.toDto(product);
     }
 

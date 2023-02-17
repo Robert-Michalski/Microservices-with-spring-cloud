@@ -2,6 +2,7 @@ package com.rob.productservice.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ManyToAny;
 
 @Entity
 @Getter @Setter
@@ -21,4 +22,9 @@ public class Product {
     @Lob
     @Column(columnDefinition = "LONGBLOB")
     private byte[] image;
+
+    @ManyToOne
+    @JoinColumn
+    private ProductDetails productDetails;
+
 }
