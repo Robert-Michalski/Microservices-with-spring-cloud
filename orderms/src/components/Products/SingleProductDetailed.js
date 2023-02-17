@@ -1,9 +1,26 @@
-import { useContext } from "react"
-import { Link } from "react-router-dom"
+import { useContext, useEffect } from "react"
+import { Link, useParams } from "react-router-dom"
 import StateContext from "../../StateContext"
+import Axios from "axios"
+import { useState } from "react"
 
 function SingleProductDetailed() {
   const appState = useContext(StateContext)
+  const { id } = useParams()
+  const [product, setProduct] = useState({})
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const ourRequest = Axios.CancelToken.source()
+      try {
+        const productResponse = await Axios.get("/api/product/" + id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+        setProduct(productResponse.data)
+      } catch (e) {
+        console.log("something went wrong during product loading " + e)
+      }
+    }
+    fetchProduct()
+  }, [])
+
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
       <div className="d-flex orders-top p-4 align-items-center">
@@ -28,7 +45,7 @@ function SingleProductDetailed() {
         </div>
         <div className="col-6 d-flex flex-column mt-4">
           <div>
-            <span className="fs-4 fw-bold">Xiaomi Redmi Note 11S 6/64GB Graphite Gray</span>
+            <span className="fs-4 fw-bold">{product.name}</span>
           </div>
           <div className="d-flex mt-5">
             <div className="d-flex flex-column col-5">
