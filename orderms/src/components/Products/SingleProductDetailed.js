@@ -6,6 +6,9 @@ import { useState } from "react"
 import GetImage from "../GetImage"
 import SmartphoneLabel from "./SmartphoneLabel"
 import GraphicsCardLabel from "./GraphicsCardLabel"
+import ProcessorLabel from "./ProcessorLabel"
+import KeyboardLabel from "./KeyboardLabel"
+import MouseLabel from "./MouseLabel"
 
 function SingleProductDetailed() {
   const appState = useContext(StateContext)
@@ -17,7 +20,6 @@ function SingleProductDetailed() {
       try {
         const productResponse = await Axios.get("/api/product/" + id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
         setProduct(productResponse.data)
-        console.log(productResponse.data)
       } catch (e) {
         console.log("something went wrong during product loading " + e)
       }
@@ -36,11 +38,11 @@ function SingleProductDetailed() {
       <hr />
       <div className="mt-4 ms-5 fs-5">
         <Link to="/categories" className="fc-blue">
-          products
+          Products
         </Link>
         {" > "}
-        <Link to="/products?category=Smartphones" className="fc-blue">
-          smartphones
+        <Link to={"/products?category=" + product?.category?.name} className="fc-blue">
+          {product?.category?.name}
         </Link>
       </div>
       <div className="container mt-4 ms-2 p-3 d-flex bg-white orders">
@@ -52,6 +54,9 @@ function SingleProductDetailed() {
           <div className="d-flex mt-5">
             {product?.productDetails && product.category.name === "Smartphones" && <SmartphoneLabel product={product} />}
             {product?.productDetails && product.category.name === "Graphics Cards" && <GraphicsCardLabel product={product} />}
+            {product?.productDetails && product.category.name === "Processors" && <ProcessorLabel product={product} />}
+            {product?.productDetails && product.category.name === "Keyboards" && <KeyboardLabel product={product} />}
+            {product?.productDetails && product.category.name === "Mouses" && <MouseLabel product={product} />}
             <div className="container col-7 product-buy-right">
               <div className="d-flex flex-column orders p-3">
                 <div className="text-end">
