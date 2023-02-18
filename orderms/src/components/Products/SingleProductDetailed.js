@@ -5,6 +5,7 @@ import Axios from "axios"
 import { useState } from "react"
 import GetImage from "../GetImage"
 import SmartphoneLabel from "./SmartphoneLabel"
+import GraphicsCardLabel from "./GraphicsCardLabel"
 
 function SingleProductDetailed() {
   const appState = useContext(StateContext)
@@ -16,6 +17,7 @@ function SingleProductDetailed() {
       try {
         const productResponse = await Axios.get("/api/product/" + id, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
         setProduct(productResponse.data)
+        console.log(productResponse.data)
       } catch (e) {
         console.log("something went wrong during product loading " + e)
       }
@@ -48,7 +50,8 @@ function SingleProductDetailed() {
             <span className="fs-4 fw-bold">{product.name}</span>
           </div>
           <div className="d-flex mt-5">
-            {product.productDetails?.productSmartphoneDetails && <SmartphoneLabel product={product} />}
+            {product?.productDetails && product.category.name === "Smartphones" && <SmartphoneLabel product={product} />}
+            {product?.productDetails && product.category.name === "Graphics Cards" && <GraphicsCardLabel product={product} />}
             <div className="container col-7 product-buy-right">
               <div className="d-flex flex-column orders p-3">
                 <div className="text-end">

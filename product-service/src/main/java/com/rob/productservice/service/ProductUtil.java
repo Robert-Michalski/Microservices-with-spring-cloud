@@ -2,7 +2,9 @@ package com.rob.productservice.service;
 
 import com.rob.productservice.dto.ProductRequest;
 import com.rob.productservice.dto.ProductResponse;
+import com.rob.productservice.dto.products.SmartphoneDto;
 import com.rob.productservice.entity.Product;
+import com.rob.productservice.entity.ProductDetails;
 
 public class ProductUtil {
 
@@ -18,6 +20,4 @@ public class ProductUtil {
                 .productDetails(product.getProductDetails())
                 .build();
     }
-
-
 }

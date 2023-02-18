@@ -35,28 +35,62 @@
                                  constraintName="FK_product_category_id" referencedTableName="category"
                                  referencedColumnNames="id"/>
     </changeSet>
-
     <changeSet id="5" author="Robert Michalski">
-        <createTable tableName="product_smartphone_details">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="display_in_inches" type="float"/>
-            <column name="processor_name" type="varchar(255)"/>
-            <column name="ram" type="int"/>
-            <column name="storage" type="int"/>
-            <column name="color" type="varchar(50)"/>
-            <column name="camera_in_mpx" type="int"/>
-        </createTable>
         <createTable tableName="product_details">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="product_smartphone_details_id" type="bigint"/>
+            <column name="display_in_inches" type="float">
+                <constraints nullable="true"/>
+            </column>
+            <column name="processor_name" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ram" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="storage_in_gb" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="main_camera_in_mpx" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="memory_type" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="memory_in_gb" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="connectors" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="clock_speed_inmhz" type="float">
+                <constraints nullable="true"/>
+            </column>
+            <column name="socket" type="varchar(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cores" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="cache_in_mb" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="backlight" type="varchar(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="destination" type="varchar(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="switches" type="varchar(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="connectivity" type="varchar(100)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="color" type="varchar(100)">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
-
-        <addForeignKeyConstraint baseTableName="product_details" baseColumnNames="id" constraintName="FK_product_product_details"
-                                 referencedTableName="product_smartphone_details"
-                                 referencedColumnNames="id"/>
     </changeSet>
 </databaseChangeLog>
