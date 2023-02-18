@@ -41,11 +41,15 @@ function Cart() {
       setState(draft => {
         draft.showing = "delivery"
       })
+    } else if (state.showing === "cart" && state.shoppingCart.length === 0) {
+      appDispatch({ type: "flashMessage", value: "No items added to cart !", bg: "red" })
     }
     if (state.showing === "delivery" && Object.keys(state.addressToDeliver).length > 0) {
       setState(draft => {
         draft.showing = "payment"
       })
+    } else if (state.showing === "delivery" && Object.keys(state.addressToDeliver).length === 0) {
+      appDispatch({ type: "flashMessage", value: "Select an address !", bg: "red" })
     }
   }
 
