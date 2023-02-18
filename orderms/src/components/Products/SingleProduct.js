@@ -1,6 +1,12 @@
 import { Link } from "react-router-dom"
 import GetImage from "../GetImage"
+import SmartphoneLabel from "./SmartphoneLabel"
+import GraphicsCardLabel from "./GraphicsCardLabel"
+import ProcessorLabel from "./ProcessorLabel"
+import KeyboardLabel from "./KeyboardLabel"
+import MouseLabel from "./MouseLabel"
 function SingleProduct(props) {
+  console.log(props)
   function getFormattedPrice() {
     const formatted = Intl.NumberFormat("en-US", {
       minimumFractionDigits: 2,

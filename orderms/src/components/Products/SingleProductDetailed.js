@@ -9,11 +9,13 @@ import GraphicsCardLabel from "./GraphicsCardLabel"
 import ProcessorLabel from "./ProcessorLabel"
 import KeyboardLabel from "./KeyboardLabel"
 import MouseLabel from "./MouseLabel"
-
+import DispatchContext from "../../DispatchContext"
 function SingleProductDetailed() {
   const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
   const { id } = useParams()
   const [product, setProduct] = useState({})
+
   useEffect(() => {
     async function fetchProduct() {
       const ourRequest = Axios.CancelToken.source()
@@ -26,6 +28,18 @@ function SingleProductDetailed() {
     }
     fetchProduct()
   }, [])
+
+  async function handleAdd() {
+    const ourRequest = Axios.CancelToken.source()
+    try {
+      const productResponse = await Axios.post("/api/order", { productId: product.id, quantity: 1, customerId: appState.user.id }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      if (productResponse.request.status === 201) {
+        appDispatch({ type: "flashMessage", value: "Item added to cart !" })
+      }
+    } catch (e) {
+      console.log("something went wrong during adding product to cart " + e)
+    }
+  }
 
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
@@ -63,7 +77,7 @@ function SingleProductDetailed() {
                   <span className="fs-4">{product.price}.00 PLN</span>
                   <div className="d-flex mt-3">
                     <input type="number" className="col-2 text-center" value="1" />
-                    <button className="ms-auto bg-green fc-white d-flex p-2 col-8 fs-5 align-items-center">
+                    <button className="ms-auto bg-green fc-white d-flex p-2 col-8 fs-5 align-items-center" onClick={handleAdd}>
                       <span className="material-symbols-outlined me-3">add_shopping_cart</span>Add to cart
                     </button>
                   </div>
