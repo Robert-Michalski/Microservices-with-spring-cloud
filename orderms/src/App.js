@@ -19,6 +19,7 @@ import NotFound from "./components/NotFound"
 import Cart from "./components/Cart/Cart.js"
 import Categories from "./components/Categories/Categories"
 import SingleProductDetailed from "./components/Products/SingleProductDetailed"
+import NewAddressForm from "./components/NewAddressForm"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -102,6 +103,7 @@ function App() {
             <Route path="/cart" element={<MainView view={Cart} />} />
             <Route path="/dashboard" element={<MainView view={Dashboard} />} />
             <Route path="/notFound" element={<NotFound />} />
+            <Route path="/user/address/new" element={<MainView view={NewAddressForm} />} />
           </Routes>
         </BrowserRouter>
       </DispatchContext.Provider>

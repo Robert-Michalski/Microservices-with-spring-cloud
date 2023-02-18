@@ -1,5 +1,6 @@
 import Axios from "axios"
 import { useContext, useEffect } from "react"
+import { Link } from "react-router-dom"
 import { useImmer } from "use-immer"
 import StateContext from "../../StateContext"
 function DeliveryView(props) {
@@ -82,7 +83,9 @@ function DeliveryView(props) {
         </div>
       </div>
       <div className="mt-3 ms-3">
-        <button className="btn btn-primary">Add new address</button>
+        <Link to="/user/address/new" className="btn btn-primary">
+          Add new address
+        </Link>
       </div>
     </>
   )
