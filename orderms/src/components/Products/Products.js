@@ -53,6 +53,13 @@ function Products() {
         <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
       </div>
       <hr />
+      <div className="mt-4 ms-5 fs-5">
+        Home &gt;
+        <Link to="/categories" className="fc-blue">
+          {" "}
+          Products
+        </Link>
+      </div>
       <div className="container p-3">
         <div className="d-flex align-items-center">
           <div className="ms-3 fs-2">{category}</div>
