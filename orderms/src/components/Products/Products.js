@@ -28,6 +28,8 @@ function Products() {
           const url = new URL("http://localhost:8011/api/product")
           url.searchParams.append("category", category)
           url.searchParams.append("page", page)
+          url.searchParams.append("sortBy", "price")
+          url.searchParams.append("order", "descending")
           const responseProducts = await Axios.get(url, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           setState(draft => {
             draft.products = responseProducts.data
@@ -70,7 +72,15 @@ function Products() {
       <div className="container p-3">
         <div className="d-flex align-items-center">
           <div className="ms-3 fs-2">{category}</div>
+
           <div className="ms-auto"></div>
+          <div className="me-5">
+            Sort by
+            <select className="ms-2 products-select">
+              <option>Name</option>
+              <option>Price</option>
+            </select>
+          </div>
           {appState.user.role === "ROLE_ADMIN" || appState.user.role === "ROLE_MANAGER" ? (
             <Link to="/products/add" className="me-3 btn btn-primary">
               Add new
@@ -82,7 +92,7 @@ function Products() {
           </div>
         </div>
 
-        <div className="bg-white container d-flex flex-wrap mt-4 ms-2 orders p-3 justify-content-around">
+        <div className="bg-white container d-flex flex-wrap mt-4 ms-2 orders p-3 ">
           {loading ? (
             <LoadingIcon />
           ) : (

@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -123,8 +124,24 @@ public class ProductService {
         return true;
     }
 
-    public List<ProductResponse> getProductsByCategory(String category, int page) {
-        Pageable pageable = PageRequest.of(page, 8);
+    public List<ProductResponse> getProductsByCategory(String category, int page, String sortBy, String order) {
+
+        if(sortBy == null){
+            sortBy = "name";
+        }
+        if(order == null){
+            order="ascending";
+        }
+
+        Sort sort = Sort.by(sortBy).ascending();
+
+        if(order.equals("descending")){
+            sort = Sort.by(sortBy).descending();
+        }
+
+        log.info("order is {}", order);
+
+        Pageable pageable = PageRequest.of(page, 8, sort);
         return productRepository.findByCategory_NameIgnoreCase(category, pageable)
                 .stream()
                 .map(ProductUtil::toDto)

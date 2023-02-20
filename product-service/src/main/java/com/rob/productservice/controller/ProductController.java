@@ -36,8 +36,8 @@ public class ProductController {
     }
 
     @GetMapping()
-    public List<ProductResponse> getProductsByCategoryPageable(@RequestParam String category, @RequestParam int page){
-        return productService.getProductsByCategory(category, page);
+    public List<ProductResponse> getProductsByCategoryPageable(@RequestParam String category, @RequestParam int page, @RequestParam(required = false) String sortBy, @RequestParam(required = false) String order){
+        return productService.getProductsByCategory(category, page, sortBy, order);
     }
 
     @Transactional

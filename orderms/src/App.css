@@ -402,3 +402,11 @@ input[type="number"] {
     transform: rotate(360deg);
   }
 }
+
+.products-select {
+  border: none;
+  outline: none;
+  padding: 0.5rem 1.5rem 0.5rem 0.3rem;
+  background-color: var(--bg-gray);
+  border-bottom: 1px solid black;
+}
