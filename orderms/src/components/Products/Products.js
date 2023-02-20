@@ -6,10 +6,12 @@ import { useNavigate } from "react-router"
 import SingleProduct from "./SingleProduct"
 import { Link } from "react-router-dom"
 import { useSearchParams } from "react-router-dom"
+import LoadingIcon from "../LoadingIcon"
 function Products() {
   const appState = useContext(StateContext)
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
+  const [loading, isLoading] = useState(false)
   const category = searchParams.get("category")
   const page = searchParams.get("page")
   const [state, setState] = useImmer({
@@ -19,6 +21,7 @@ function Products() {
 
   useEffect(() => {
     if (appState.loggedIn) {
+      isLoading(prev => (prev = true))
       const ourRequest = Axios.CancelToken.source()
       async function fetchData() {
         try {
@@ -29,6 +32,7 @@ function Products() {
           setState(draft => {
             draft.products = responseProducts.data
           })
+          isLoading(prev => (prev = false))
         } catch (e) {
           console.log("there was a problem fetching the data " + e)
         }
@@ -47,7 +51,6 @@ function Products() {
       draft.reloadCounter++
     })
   }
-
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
       <div className="d-flex orders-top p-4 align-items-center">
@@ -79,10 +82,14 @@ function Products() {
           </div>
         </div>
 
-        <div className="bg-white container d-flex flex-wrap mt-4 ms-2 orders p-3 justify-content-aroun">
-          {state.products.map(product => {
-            return <SingleProduct product={product} key={product.id} refresh={refresh} />
-          })}
+        <div className="bg-white container d-flex flex-wrap mt-4 ms-2 orders p-3 justify-content-around">
+          {loading ? (
+            <LoadingIcon />
+          ) : (
+            state.products.map(product => {
+              return <SingleProduct product={product} key={product.id} refresh={refresh} />
+            })
+          )}
         </div>
         <div className="mt-2 ms-2 fs-3">
           <Link to={`/products?category=${category}&page=${0}`} onClick={refresh} className="me-3 fc-blue">
