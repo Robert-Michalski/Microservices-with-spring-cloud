@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react"
+import React, { useEffect, useContext, useState } from "react"
 import StateContext from "../../StateContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
@@ -11,6 +11,7 @@ function Products() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const category = searchParams.get("category")
+  const page = searchParams.get("page")
   const [state, setState] = useImmer({
     products: [],
     reloadCounter: 0
@@ -21,12 +22,15 @@ function Products() {
       const ourRequest = Axios.CancelToken.source()
       async function fetchData() {
         try {
-          const responseProducts = await Axios.get(`/api/product?category=` + category, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          const url = new URL("http://localhost:8011/api/product")
+          url.searchParams.append("category", category)
+          url.searchParams.append("page", page)
+          const responseProducts = await Axios.get(url, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           setState(draft => {
             draft.products = responseProducts.data
           })
         } catch (e) {
-          console.log("there was a problem fetching the data")
+          console.log("there was a problem fetching the data " + e)
         }
       }
       fetchData()
@@ -75,7 +79,7 @@ function Products() {
           </div>
         </div>
 
-        <div className="bg-white container d-flex flex-wrap mt-4 ms-2 orders p-3 justify-content-between">
+        <div className="bg-white container d-flex flex-wrap mt-4 ms-2 orders p-3 justify-content-aroun">
           {state.products.map(product => {
             return <SingleProduct product={product} key={product.id} refresh={refresh} />
           })}

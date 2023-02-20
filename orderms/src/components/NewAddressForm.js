@@ -2,8 +2,12 @@ import { useContext } from "react"
 import StateContext from "../StateContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
+import DispatchContext from "../DispatchContext"
+import { useNavigate } from "react-router"
 function NewAddressForm() {
   const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
+  const navigate = useNavigate()
   const [state, setState] = useImmer({
     address: "",
     city: "",
@@ -15,6 +19,10 @@ function NewAddressForm() {
     try {
       const ourRequest = Axios.CancelToken.source()
       const response = await Axios.post("/api/address", { userId: appState.user.id, address: state.address, city: state.city, country: state.country, postalCode: state.postalCode }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      if (response.request.status === 201) {
+        appDispatch({ type: "liveMessage", value: "Address added succesfully" })
+        navigate("/cart")
+      }
     } catch (e) {
       console.log("Something went wrong during address adding " + e)
     }

@@ -35,9 +35,9 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping
-    public List<ProductResponse> getProductsByCategory(@RequestParam String category){
-        return productService.getProductsByCategory(category);
+    @GetMapping()
+    public List<ProductResponse> getProductsByCategoryPageable(@RequestParam String category, @RequestParam int page){
+        return productService.getProductsByCategory(category, page);
     }
 
     @Transactional

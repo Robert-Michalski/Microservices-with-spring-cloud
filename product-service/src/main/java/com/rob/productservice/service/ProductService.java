@@ -1,7 +1,6 @@
 package com.rob.productservice.service;
 
 import com.rob.productservice.dto.ProductRequest;
-import com.rob.productservice.dto.ProductRequestNew;
 import com.rob.productservice.dto.ProductResponse;
 import com.rob.productservice.dto.ProductStockRequest;
 import com.rob.productservice.entity.Category;
@@ -9,9 +8,10 @@ import com.rob.productservice.entity.Product;
 import com.rob.productservice.repository.CategoryRepository;
 import com.rob.productservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -124,8 +123,9 @@ public class ProductService {
         return true;
     }
 
-    public List<ProductResponse> getProductsByCategory(String category) {
-        return productRepository.findByCategory_NameIgnoreCase(category)
+    public List<ProductResponse> getProductsByCategory(String category, int page) {
+        Pageable pageable = PageRequest.of(page, 8);
+        return productRepository.findByCategory_NameIgnoreCase(category, pageable)
                 .stream()
                 .map(ProductUtil::toDto)
                 .toList();
