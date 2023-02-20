@@ -12,6 +12,8 @@ function Products() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const [loading, isLoading] = useState(false)
+  const [sortBy, setSortBy] = useState("price")
+  const [order, setOrder] = useState("descending")
   const category = searchParams.get("category")
   const page = searchParams.get("page")
   const [state, setState] = useImmer({
@@ -28,8 +30,8 @@ function Products() {
           const url = new URL("http://localhost:8011/api/product")
           url.searchParams.append("category", category)
           url.searchParams.append("page", page)
-          url.searchParams.append("sortBy", "price")
-          url.searchParams.append("order", "descending")
+          url.searchParams.append("sortBy", sortBy)
+          url.searchParams.append("order", order)
           const responseProducts = await Axios.get(url, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
           setState(draft => {
             draft.products = responseProducts.data
@@ -76,9 +78,26 @@ function Products() {
           <div className="ms-auto"></div>
           <div className="me-5">
             Sort by
-            <select className="ms-2 products-select">
-              <option>Name</option>
-              <option>Price</option>
+            <select
+              className="ms-2 products-select"
+              onChange={e => {
+                setSortBy(prev => (prev = e.target.value))
+                refresh()
+                console.log("click")
+              }}
+            >
+              <option value="name">Name</option>
+              <option value="price">Price</option>
+            </select>
+            <select
+              className="ms-2 products-select"
+              onChange={e => {
+                setOrder(prev => e.target.value)
+                refresh()
+              }}
+            >
+              <option value="ascending">asc</option>
+              <option value="descending">desc</option>
             </select>
           </div>
           {appState.user.role === "ROLE_ADMIN" || appState.user.role === "ROLE_MANAGER" ? (
