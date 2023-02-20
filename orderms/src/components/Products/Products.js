@@ -12,8 +12,8 @@ function Products() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const [loading, isLoading] = useState(false)
-  const [sortBy, setSortBy] = useState("price")
-  const [order, setOrder] = useState("descending")
+  const [sortBy, setSortBy] = useState("name")
+  const [order, setOrder] = useState("")
   const category = searchParams.get("category")
   const page = searchParams.get("page")
   const [state, setState] = useImmer({
