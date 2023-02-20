@@ -84,6 +84,14 @@ function Products() {
             return <SingleProduct product={product} key={product.id} refresh={refresh} />
           })}
         </div>
+        <div className="mt-2 ms-2 fs-3">
+          <Link to={`/products?category=${category}&page=${0}`} onClick={refresh} className="me-3 fc-blue">
+            1
+          </Link>
+          <Link to={`/products?category=${category}&page=${1}`} onClick={refresh} className="fc-blue">
+            2
+          </Link>
+        </div>
       </div>
     </div>
   )

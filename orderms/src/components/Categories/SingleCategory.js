@@ -4,7 +4,7 @@ function SingleCategory(props) {
   return (
     <div className="d-flex category mb-3">
       <div className="category-img col-2">{GetImage(props.img)}</div>
-      <Link to={"/products?category=" + props.category.name} className="align-self-center fs-2 fw-bold ms-4">
+      <Link to={`/products?category=${props.category.name}&page=0`} className="align-self-center fs-2 fw-bold ms-4">
         {props.category.name}
       </Link>
     </div>
