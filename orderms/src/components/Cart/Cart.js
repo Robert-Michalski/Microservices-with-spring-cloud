@@ -8,6 +8,7 @@ import { useImmer } from "use-immer"
 import SummaryView from "./SummaryView"
 import DispatchContext from "../../DispatchContext"
 import { useNavigate } from "react-router"
+import MainTop from "../MainTop"
 function Cart() {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
@@ -78,12 +79,7 @@ function Cart() {
 
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
-      <div className="d-flex orders-top p-4 align-items-center">
-        <div className="ms-4">Cart</div>
-        <span className="material-symbols-outlined ms-auto">search</span>
-        <span className="material-symbols-outlined ms-3">notifications</span>
-        <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
-      </div>
+      <MainTop label="Cart" />
       <hr />
       <div className="container p-3 d-flex flex-column">{state.showing === "cart" ? <CartView shoppingCart={state.shoppingCart} nextView={nextStep} refresh={refresh} /> : state.showing === "delivery" ? <DeliveryView shoppingCart={state.shoppingCart} nextView={nextStep} updateAddress={updateAddressToDeliver} /> : <SummaryView shoppingCart={state.shoppingCart} addressToDeliver={state.addressToDeliver} handleOrder={handleOrder} />}</div>
     </div>

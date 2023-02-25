@@ -7,6 +7,7 @@ import SingleProduct from "./SingleProduct"
 import { Link } from "react-router-dom"
 import { useSearchParams } from "react-router-dom"
 import LoadingIcon from "../LoadingIcon"
+import MainTop from "../MainTop"
 function Products() {
   const appState = useContext(StateContext)
   const navigate = useNavigate()
@@ -57,12 +58,7 @@ function Products() {
   }
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
-      <div className="d-flex orders-top p-4 align-items-center">
-        <div className="ms-4">Products</div>
-        <span className="material-symbols-outlined ms-auto">search</span>
-        <span className="material-symbols-outlined ms-3">notifications</span>
-        <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
-      </div>
+      <MainTop label="Products" />
       <hr />
       <div className="mt-4 ms-5 fs-5">
         Home &gt;

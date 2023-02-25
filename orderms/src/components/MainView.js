@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import Navigation from "./Navigation"
 function MainView(props) {
   return (

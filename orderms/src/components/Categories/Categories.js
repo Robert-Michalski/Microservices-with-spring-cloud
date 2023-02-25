@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from "react"
 import StateContext from "../../StateContext"
 import Axios from "axios"
 import SingleCategory from "./SingleCategory"
+import MainTop from "../MainTop"
 function Categories() {
   const appState = useContext(StateContext)
   const [categories, setCategories] = useState([])
@@ -20,12 +21,7 @@ function Categories() {
 
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
-      <div className="d-flex orders-top p-4 align-items-center">
-        <div className="ms-4">Products</div>
-        <span className="material-symbols-outlined ms-auto">search</span>
-        <span className="material-symbols-outlined ms-3">notifications</span>
-        <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
-      </div>
+      <MainTop label="Products" />
       <hr />
       <div className="container p-3">
         <div className="d-flex align-items-center">

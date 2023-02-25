@@ -4,6 +4,7 @@ import Axios from "axios"
 import { useNavigate } from "react-router"
 import StateContext from "../StateContext"
 import DashboardInfoBox from "./DashboardInfoBox"
+import MainTop from "./MainTop"
 function Dashboard() {
   const navigate = useNavigate()
   const appState = useContext(StateContext)
@@ -42,12 +43,7 @@ function Dashboard() {
 
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
-      <div className="d-flex orders-top p-4 align-items-center">
-        <div className="ms-4">Dashboard</div>
-        <span className="material-symbols-outlined ms-auto">search</span>
-        <span className="material-symbols-outlined ms-3">notifications</span>
-        <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
-      </div>
+      <MainTop label="Dashboard" />
       <hr />
       <div className="container p-3">
         <div className="d-flex flex-column">
