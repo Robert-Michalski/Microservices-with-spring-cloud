@@ -147,4 +147,11 @@ public class ProductService {
                 .map(ProductUtil::toDto)
                 .toList();
     }
+
+    public List<ProductResponse> search(String name) {
+        return productRepository.findByNameContainsIgnoreCase(name)
+                .stream()
+                .map(ProductUtil::toDto)
+                .toList();
+    }
 }

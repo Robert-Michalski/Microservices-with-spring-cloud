@@ -75,4 +75,9 @@ public class ProductController {
     public boolean isInStock(@RequestBody ProductStockRequest request){
         return productService.isInStock(request);
     }
+
+    @GetMapping("/search")
+    public List<ProductResponse> search(@RequestParam String name){
+        return productService.search(name);
+    }
 }
