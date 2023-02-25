@@ -420,11 +420,21 @@ input[type="number"] {
 }
 .search {
   z-index: 3;
-  left: -300px;
+  left: -40px;
   top: -100px;
   color: black;
-  min-width: 1600px;
+  font-size: 1rem;
+  min-width: 1200px;
   min-height: 900px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.94);
   border-radius: 10px;
+}
+.search input {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
+  outline: none;
+}
+.search input:focus {
+  outline: none;
 }
