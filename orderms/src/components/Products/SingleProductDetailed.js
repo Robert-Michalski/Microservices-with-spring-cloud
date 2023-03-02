@@ -16,6 +16,7 @@ function SingleProductDetailed() {
   const appDispatch = useContext(DispatchContext)
   const { id } = useParams()
   const [product, setProduct] = useState({})
+  const [amount, setAmount] = useState(1)
 
   useEffect(() => {
     async function fetchProduct() {
@@ -33,7 +34,7 @@ function SingleProductDetailed() {
   async function handleAdd() {
     const ourRequest = Axios.CancelToken.source()
     try {
-      const productResponse = await Axios.post("/api/order", { productId: product.id, quantity: 1, customerId: appState.user.id }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      const productResponse = await Axios.post("/api/order", { productId: product.id, quantity: amount, customerId: appState.user.id }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
       if (productResponse.request.status === 201) {
         appDispatch({ type: "flashMessage", value: "Item added to cart !" })
       }
@@ -72,7 +73,7 @@ function SingleProductDetailed() {
                 <div className="text-end">
                   <span className="fs-4">{product.price}.00 PLN</span>
                   <div className="d-flex mt-3">
-                    <input type="number" className="col-2 text-center" value="1" />
+                    <input type="number" className="col-3 text-center" value={amount} onChange={e => setAmount(prev => (prev = e.target.value))} />
                     <button className="ms-auto bg-green fc-white d-flex p-2 col-8 fs-5 align-items-center" onClick={handleAdd}>
                       <span className="material-symbols-outlined me-3">add_shopping_cart</span>Add to cart
                     </button>
