@@ -20,6 +20,7 @@ import Cart from "./components/Cart/Cart.js"
 import Categories from "./components/Categories/Categories"
 import SingleProductDetailed from "./components/Products/SingleProductDetailed"
 import NewAddressForm from "./components/NewAddressForm"
+import Notification from "./components/Notification/Notification"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -104,6 +105,7 @@ function App() {
             <Route path="/dashboard" element={<MainView view={Dashboard} />} />
             <Route path="/notFound" element={<NotFound />} />
             <Route path="/user/address/new" element={<MainView view={NewAddressForm} />} />
+            <Route path="/not" element={<Notification />} />
           </Routes>
         </BrowserRouter>
       </DispatchContext.Provider>
