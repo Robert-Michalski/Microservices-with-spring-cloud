@@ -164,11 +164,30 @@ public class OrderService {
         }
     }
 
-    public String deleteProductFromOrder(long orderId, long productId) {
+    public String deleteProductFromOrder(long orderId, long productId, Integer amountToDelete) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
-        long recordsDeleted = orderDetailsRepository.deleteByOrderIdAndProductId(order.getId(), productId);
-        log.info("Deleting productId: {}, deleted {} records", productId, recordsDeleted);
-        if (recordsDeleted > 0) {
+
+        OrderDetails orderDetails = orderDetailsRepository.findByOrder_IdAndProductId(orderId, productId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        boolean deleteSuccesfull = false;
+        // if just decreasing amount
+        if(orderDetails.getQuantity() > amountToDelete){
+            log.info("Decreasing amount from {} to {}", orderDetails.getQuantity(), orderDetails.getQuantity()-amountToDelete);
+            orderDetails.setQuantity(orderDetails.getQuantity()-amountToDelete);
+            orderDetailsRepository.save(orderDetails);
+            deleteSuccesfull = true;
+        }
+        // if deleting whole order
+        else {
+            log.info("Deleting whole order");
+            long recordsDeleted = orderDetailsRepository.deleteByOrderIdAndProductId(order.getId(), productId);
+            log.info("Deleting productId: {}, deleted {} records", productId, recordsDeleted);
+            if(recordsDeleted > 0 ){
+                deleteSuccesfull=true;
+            }
+        }
+
+        if (deleteSuccesfull) {
             return "Delete";
         } else {
             return "Something went wrong";

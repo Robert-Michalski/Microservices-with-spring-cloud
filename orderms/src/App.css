@@ -438,3 +438,6 @@ input[type="number"] {
 .search input:focus {
   outline: none;
 }
+.borderless {
+  border: none;
+}

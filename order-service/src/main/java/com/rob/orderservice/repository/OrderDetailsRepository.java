@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Long> {
 
     @Modifying
@@ -18,6 +20,8 @@ public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Long
     @Transactional
     @Modifying
     long deleteByOrderIdAndProductId(long orderId, long productId);
+
+    Optional<OrderDetails> findByOrder_IdAndProductId(Long id, long productId);
 
 
 }

@@ -31,7 +31,7 @@ function CartView(props) {
         {props.shoppingCart.length === 0 ? (
           "There are no items in cart yet"
         ) : (
-          <div className="col-7">
+          <div className="col-8">
             <ProductsMap shoppingCart={props.shoppingCart} refresh={props.refresh} />
           </div>
         )}

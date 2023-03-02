@@ -52,8 +52,8 @@ public class OrderController {
         return orderService.deleteOrderById(id);
     }
 
-    @DeleteMapping("{id}/product")
-    public String deleteProductFromOrder(@PathVariable long id, @RequestParam long productId){
-        return orderService.deleteProductFromOrder(id, productId);
+    @DeleteMapping("{orderId}/product")
+    public String deleteProductFromOrder(@PathVariable long orderId, @RequestParam long productId, @RequestParam(required = false) Integer amountToDelete){
+        return orderService.deleteProductFromOrder(orderId, productId, amountToDelete);
     }
 }
