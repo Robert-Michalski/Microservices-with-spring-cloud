@@ -1,4 +1,4 @@
 package rob.notificationservice;
 
-public record HelloMessage(String message) {
+public record HelloMessage(long recipientId, String message) {
 }
