@@ -441,3 +441,9 @@ input[type="number"] {
 .borderless {
   border: none;
 }
+.notification-count {
+  left: 40px;
+  top: -15px;
+  color: red;
+  font-weight: bold;
+}

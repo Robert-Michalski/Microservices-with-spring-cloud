@@ -20,7 +20,6 @@ import Cart from "./components/Cart/Cart.js"
 import Categories from "./components/Categories/Categories"
 import SingleProductDetailed from "./components/Products/SingleProductDetailed"
 import NewAddressForm from "./components/NewAddressForm"
-import NotificationService from "./components/Notification/NotificationService"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -90,7 +89,6 @@ function App() {
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
-        <NotificationService />
         <BrowserRouter>
           <FlashMessages messages={state.flashMessages} />
           <Routes>
@@ -106,7 +104,6 @@ function App() {
             <Route path="/dashboard" element={<MainView view={Dashboard} />} />
             <Route path="/notFound" element={<NotFound />} />
             <Route path="/user/address/new" element={<MainView view={NewAddressForm} />} />
-            <Route path="/not" element={<NotificationService />} />
           </Routes>
         </BrowserRouter>
       </DispatchContext.Provider>
