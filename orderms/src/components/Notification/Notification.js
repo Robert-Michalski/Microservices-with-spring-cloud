@@ -76,7 +76,7 @@ function Notification() {
                         </span>
                       )}
                     </div>
-                    <div id="notification-date" className="align-self-end d-flex">
+                    <div id="notification-date" className="mt-auto">
                       <span>{formatDate(notification.timestamp)}</span>
                     </div>
                   </div>
