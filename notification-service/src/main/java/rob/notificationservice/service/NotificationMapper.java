@@ -17,6 +17,7 @@ public class NotificationMapper {
     }
     public static NotificationResponse toDto(Notification notification){
         return NotificationResponse.builder()
+                .id(notification.getId())
                 .content(notification.getContent())
                 .timestamp(notification.getTimestamp())
                 .isRead(notification.isRead())

@@ -5,5 +5,5 @@ import lombok.Builder;
 import java.time.LocalDateTime;
 
 @Builder
-public record NotificationResponse(String content, LocalDateTime timestamp, boolean isRead) {
+public record NotificationResponse(long id, String content, LocalDateTime timestamp, boolean isRead) {
 }
