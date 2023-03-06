@@ -457,3 +457,9 @@ input[type="number"] {
   max-width: 300px;
   z-index: 3;
 }
+.single-notification {
+  border-bottom: 1px solid black;
+}
+#notification-x {
+  font-size: 20px;
+}
