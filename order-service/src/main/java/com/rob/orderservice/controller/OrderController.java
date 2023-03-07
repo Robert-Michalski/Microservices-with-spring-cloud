@@ -37,23 +37,30 @@ public class OrderController {
         return orderService.countAll();
     }
 
+    @GetMapping("/pendingCount")
+    public long getCountOfPendingOrders() {
+        return orderService.getCountOfPendingOrders();
+    }
+
     @GetMapping("cart/{customerId}")
-    public Set<CartItemResponse> showCartItems(@PathVariable Long customerId){
+    public Set<CartItemResponse> showCartItems(@PathVariable Long customerId) {
         return orderService.showCartItems(customerId);
     }
 
     @PatchMapping("status")
-    public OrderResponse updateOrderStatus(@RequestBody OrderUpdateStatusRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+    public OrderResponse updateOrderStatus(@RequestBody OrderUpdateStatusRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return orderService.updateOrderStatus(request, token);
     }
 
     @DeleteMapping("{id}")
-    public String deleteOrder(@PathVariable long id){
+    public String deleteOrder(@PathVariable long id) {
         return orderService.deleteOrderById(id);
     }
 
     @DeleteMapping("{orderId}/product")
-    public String deleteProductFromOrder(@PathVariable long orderId, @RequestParam long productId, @RequestParam(required = false) Integer amountToDelete){
+    public String deleteProductFromOrder(@PathVariable long orderId, @RequestParam long productId, @RequestParam(required = false) Integer amountToDelete) {
         return orderService.deleteProductFromOrder(orderId, productId, amountToDelete);
     }
+
+
 }

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import { Link } from "react-router-dom"
 
 function DashboardInfoBox(props) {
   return (
@@ -10,7 +11,9 @@ function DashboardInfoBox(props) {
       <hr />
       <div className="fs-3">{props.count}</div>
       <div className="ms-auto mt-2">
-        <small>More info -&gt;</small>
+        <Link to={props.link}>
+          <small>More info -&gt;</small>
+        </Link>
       </div>
     </div>
   )

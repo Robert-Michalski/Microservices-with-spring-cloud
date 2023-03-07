@@ -193,5 +193,11 @@ public class OrderService {
             return "Something went wrong";
         }
     }
+
+    public long getCountOfPendingOrders() {
+        return orderRepository.findAll().stream()
+                .filter(order -> order.getStatus() == Status.RECEIVED)
+                .count();
+    }
 }
 

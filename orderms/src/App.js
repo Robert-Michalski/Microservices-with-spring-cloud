@@ -10,7 +10,7 @@ import { useEffect } from "react"
 import Register from "./components/Register"
 import Products from "./components/Products/Products"
 import MainView from "./components/MainView"
-import Dashboard from "./components/Dashboard"
+import Dashboard from "./components/Dashboard/Dashboard"
 import Cookies from "universal-cookie"
 import jwt from "jwt-decode"
 import AddProductPage from "./components/Products/AddProductPage"
@@ -20,6 +20,7 @@ import Cart from "./components/Cart/Cart.js"
 import Categories from "./components/Categories/Categories"
 import SingleProductDetailed from "./components/Products/SingleProductDetailed"
 import NewAddressForm from "./components/NewAddressForm"
+import OrdersPending from "./components/Dashboard/OrdersPending"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -102,6 +103,7 @@ function App() {
             <Route path="/products/:id" element={<MainView view={SingleProductDetailed} />} />
             <Route path="/cart" element={<MainView view={Cart} />} />
             <Route path="/dashboard" element={<MainView view={Dashboard} />} />
+            <Route path="/dashboard/ordersPending" element={<MainView view={OrdersPending} />} />
             <Route path="/notFound" element={<NotFound />} />
             <Route path="/user/address/new" element={<MainView view={NewAddressForm} />} />
           </Routes>
