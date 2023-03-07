@@ -3,11 +3,12 @@ package com.rob.orderservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,7 +21,9 @@ public class Order {
     private Set<OrderDetails> orderDetails;
     private long customerId;
     private long addressId;
-    private Date orderDate;
+
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime orderDate;
     @Enumerated(EnumType.STRING)
     private Status status;
 

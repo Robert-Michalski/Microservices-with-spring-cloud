@@ -1,9 +1,6 @@
 package com.rob.orderservice.service;
 
-import com.rob.orderservice.dto.CartItemResponse;
-import com.rob.orderservice.dto.OrderRequest;
-import com.rob.orderservice.dto.OrderResponse;
-import com.rob.orderservice.dto.OrderUpdateStatusRequest;
+import com.rob.orderservice.dto.*;
 import com.rob.orderservice.entity.Order;
 import com.rob.orderservice.entity.OrderDetails;
 import com.rob.orderservice.entity.Status;
@@ -18,7 +15,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -50,7 +51,7 @@ public class OrderService {
             log.info("New order will be handled");
             Order order = orderRepository.save(Order.builder()
                     .orderDetails(new HashSet<>())
-                    .orderDate(Date.from(Instant.now()))
+                    .orderDate(LocalDateTime.now())
                     .customerId(orderRequest.customerId())
                     .status(Status.CART).build());
 
@@ -125,7 +126,6 @@ public class OrderService {
             Order savedOrder = orderRepository.save(orderToUpdate);
             log.info("Order after updating status {}", savedOrder);
 
-
             return OrderUtil.toDto(savedOrder);
         } else {
             log.info("Not enough product in stock");
@@ -133,6 +133,7 @@ public class OrderService {
         }
 
     }
+
 
     private boolean checkIfProductsAreAvailableAndDecreaseTheirQuantity(Set<OrderDetails> orderRequests, String token) {
         Map<Long, Integer> productsIdsToQuantity = new HashMap<>();
@@ -198,6 +199,29 @@ public class OrderService {
         return orderRepository.findAll().stream()
                 .filter(order -> order.getStatus() == Status.RECEIVED)
                 .count();
+    }
+
+    public Set<ReceivedItemResponse> getPendingOrders() {
+        Set<ReceivedItemResponse> receivedItemResponses = new HashSet<>();
+        orderRepository.getReceivedOrders().forEach(item -> {
+
+            String[] values = item.split(Pattern.quote(","));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            ReceivedItemResponse receivedItemResponse = ReceivedItemResponse.builder()
+                    .productName(values[0])
+                    .quantity(Integer.parseInt(values[1]))
+                    .price(Double.parseDouble(values[2]))
+                    .orderId(Long.parseLong(values[3]))
+                    .productId(Long.parseLong(values[4]))
+                    .userId(Long.parseLong(values[5]))
+                    .orderDate(LocalDateTime.parse(values[6].substring(0, 19), formatter))
+                    .addressId(Long.parseLong(values[7]))
+                    .build();
+            receivedItemResponses.add(receivedItemResponse);
+        });
+        return receivedItemResponses;
+
     }
 }
 

@@ -1,9 +1,6 @@
 package com.rob.orderservice.controller;
 
-import com.rob.orderservice.dto.CartItemResponse;
-import com.rob.orderservice.dto.OrderRequest;
-import com.rob.orderservice.dto.OrderResponse;
-import com.rob.orderservice.dto.OrderUpdateStatusRequest;
+import com.rob.orderservice.dto.*;
 import com.rob.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -51,7 +48,6 @@ public class OrderController {
     public OrderResponse updateOrderStatus(@RequestBody OrderUpdateStatusRequest request, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         return orderService.updateOrderStatus(request, token);
     }
-
     @DeleteMapping("{id}")
     public String deleteOrder(@PathVariable long id) {
         return orderService.deleteOrderById(id);
@@ -62,5 +58,8 @@ public class OrderController {
         return orderService.deleteProductFromOrder(orderId, productId, amountToDelete);
     }
 
-
+    @GetMapping("pending")
+    public Set<ReceivedItemResponse> getPendingOrders(){
+        return orderService.getPendingOrders();
+    }
 }
