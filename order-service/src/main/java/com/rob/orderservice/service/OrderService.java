@@ -124,7 +124,11 @@ public class OrderService {
             orderToUpdate.setStatus(request.status());
             orderToUpdate.setAddressId(request.addressId());
             Order savedOrder = orderRepository.save(orderToUpdate);
+
             log.info("Order after updating status {}", savedOrder);
+
+            sendNotification(orderToUpdate.getCustomerId(),
+                    "Your order was updated to "+request.status(), token);
 
             return OrderUtil.toDto(savedOrder);
         } else {
@@ -222,6 +226,23 @@ public class OrderService {
         });
         return receivedItemResponses;
 
+    }
+
+    private boolean sendNotification(long recipientId, String content, String token){
+        NotificationDTO notificationDTO = NotificationDTO.builder()
+                .content(content)
+                .recipientId(recipientId)
+                .build();
+
+        Boolean result = webClient.post()
+                .uri("http://localhost:9090/api/notification/send")
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .bodyValue(notificationDTO)
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+
+        return result;
     }
 }
 

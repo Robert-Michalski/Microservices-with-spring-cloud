@@ -20,7 +20,7 @@ public class NotificationController {
 
     @PostMapping("/send")
     @ResponseStatus(HttpStatus.CREATED)
-    public NotificationResponse sendMessage(@RequestBody NotificationRequest request){
+    public boolean sendMessage(@RequestBody NotificationRequest request){
         return notificationService.sendAndSaveNotification(request);
     }
 

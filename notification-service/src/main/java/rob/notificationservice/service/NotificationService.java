@@ -21,7 +21,7 @@ public class NotificationService {
     private final SimpMessagingTemplate template;
 
 
-    public NotificationResponse sendAndSaveNotification(NotificationRequest notificationRequest) {
+    public boolean sendAndSaveNotification(NotificationRequest notificationRequest) {
 
         Notification notification = NotificationMapper.toEntity(notificationRequest);
         notification.setRead(false);
@@ -33,7 +33,7 @@ public class NotificationService {
         template.convertAndSendToUser(String.valueOf(notificationRequest.recipientId()),
                 "/queue/messages", response);
 
-        return response;
+        return true;
     }
 
 
