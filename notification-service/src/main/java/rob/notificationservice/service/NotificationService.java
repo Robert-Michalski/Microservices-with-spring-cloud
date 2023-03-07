@@ -1,6 +1,7 @@
 package rob.notificationservice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class NotificationService {
 
     public List<NotificationResponse> getAllNotificationsById(Long userId) {
 
-        return notificationRepository.findByRecipientId(userId)
+        return notificationRepository.findByRecipientId(userId, Sort.by("timestamp").descending())
                 .stream()
                 .map(NotificationMapper::toDto)
                 .toList();
