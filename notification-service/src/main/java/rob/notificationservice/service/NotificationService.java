@@ -37,6 +37,7 @@ public class NotificationService {
 
 
     public List<NotificationResponse> getAllNotificationsById(Long userId) {
+
         return notificationRepository.findByRecipientId(userId)
                 .stream()
                 .map(NotificationMapper::toDto)
