@@ -1,5 +1,6 @@
 package rob.notificationservice.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import rob.notificationservice.model.entity.Notification;
 

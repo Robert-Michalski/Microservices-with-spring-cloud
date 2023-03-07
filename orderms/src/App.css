@@ -455,6 +455,8 @@ input[type="number"] {
   min-width: 400px;
   max-width: 400px;
   z-index: 3;
+  max-height: 550px;
+  overflow-y: auto;
 }
 .single-notification {
   border-radius: 10px;

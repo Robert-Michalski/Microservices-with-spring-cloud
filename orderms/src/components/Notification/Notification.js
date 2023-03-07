@@ -50,14 +50,14 @@ function Notification() {
     return new Date(timestamp).toLocaleString()
   }
   return (
-    <div className="d-flex relative">
+    <div className="d-flex relative ">
       <span className="material-symbols-outlined ms-3" onClick={() => setNotificationsVisible(prev => !prev)}>
         notifications
       </span>
       {notificationCount === 0 ? null : <div className="absolute notification-count">{notificationCount}</div>}
-      {notificationsVisible ? (
+      {notificationsVisible && notifications.length > 0 ? (
         <div className="absolute notifications d-flex flex-column bg-white">
-          {notifications.map(notification => {
+          {notifications.map((notification, index) => {
             return (
               <>
                 <div className={"col-12 single-notification p-2 d-flex " + getBackground(notification.isRead)} key={notification.id}>
