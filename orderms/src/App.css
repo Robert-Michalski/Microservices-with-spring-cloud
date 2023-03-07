@@ -441,3 +441,29 @@ input[type="number"] {
 .borderless {
   border: none;
 }
+.notification-count {
+  left: 40px;
+  top: -15px;
+  color: red;
+  font-weight: bold;
+}
+.notifications {
+  top: 50px;
+  border-radius: 10px;
+  border: 1px solid black;
+  left: -150px;
+  min-width: 400px;
+  max-width: 400px;
+  z-index: 3;
+}
+.single-notification {
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: normal;
+}
+#notification-x {
+  font-size: 20px;
+}
+#notification-date {
+  font-size: 0.7rem;
+}

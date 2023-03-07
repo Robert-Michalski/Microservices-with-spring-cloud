@@ -3,6 +3,7 @@ import StateContext from "../StateContext"
 import Axios from "axios"
 import LoadingIcon from "./LoadingIcon"
 import SingleProductSmall from "./Products/SingleProductSmall"
+import Notification from "./Notification/Notification"
 function MainTop(props) {
   const appState = useContext(StateContext)
   const [showSearch, setShowSearch] = useState(false)
@@ -69,10 +70,12 @@ function MainTop(props) {
         </div>
       ) : null}
       <div className="ms-4">{props.label}</div>
-      <span className="material-symbols-outlined ms-auto" onClick={toggleSearch}>
-        search
-      </span>
-      <span className="material-symbols-outlined ms-3">notifications</span>
+      <div className="ms-auto d-flex">
+        <span className="material-symbols-outlined " onClick={toggleSearch}>
+          search
+        </span>
+      </div>
+      <Notification />
       <div className="ms-5">{appState.user.firstName + " " + appState.user.lastName}</div>
     </div>
   )
