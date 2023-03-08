@@ -57,6 +57,9 @@ function SingleOrderDetailed() {
                     <div className="w-100 mt-2"></div>
                     <div className="col-sm"> Total :</div>
                     <div className="col-sm"> {(product.price * product.quantityOrdered).toFixed(2) + " PLN"}</div>
+                    <div className="w-100 mt-2"></div>
+                    <div className="col-sm"> Status :</div>
+                    <div className="col-sm"> {order.status}</div>
                   </div>
                 </div>
               )
