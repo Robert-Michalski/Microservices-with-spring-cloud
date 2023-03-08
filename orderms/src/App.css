@@ -474,3 +474,6 @@ input[type="number"] {
   box-shadow: 1px 1px 4px 1px black;
   padding: 0.5rem 1rem;
 }
+.order-history-name {
+  min-height: 120px;
+}

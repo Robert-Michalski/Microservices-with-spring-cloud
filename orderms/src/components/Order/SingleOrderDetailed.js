@@ -44,13 +44,20 @@ function SingleOrderDetailed() {
           <div className="d-flex flex-wrap col-12 mt-3">
             {order.products.map((product, index) => {
               return (
-                <div className="ms-2 mt-2 col-5 d-flex flex-column order-product-card" key={index}>
-                  <Link to={"/products/" + product.productId} className="fc-blue fs-4">
+                <div className="ms-2 mt-2 col-5 d-flex flex-column order-product-card " key={index}>
+                  <Link to={"/products/" + product.productId} className="fc-blue fs-4 order-history-name">
                     {product.productName}
                   </Link>
-                  <span className="mt-1">Price : {product.price.toFixed(2) + " PLN"}</span>
-                  <span className="mt-1">Quantity : {product.quantityOrdered}</span>
-                  <span className="mt-1">Total: {(product.price * product.quantityOrdered).toFixed(2) + " PLN"}</span>
+                  <div className="col-8 row fs-5">
+                    <div className="col-sm"> Price :</div>
+                    <div className="col-sm"> {product.price.toFixed(2) + " PLN"}</div>
+                    <div className="w-100 mt-2"></div>
+                    <div className="col-sm"> Quantity :</div>
+                    <div className="col-sm"> {product.quantityOrdered}</div>
+                    <div className="w-100 mt-2"></div>
+                    <div className="col-sm"> Total :</div>
+                    <div className="col-sm"> {(product.price * product.quantityOrdered).toFixed(2) + " PLN"}</div>
+                  </div>
                 </div>
               )
             })}
