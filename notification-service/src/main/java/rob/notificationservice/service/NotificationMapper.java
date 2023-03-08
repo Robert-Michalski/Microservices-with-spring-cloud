@@ -13,6 +13,7 @@ public class NotificationMapper {
                 .recipientId(notificationRequest.recipientId())
                 .content(notificationRequest.content())
                 .timestamp(LocalDateTime.now())
+                .type(notificationRequest.type())
                 .build();
     }
     public static NotificationResponse toDto(Notification notification){
@@ -21,6 +22,7 @@ public class NotificationMapper {
                 .content(notification.getContent())
                 .timestamp(notification.getTimestamp())
                 .isRead(notification.isRead())
+                .type(notification.getType())
                 .build();
     }
 }

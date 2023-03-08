@@ -1,6 +1,7 @@
 package com.rob.orderservice.service;
 
 import com.rob.orderservice.dto.*;
+import com.rob.orderservice.entity.NotificationType;
 import com.rob.orderservice.entity.Order;
 import com.rob.orderservice.entity.OrderDetails;
 import com.rob.orderservice.entity.Status;
@@ -26,6 +27,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailsRepository orderDetailsRepository;
     private final WebClient webClient;
+    private final NotificationSender notificationSender;
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     public List<OrderResponse> getOrdersOfUser(int id) {
@@ -123,8 +125,11 @@ public class OrderService {
 
             log.info("Order after updating status {}", savedOrder);
 
-            sendNotification(orderToUpdate.getCustomerId(),
-                    "Your order was updated to " + request.status(), token);
+            notificationSender.send(NotificationDTO.builder()
+                    .type(NotificationType.ORDER)
+                    .content("Your order was updated to " + request.status())
+                    .recipientId(orderToUpdate.getCustomerId())
+                    .build(), token);
 
             return OrderUtil.toDto(savedOrder);
         } else {
@@ -201,18 +206,6 @@ public class OrderService {
                 .count();
     }
 
-//    public Set<OrderDetailed> getPendingOrders(String token) {
-//        Set<OrderDetailed> orderDetailedSet = new HashSet<>();
-//
-//        orderRepository.getReceivedOrders().forEach(item -> {
-//
-//            receivedItemResponses.add();
-//        });
-//        return receivedItemResponses;
-//
-//    }
-
-
     public OrderDetailed getSingleOrderDetailedById(long orderId, String token) {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         Set<ProductResponse> productDetails = new HashSet<>();
@@ -254,22 +247,6 @@ public class OrderService {
         return orderDetailedSet;
 
     }
-
-    private Boolean sendNotification(long recipientId, String content, String token) {
-        NotificationDTO notificationDTO = NotificationDTO.builder()
-                .content(content)
-                .recipientId(recipientId)
-                .build();
-
-        return webClient.post()
-                .uri("http://localhost:9090/api/notification/send")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
-                .bodyValue(notificationDTO)
-                .retrieve()
-                .bodyToMono(Boolean.class)
-                .block();
-    }
-
 
 }
 
