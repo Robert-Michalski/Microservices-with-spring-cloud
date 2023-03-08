@@ -30,6 +30,11 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
+    @GetMapping("{id}/short")
+    public ProductResponseShort getShortProductById(@PathVariable Long id){
+        return productService.getShortProductById(id);
+    }
+
     @GetMapping("all")
     public List<ProductResponse> getAllProducts(){
         return productService.getAllProducts();

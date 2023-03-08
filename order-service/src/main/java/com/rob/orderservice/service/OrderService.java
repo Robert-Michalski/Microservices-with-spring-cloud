@@ -15,11 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -128,7 +124,7 @@ public class OrderService {
             log.info("Order after updating status {}", savedOrder);
 
             sendNotification(orderToUpdate.getCustomerId(),
-                    "Your order was updated to "+request.status(), token);
+                    "Your order was updated to " + request.status(), token);
 
             return OrderUtil.toDto(savedOrder);
         } else {
@@ -176,9 +172,9 @@ public class OrderService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
         boolean deleteSuccesfull = false;
         // if just decreasing amount
-        if(orderDetails.getQuantity() > amountToDelete){
-            log.info("Decreasing amount from {} to {}", orderDetails.getQuantity(), orderDetails.getQuantity()-amountToDelete);
-            orderDetails.setQuantity(orderDetails.getQuantity()-amountToDelete);
+        if (orderDetails.getQuantity() > amountToDelete) {
+            log.info("Decreasing amount from {} to {}", orderDetails.getQuantity(), orderDetails.getQuantity() - amountToDelete);
+            orderDetails.setQuantity(orderDetails.getQuantity() - amountToDelete);
             orderDetailsRepository.save(orderDetails);
             deleteSuccesfull = true;
         }
@@ -187,8 +183,8 @@ public class OrderService {
             log.info("Deleting whole order");
             long recordsDeleted = orderDetailsRepository.deleteByOrderIdAndProductId(order.getId(), productId);
             log.info("Deleting productId: {}, deleted {} records", productId, recordsDeleted);
-            if(recordsDeleted > 0 ){
-                deleteSuccesfull=true;
+            if (recordsDeleted > 0) {
+                deleteSuccesfull = true;
             }
         }
 
@@ -205,44 +201,75 @@ public class OrderService {
                 .count();
     }
 
-    public Set<ReceivedItemResponse> getPendingOrders() {
-        Set<ReceivedItemResponse> receivedItemResponses = new HashSet<>();
-        orderRepository.getReceivedOrders().forEach(item -> {
+//    public Set<OrderDetailed> getPendingOrders(String token) {
+//        Set<OrderDetailed> orderDetailedSet = new HashSet<>();
+//
+//        orderRepository.getReceivedOrders().forEach(item -> {
+//
+//            receivedItemResponses.add();
+//        });
+//        return receivedItemResponses;
+//
+//    }
 
-            String[] values = item.split(Pattern.quote(","));
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-            ReceivedItemResponse receivedItemResponse = ReceivedItemResponse.builder()
-                    .productName(values[0])
-                    .quantity(Integer.parseInt(values[1]))
-                    .price(Double.parseDouble(values[2]))
-                    .orderId(Long.parseLong(values[3]))
-                    .productId(Long.parseLong(values[4]))
-                    .userId(Long.parseLong(values[5]))
-                    .orderDate(LocalDateTime.parse(values[6].substring(0, 19), formatter))
-                    .addressId(Long.parseLong(values[7]))
+    public OrderDetailed getSingleOrderDetailedById(long orderId, String token) {
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        Set<ProductResponse> productDetails = new HashSet<>();
+
+        order.getOrderDetails().forEach(orderDetails -> {
+
+            ProductResponse productResponse = webClient.get()
+                    .uri("http://localhost:8011/api/product/" + orderDetails.getProductId() + "/short")
+                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                    .retrieve()
+                    .bodyToMono(ProductResponse.class)
+                    .block();
+
+            ProductResponse productResponseToSave = ProductResponse.builder()
+                    .productId(orderDetails.getProductId())
+                    .productName(productResponse.productName())
+                    .price(productResponse.price())
+                    .quantityOrdered(orderDetails.getQuantity())
                     .build();
-            receivedItemResponses.add(receivedItemResponse);
+
+            productDetails.add(productResponseToSave);
         });
-        return receivedItemResponses;
+
+        return OrderDetailed.builder()
+                .orderId(order.getId())
+                .addressId(order.getAddressId())
+                .orderDate(order.getOrderDate())
+                .status(order.getStatus())
+                .products(productDetails)
+                .build();
+    }
+
+    public Set<OrderDetailed> getPendingOrders(String token) {
+        Set<Order> orders = orderRepository.findByStatusOrderByOrderDateDesc(Status.RECEIVED);
+
+        Set<OrderDetailed> orderDetailedSet = new HashSet<>();
+        orders.forEach(order -> orderDetailedSet.add(getSingleOrderDetailedById(order.getId(), token)));
+        log.info("Result: {}", orderDetailedSet);
+        return orderDetailedSet;
 
     }
 
-    private boolean sendNotification(long recipientId, String content, String token){
+    private Boolean sendNotification(long recipientId, String content, String token) {
         NotificationDTO notificationDTO = NotificationDTO.builder()
                 .content(content)
                 .recipientId(recipientId)
                 .build();
 
-        Boolean result = webClient.post()
+        return webClient.post()
                 .uri("http://localhost:9090/api/notification/send")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .bodyValue(notificationDTO)
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block();
-
-        return result;
     }
+
+
 }
 

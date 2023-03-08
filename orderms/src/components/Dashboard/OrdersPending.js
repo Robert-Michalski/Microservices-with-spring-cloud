@@ -32,14 +32,13 @@ function OrdersPending() {
       <hr />
       <div className="container p-3 d-flex flex-column">
         <div className="bg-white row mt-4 ms-2 orders ">
-          <div className="col-sm-4 grid-header items-row text-center">Product name</div>
-          <div className="col-sm-2 grid-header items-row text-center">Quantity</div>
           <div className="col-sm-3 grid-header items-row text-center">Date</div>
-          <div className="col-sm-3 grid-header items-row text-center">ACTION</div>
+          <div className="col-sm-3 grid-header items-row text-center">Total</div>
+          <div className="col-sm-5 grid-header items-row text-center">ACTION</div>
           <div className="w-100"></div>
           <hr className="p-2" />
           {orders.map((order, index) => {
-            return <SingleOrderPending key={order.id} order={order} idx={index} refresh={refresh} />
+            return <SingleOrderPending key={order.orderId} order={order} idx={index} refresh={refresh} />
           })}
         </div>
       </div>

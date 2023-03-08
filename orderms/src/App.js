@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import "./App.css"
-import Orders from "./components/Orders"
+import Orders from "./components/Order/Orders"
 import Login from "./components/Login"
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
@@ -8,19 +8,20 @@ import { useImmerReducer } from "use-immer"
 import Axios from "axios"
 import { useEffect } from "react"
 import Register from "./components/Register"
-import Products from "./components/Products/Products"
+import Products from "./components/Product/Products"
 import MainView from "./components/MainView"
 import Dashboard from "./components/Dashboard/Dashboard"
 import Cookies from "universal-cookie"
 import jwt from "jwt-decode"
-import AddProductPage from "./components/Products/AddProductPage"
+import AddProductPage from "./components/Product/AddProductPage"
 import FlashMessages from "./components/FlashMessages"
 import NotFound from "./components/NotFound"
 import Cart from "./components/Cart/Cart.js"
 import Categories from "./components/Categories/Categories"
-import SingleProductDetailed from "./components/Products/SingleProductDetailed"
+import SingleProductDetailed from "./components/Product/SingleProductDetailed"
 import NewAddressForm from "./components/NewAddressForm"
 import OrdersPending from "./components/Dashboard/OrdersPending"
+import SingleOrderDetailed from "./components/Order/SingleOrderDetailed"
 Axios.defaults.baseURL = "http://localhost:8011/"
 Axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*"
 
@@ -96,6 +97,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/orders" element={<MainView view={Orders} />} />
+            <Route path="/orders/:id" element={<MainView view={SingleOrderDetailed} />} />
             <Route path="/categories" element={<MainView view={Categories} />} />
             <Route path="/products" element={<MainView view={Products} />} />
             <Route path="/products/add" element={<MainView view={AddProductPage} />} />

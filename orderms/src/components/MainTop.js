@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import StateContext from "../StateContext"
 import Axios from "axios"
 import LoadingIcon from "./LoadingIcon"
-import SingleProductSmall from "./Products/SingleProductSmall"
+import SingleProductSmall from "./Product/SingleProductSmall"
 import Notification from "./Notification/Notification"
 function MainTop(props) {
   const appState = useContext(StateContext)

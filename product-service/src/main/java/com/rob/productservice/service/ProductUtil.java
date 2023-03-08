@@ -1,10 +1,8 @@
 package com.rob.productservice.service;
 
-import com.rob.productservice.dto.ProductRequest;
 import com.rob.productservice.dto.ProductResponse;
-import com.rob.productservice.dto.products.SmartphoneDto;
+import com.rob.productservice.dto.ProductResponseShort;
 import com.rob.productservice.entity.Product;
-import com.rob.productservice.entity.ProductDetails;
 
 public class ProductUtil {
 
@@ -18,6 +16,12 @@ public class ProductUtil {
                 .quantity(product.getQuantity())
                 .image(product.getImage())
                 .productDetails(product.getProductDetails())
+                .build();
+    }
+    public static ProductResponseShort toShortDto(Product product){
+        return ProductResponseShort.builder()
+                .productName(product.getName())
+                .price(product.getPrice())
                 .build();
     }
 }

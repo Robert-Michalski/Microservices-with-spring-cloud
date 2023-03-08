@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from "react"
 import { useNavigate } from "react-router"
+import { Link } from "react-router-dom"
 import SingleOrder from "./SingleOrder"
-import StateContext from "../StateContext"
-import DispatchContext from "../DispatchContext"
+import StateContext from "../../StateContext"
+import DispatchContext from "../../DispatchContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
-import MainTop from "./MainTop"
+import MainTop from "../MainTop"
 function Orders() {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
@@ -51,11 +52,12 @@ function Orders() {
             <input type="text" placeholder="Find an order"></input>
           </div>
         </div>
-        <div className="bg-white row mt-4 ms-2 orders ">
+        <div className="bg-white row mt-4 ms-2 orders align-items-center">
           <div className="col-sm grid-header items-row">Order ID</div>
           <div className="col-sm grid-header items-row">Date</div>
           <div className="col-sm grid-header items-row">Status</div>
           <div className="col-sm grid-header items-row">Total</div>
+          <div className="col-sm grid-header items-row">Action</div>
           <div className="w-100"></div>
           <hr className="p-2" />
           {state.orders.map((order, index) => {

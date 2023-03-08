@@ -2,6 +2,7 @@ package com.rob.productservice.service;
 
 import com.rob.productservice.dto.ProductRequest;
 import com.rob.productservice.dto.ProductResponse;
+import com.rob.productservice.dto.ProductResponseShort;
 import com.rob.productservice.dto.ProductStockRequest;
 import com.rob.productservice.entity.Category;
 import com.rob.productservice.entity.Product;
@@ -153,5 +154,10 @@ public class ProductService {
                 .stream()
                 .map(ProductUtil::toDto)
                 .toList();
+    }
+
+    public ProductResponseShort getShortProductById(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        return ProductUtil.toShortDto(product);
     }
 }

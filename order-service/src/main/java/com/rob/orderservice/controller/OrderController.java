@@ -59,7 +59,12 @@ public class OrderController {
     }
 
     @GetMapping("pending")
-    public Set<ReceivedItemResponse> getPendingOrders(){
-        return orderService.getPendingOrders();
+    public Set<OrderDetailed> getPendingOrders(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        return orderService.getPendingOrders(token);
+    }
+
+    @GetMapping("{orderId}")
+    public OrderDetailed getSingleOrderDetailed(@PathVariable long orderId, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        return orderService.getSingleOrderDetailedById(orderId, token);
     }
 }

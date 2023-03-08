@@ -469,3 +469,8 @@ input[type="number"] {
 #notification-date {
   font-size: 0.7rem;
 }
+.order-product-card {
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px 1px black;
+  padding: 0.5rem 1rem;
+}
