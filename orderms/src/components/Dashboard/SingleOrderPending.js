@@ -21,6 +21,7 @@ function SingleOrderPending(props) {
 
     try {
       await Axios.patch("/api/order/status", { orderId: props.order.orderId, addressId: props.order.addressId, status: "DELIVERY" }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+      props.refresh()
     } catch (e) {
       console.log("Something went wrong during loading pending orders " + e)
     }

@@ -49,6 +49,7 @@ function Notification() {
   function formatDate(timestamp) {
     return new Date(timestamp).toLocaleString()
   }
+
   return (
     <div className="d-flex relative ">
       <span className="material-symbols-outlined ms-3" onClick={() => setNotificationsVisible(prev => !prev)}>
@@ -61,8 +62,8 @@ function Notification() {
             return (
               <>
                 <div className={"col-12 single-notification p-2 d-flex " + getBackground(notification.isRead)} key={notification.id}>
-                  <div className="p-2">{notification.content}</div>
-                  <div className="p-1 d-flex flex-column ms-auto">
+                  <div className="p-2 me-2">{notification.content}</div>
+                  <div className="d-flex flex-column ms-auto">
                     <div className="ms-auto mt-2">
                       {notification.isRead ? null : (
                         <span

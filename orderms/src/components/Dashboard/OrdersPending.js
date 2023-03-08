@@ -6,6 +6,7 @@ import SingleOrderPending from "./SingleOrderPending"
 function OrdersPending() {
   //
   const [orders, setOrders] = useState([])
+  const [refreshCount, setRefreshCount] = useState([0])
   const appState = useContext(StateContext)
 
   useEffect(() => {
@@ -19,7 +20,11 @@ function OrdersPending() {
       }
     }
     fetchOrders()
-  }, [])
+  }, [refreshCount])
+
+  function refresh() {
+    setRefreshCount(prev => (prev += 1))
+  }
 
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
@@ -34,7 +39,7 @@ function OrdersPending() {
           <div className="w-100"></div>
           <hr className="p-2" />
           {orders.map((order, index) => {
-            return <SingleOrderPending key={order.id} order={order} idx={index} />
+            return <SingleOrderPending key={order.id} order={order} idx={index} refresh={refresh} />
           })}
         </div>
       </div>
