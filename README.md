@@ -2,6 +2,10 @@ Right now backend propablly will not compile because I am adding via liquibase p
 Solution - from product-service population remove all <column name image />
 I will work on solution which will work without you move a finger but now it is what it is.
 
+
+### LITTLE DEMO 
+https://www.youtube.com/watch?v=8FBAgQ5497M&ab_channel=RobertM
+
 ## HOW TO RUN BACKEND
 1. Have JDK installed
 2. Clone repository
