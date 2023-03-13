@@ -96,11 +96,6 @@ function Products() {
               <option value="descending">desc</option>
             </select>
           </div>
-          {appState.user.role === "ROLE_ADMIN" || appState.user.role === "ROLE_MANAGER" ? (
-            <Link to="/products/add" className="me-3 btn btn-primary">
-              Add new
-            </Link>
-          ) : null}
 
           <div className="me-4 search-order">
             <input type="text" placeholder="Find product"></input>

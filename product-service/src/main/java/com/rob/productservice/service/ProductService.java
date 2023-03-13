@@ -16,8 +16,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -31,7 +33,7 @@ public class ProductService {
 
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 
-    public ProductResponse addProduct(ProductRequest productRequest) {
+    public ProductResponse addProduct(ProductRequest productRequest, MultipartFile file) throws IOException {
         if (categoryRepository.findById(productRequest.categoryId()).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
@@ -43,6 +45,7 @@ public class ProductService {
                 .price(productRequest.price())
                 .details(productRequest.details())
                 .quantity(productRequest.quantity())
+                .image(file.getBytes())
                 .build();
         return ProductUtil.toDto(productRepository.save(productToSave));
     }

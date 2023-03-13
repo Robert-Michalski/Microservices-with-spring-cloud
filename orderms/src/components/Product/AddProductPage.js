@@ -4,9 +4,14 @@ import { useImmer } from "use-immer"
 import Axios from "axios"
 import { useNavigate, useParams } from "react-router"
 import MainTop from "../MainTop"
+import GetImage from "../GetImage"
+import { useState } from "react"
+import DispatchContext from "../../DispatchContext"
 function AddProductPage() {
   const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
   const navigate = useNavigate()
+  const [isUploaded, setIsUploaded] = useState(false)
   const { id } = useParams()
   const [state, setState] = useImmer({
     product: {
@@ -19,7 +24,8 @@ function AddProductPage() {
       details: "",
       quantity: 0
     },
-    categories: []
+    categories: [],
+    imgData: {}
   })
 
   async function handleSubmit(e) {
@@ -28,12 +34,12 @@ function AddProductPage() {
     try {
       if (!id) {
         const response = await Axios.post("/api/product", { name: state.product.name, categoryId: state.product.category.id, price: state.product.price, details: state.product.details, quantity: state.product.quantity }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-        if (response.request.status == 201) {
+        if (response.request.status === 201) {
           navigate("/products")
         }
       } else {
         const response = await Axios.put("/api/product/" + id, { name: state.product.name, categoryId: state.product.category.id, price: state.product.price, details: state.product.details, quantity: state.product.quantity }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-        if (response.request.status == 200) {
+        if (response.request.status === 200) {
           navigate("/products")
         }
       }
@@ -67,6 +73,31 @@ function AddProductPage() {
     }
   }, [])
 
+  async function handleImageSubmit(e) {
+    e.preventDefault()
+    const ourRequest = Axios.CancelToken.source()
+    try {
+      const data = new FormData()
+      data.append("file", state.imgData[0])
+
+      const response = await Axios.post(
+        "http://localhost:9092/api/image/upload",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        },
+        { cancelToken: ourRequest.token }
+      )
+      if (response.request.status === 201) {
+        setIsUploaded(prev => (prev = true))
+        appDispatch({ type: "flashMessage", value: "Image uploaded successfully" })
+      }
+    } catch (e) {
+      console.log("error during image upload " + e)
+    }
+  }
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
       <MainTop label="Products" />
@@ -75,102 +106,143 @@ function AddProductPage() {
         <div className="d-flex align-items-center">
           <div className="ms-3 fs-2">Add new product</div>
         </div>
-        <form className="d-flex flex-column p-3" onSubmit={handleSubmit}>
-          <span className="mt-2">Basic info</span>
-          <hr className="col-5"></hr>
-          <div className="row col-6 ">
-            <div className="col-sm fs-3">Product name</div>
+        <div className="d-flex container">
+          <form className="d-flex flex-column p-3 col-6" onSubmit={handleSubmit}>
+            <span className="mt-2">Basic info</span>
+            <hr className="col-5 mb-3"></hr>
+            <div className="row col-12 ">
+              <label className="col-sm fs-3" htmlFor="name">
+                Product name
+              </label>
+              <div className="col-sm">
+                <input
+                  id="name"
+                  type="text"
+                  className="product-add-input"
+                  onChange={e =>
+                    setState(draft => {
+                      draft.product.name = e.target.value
+                    })
+                  }
+                  value={state.product.name}
+                  placeholder="Steel wire"
+                />
+              </div>
+              <div className="w-100 mt-3"></div>
+              <label className="col-sm fs-3" htmlFor="category">
+                Category
+              </label>
+              <div className="col-sm">
+                <select
+                  id="category"
+                  className="col-9 product-add-input"
+                  onChange={e =>
+                    setState(draft => {
+                      draft.product.category.id = e.target.value
+                    })
+                  }
+                  value={state.product.category.id}
+                >
+                  <option value="" disabled>
+                    Please select
+                  </option>
+                  {state.categories.map(category => {
+                    return (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    )
+                  })}
+                </select>
+              </div>
+              <div className="w-100 mt-3"></div>
+              <label className="col-sm fs-3" htmlFor="price">
+                Price
+              </label>
+              <div className="col-sm input-container">
+                <input
+                  id="price"
+                  type="text"
+                  className="product-add-input"
+                  onChange={e =>
+                    setState(draft => {
+                      draft.product.price = e.target.value
+                    })
+                  }
+                  value={state.product.price}
+                  placeholder="1200.00"
+                />
+              </div>
+              <div className="w-100 mt-3"></div>
+              <label className="col-sm fs-3" htmlFor="details">
+                Details
+              </label>
+              <div className="col-sm">
+                <input
+                  id="details"
+                  type="text"
+                  className="product-add-input"
+                  onChange={e =>
+                    setState(draft => {
+                      draft.product.details = e.target.value
+                    })
+                  }
+                  value={state.product.details}
+                  placeholder="20x30"
+                />
+              </div>
+              <div className="w-100 mt-3"></div>
+              <label className="col-sm fs-3" htmlFor="quantity">
+                Quantity
+              </label>
+              <div className="col-sm">
+                <input
+                  id="quantity"
+                  type="number"
+                  className="product-add-input"
+                  onChange={e =>
+                    setState(draft => {
+                      draft.product.quantity = e.target.value
+                    })
+                  }
+                  value={state.product.quantity}
+                  placeholder="100"
+                />
+              </div>
+              <div className="w-100 mt-3"></div>
+              <div className="col-5 mt-3 mx-auto">
+                <button type="submit" className="btn btn-primary container">
+                  ADD
+                </button>
+              </div>
+              <div className="w-100 mt-3"></div>
+            </div>
+          </form>
+          <form className="col-4" onSubmit={handleImageSubmit}>
+            <label className="col-sm fs-3" htmlFor="image">
+              Image
+            </label>
             <div className="col-sm">
               <input
-                type="text"
-                className="product-add-input"
+                type="file"
+                disabled={isUploaded}
+                id="image"
+                className="mt-2"
                 onChange={e =>
                   setState(draft => {
-                    draft.product.name = e.target.value
+                    draft.imgData = e.target.files
                   })
                 }
-                value={state.product.name}
-                placeholder="Steel wire"
               />
+              {state.imgData.length > 0 ? <img className="mt-3" src={URL.createObjectURL(state.imgData[0])} alt="#" /> : null}
             </div>
-            <div className="w-100 mt-3"></div>
-            <div className="col-sm fs-3">Category</div>
-            <div className="col-sm">
-              <select
-                className="col-9 product-add-input"
-                onChange={e =>
-                  setState(draft => {
-                    draft.product.category.id = e.target.value
-                  })
-                }
-                value={state.product.category.id}
-              >
-                <option value="" disabled>
-                  Please select
-                </option>
-                {state.categories.map(category => {
-                  return (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  )
-                })}
-              </select>
-            </div>
-            <div className="w-100 mt-3"></div>
-            <div className="col-sm fs-3">Price</div>
-            <div className="col-sm input-container">
-              <input
-                type="text"
-                className="product-add-input"
-                onChange={e =>
-                  setState(draft => {
-                    draft.product.price = e.target.value
-                  })
-                }
-                value={state.product.price}
-                placeholder="1200.00"
-              />
-            </div>
-            <div className="w-100 mt-3"></div>
-            <div className="col-sm fs-3">Details</div>
-            <div className="col-sm">
-              <input
-                type="text"
-                className="product-add-input"
-                onChange={e =>
-                  setState(draft => {
-                    draft.product.details = e.target.value
-                  })
-                }
-                value={state.product.details}
-                placeholder="20x30"
-              />
-            </div>
-            <div className="w-100 mt-3"></div>
-            <div className="col-sm fs-3">Quantity</div>
-            <div className="col-sm">
-              <input
-                type="number"
-                className="product-add-input"
-                onChange={e =>
-                  setState(draft => {
-                    draft.product.quantity = e.target.value
-                  })
-                }
-                value={state.product.quantity}
-                placeholder="100"
-              />
-            </div>
-            <div className="w-100 mt-3"></div>
-            <div className="col-5 mt-3 mx-auto">
-              <button type="submit" className="btn btn-primary container">
-                ADD
+            <div className="container d-flex">
+              <button type="submit" disabled={isUploaded} className="btn btn-primary mt-4 mx-auto col-5">
+                UPLOAD
               </button>
             </div>
-            <div className="w-100 mt-3"></div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   )

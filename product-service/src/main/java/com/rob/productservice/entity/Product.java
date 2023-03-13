@@ -3,6 +3,7 @@ package com.rob.productservice.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ManyToAny;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Getter @Setter

@@ -3,6 +3,7 @@ import StateContext from "../../StateContext"
 import Axios from "axios"
 import SingleCategory from "./SingleCategory"
 import MainTop from "../MainTop"
+import { Link } from "react-router-dom"
 function Categories() {
   const appState = useContext(StateContext)
   const [categories, setCategories] = useState([])
@@ -27,6 +28,11 @@ function Categories() {
         <div className="d-flex align-items-center">
           <div className="ms-3 fs-2">All categories</div>
           <div className="ms-auto"></div>
+          {appState.user.role === "ROLE_ADMIN" || appState.user.role === "ROLE_MANAGER" ? (
+            <Link to="/products/add" className="me-3 btn btn-primary">
+              Add new product
+            </Link>
+          ) : null}
         </div>
         <div className="bg-white mt-4 ms-2 orders p-3 col-8">
           {categories.map((value, index) => {
