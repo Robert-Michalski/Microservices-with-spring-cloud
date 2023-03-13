@@ -35,7 +35,7 @@
             <column name="price" value="4599.00"/>
             <column name="details" value="6,1/Qualcomm Snapdragon 8 gen 2/8 GB/256 GB/Green/50 Mpix"/>
             <column name="quantity" value="100"/>
-            <column name="image" valueBlobFile="products-images/smartphones/s23beige.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Samsung Galaxy S20 FE 5G Blue"/>
@@ -43,7 +43,7 @@
             <column name="price" value="1999.00"/>
             <column name="details" value="Fan Edition Blue"/>
             <column name="quantity" value="100"/>
-            <column name="image" valueBlobFile="products-images/smartphones/s20feblue.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="OnePlus 11 5G Black"/>
@@ -51,7 +51,7 @@
             <column name="price" value="4199.00"/>
             <column name="details" value="8/128GB Titan Black 120Hz"/>
             <column name="quantity" value="200"/>
-            <column name="image" valueBlobFile="products-images/smartphones/OnePlus11Black.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Apple iPhone 13 Midnight"/>
@@ -59,7 +59,7 @@
             <column name="price" value="4249.00"/>
             <column name="details" value="128GB Midnight"/>
             <column name="quantity" value="200"/>
-            <column name="image" valueBlobFile="products-images/smartphones/iPhone13Midnight.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Samsung Galaxy S23 Black"/>
@@ -67,7 +67,7 @@
             <column name="price" value="4599.00"/>
             <column name="details" value="8/256GB Black"/>
             <column name="quantity" value="69"/>
-            <column name="image" valueBlobFile="products-images/smartphones/s23black.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Xiaomi Redmi Note 11S"/>
@@ -75,7 +75,7 @@
             <column name="price" value="999.00"/>
             <column name="details" value="6/64GB"/>
             <column name="quantity" value="300"/>
-            <column name="image" valueBlobFile="products-images/smartphones/XiaomiRedmiNote11SGray.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Apple iPhone 12 White"/>
@@ -83,7 +83,7 @@
             <column name="price" value="3649.00"/>
             <column name="details" value="64GB White 5G"/>
             <column name="quantity" value="100"/>
-            <column name="image" valueBlobFile="products-images/smartphones/iPhone12White.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="ASUS ZenFone 8 Black"/>
@@ -91,7 +91,7 @@
             <column name="price" value="1999.00"/>
             <column name="details" value="8/128GB Black"/>
             <column name="quantity" value="100"/>
-            <column name="image" valueBlobFile="products-images/smartphones/AsusZenfone8Black.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Apple iPhone 13 Starlight"/>
@@ -99,7 +99,7 @@
             <column name="price" value="4269.00"/>
             <column name="details" value="128GB Starlight"/>
             <column name="quantity" value="100"/>
-            <column name="image" valueBlobFile="products-images/smartphones/iPhone13Starlight.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Nothing Phone (1) 5G Black"/>
@@ -107,7 +107,7 @@
             <column name="price" value="2169.00"/>
             <column name="details" value="8/256GB Black"/>
             <column name="quantity" value="100"/>
-            <column name="image" valueBlobFile="products-images/smartphones/NothingPhoneBlack.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Apple iPhone 11 Black"/>
@@ -115,7 +115,7 @@
             <column name="price" value="2799.00"/>
             <column name="details" value="128GB Black"/>
             <column name="quantity" value="80"/>
-            <column name="image" valueBlobFile="products-images/smartphones/iPhone11Black.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Apple iPhone 11 White"/>
@@ -123,7 +123,7 @@
             <column name="price" value="2349.00"/>
             <column name="details" value="64GB White"/>
             <column name="quantity" value="100"/>
-            <column name="image" valueBlobFile="products-images/smartphones/iPhone11White.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Samsung Galaxy S23 Ultra Green"/>
@@ -131,7 +131,7 @@
             <column name="price" value="6799.00"/>
             <column name="details" value="12/512GB Green"/>
             <column name="quantity" value="100"/>
-            <column name="image" valueBlobFile="products-images/smartphones/s23UltraGreen.jpg"/>
+
         </insert>
         <!--        GRAPHIC CARDS-->
         <insert tableName="product">
@@ -140,7 +140,7 @@
             <column name="price" value="6599.00"/>
             <column name="details" value="16GB GDDR6X"/>
             <column name="quantity" value="100"/>
-            <column name="image" valueBlobFile="products-images/graphics/Inno3DRtx4080.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Gainward GeForce RTX 3070 Phantom 8GB GDDR6X"/>
@@ -148,7 +148,7 @@
             <column name="price" value="6599.00"/>
             <column name="details" value="8GB GDDR6X"/>
             <column name="quantity" value="123"/>
-            <column name="image" valueBlobFile="products-images/graphics/Gainward3070.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Gigabyte GeForce RTX 3070Ti GAMING OC 8GB GDDR6X"/>
@@ -156,7 +156,7 @@
             <column name="price" value="3299.00"/>
             <column name="details" value="8GB GDDR6X"/>
             <column name="quantity" value="321"/>
-            <column name="image" valueBlobFile="products-images/graphics/Gigabyte3070Ti.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Gainward GeForce RTX 4070 Ti Phantom Reunion 12GB GDDR6X"/>
@@ -164,7 +164,7 @@
             <column name="price" value="3299.00"/>
             <column name="details" value="12GB GDDR6X"/>
             <column name="quantity" value="321"/>
-            <column name="image" valueBlobFile="products-images/graphics/Gainward4070Ti.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Sapphire Radeon RX 6600 GAMING Pulse 8GB GDDR6"/>
@@ -172,7 +172,7 @@
             <column name="price" value="1359.00"/>
             <column name="details" value="8GB GDDR6"/>
             <column name="quantity" value="321"/>
-            <column name="image" valueBlobFile="products-images/graphics/Radeon6600.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Gigabyte GeForce RTX 3060 GAMING OC LHR 12GB GDDR6"/>
@@ -180,7 +180,7 @@
             <column name="price" value="1929.00"/>
             <column name="details" value="12GB GDDR6"/>
             <column name="quantity" value="400"/>
-            <column name="image" valueBlobFile="products-images/graphics/GigabyteEagle.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Gigabyte GeForce RTX 3060 EAGLE OC LHR 12GB GDDR6"/>
@@ -188,7 +188,7 @@
             <column name="price" value="1779.00"/>
             <column name="details" value="12GB GDDR6"/>
             <column name="quantity" value="400"/>
-            <column name="image" valueBlobFile="products-images/graphics/GigabyteEagle.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Inno3D GeForce RTX 3060 Twin X2 LHR 12GB GDDR6"/>
@@ -196,7 +196,7 @@
             <column name="price" value="1679.00"/>
             <column name="details" value="12GB GDDR6"/>
             <column name="quantity" value="300"/>
-            <column name="image" valueBlobFile="products-images/graphics/Inno3D3060.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Gainward GeForce RTX 3060 Ghost 12GB GDDR6"/>
@@ -204,7 +204,7 @@
             <column name="price" value="1689.00"/>
             <column name="details" value="12GB GDDR6"/>
             <column name="quantity" value="250"/>
-            <column name="image" valueBlobFile="products-images/graphics/Gainward3070.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Gigabyte GeForce RTX 3070 GAMING OC LHR 8GB GDDR6"/>
@@ -212,7 +212,7 @@
             <column name="price" value="2899.00"/>
             <column name="details" value="8GB GDDR6"/>
             <column name="quantity" value="150"/>
-            <column name="image" valueBlobFile="products-images/graphics/GigabyteEagle.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Gigabyte GeForce RTX 3070 Ti GAMING OC 8GB GDDR6X"/>
@@ -220,7 +220,7 @@
             <column name="price" value="3299.00"/>
             <column name="details" value="8GB GDDR6X"/>
             <column name="quantity" value="150"/>
-            <column name="image" valueBlobFile="products-images/graphics/Gigabyte3070Ti.jpg"/>
+
         </insert>
         <!--        PROCESSORS-->
         <insert tableName="product">
@@ -229,7 +229,7 @@
             <column name="price" value="869.00"/>
             <column name="details" value="3.7GHz / 6 Cores / Socket AM4"/>
             <column name="quantity" value="150"/>
-            <column name="image" valueBlobFile="products-images/processors/Amd5.jpg"/>
+
 
         </insert>
         <insert tableName="product">
@@ -238,7 +238,7 @@
             <column name="price" value="699.00"/>
             <column name="details" value="3.5GHz / 6 Cores / Socket AM4"/>
             <column name="quantity" value="150"/>
-            <column name="image" valueBlobFile="products-images/processors/Amd5.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Intel Core i5‑12400F"/>
@@ -246,7 +246,7 @@
             <column name="price" value="799.00"/>
             <column name="details" value="2.5 GHz / 6 Cores / Socket 1700"/>
             <column name="quantity" value="550"/>
-            <column name="image" valueBlobFile="products-images/processors/Inteli512th.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Intel Core i5‑13600KF"/>
@@ -254,7 +254,7 @@
             <column name="price" value="1529.00"/>
             <column name="details" value="3.5 GHz / 14 Cores / Socket 1700"/>
             <column name="quantity" value="1000"/>
-            <column name="image" valueBlobFile="products-images/processors/Inteli513th.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="AMD Ryzen 7 5700X"/>
@@ -262,7 +262,7 @@
             <column name="price" value="939.00"/>
             <column name="details" value="3.4 GHz / 8 Cores / Socket AM4"/>
             <column name="quantity" value="1000"/>
-            <column name="image" valueBlobFile="products-images/processors/Amd7.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Intel Core i7‑13700K"/>
@@ -270,7 +270,7 @@
             <column name="price" value="2169.00"/>
             <column name="details" value="3.4 GHz / 16 Cores / Socket 1700"/>
             <column name="quantity" value="1000"/>
-            <column name="image" valueBlobFile="products-images/processors/Inteli713th.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Intel Core i3‑10100F OEM"/>
@@ -278,7 +278,7 @@
             <column name="price" value="299.00"/>
             <column name="details" value="3.6 GHz / 4 Cores / Socket 1200"/>
             <column name="quantity" value="452"/>
-            <column name="image" valueBlobFile="products-images/processors/Inteli310th.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Intel Core i5‑10400F OEM"/>
@@ -286,7 +286,7 @@
             <column name="price" value="429.00"/>
             <column name="details" value="2.9 GHz / 6 Cores / Socket 1200"/>
             <column name="quantity" value="771"/>
-            <column name="image" valueBlobFile="products-images/processors/Inteli512th.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Intel Core i5‑10400F OEM"/>
@@ -294,7 +294,7 @@
             <column name="price" value="429.00"/>
             <column name="details" value="2.9 GHz / 6 Cores / Socket 1200"/>
             <column name="quantity" value="771"/>
-            <column name="image" valueBlobFile="products-images/processors/Inteli512th.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Intel Core i3‑12100F"/>
@@ -302,7 +302,7 @@
             <column name="price" value="499.00"/>
             <column name="details" value="3.3 GHz / 4 Cores / Socket 1700"/>
             <column name="quantity" value="841"/>
-            <column name="image" valueBlobFile="products-images/processors/Inteli310th.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Intel Core i7‑13700KF"/>
@@ -310,7 +310,7 @@
             <column name="price" value="2099.00"/>
             <column name="details" value="3.4 GHz / 16 Cores / Socket 1700"/>
             <column name="quantity" value="734"/>
-            <column name="image" valueBlobFile="products-images/processors/Inteli713th.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="AMD Ryzen 7 5800X"/>
@@ -318,7 +318,7 @@
             <column name="price" value="1129.00"/>
             <column name="details" value="3.8 GHz / 8 Cores / Socket AM4"/>
             <column name="quantity" value="933"/>
-            <column name="image" valueBlobFile="products-images/processors/Amd7.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Intel Core i5‑10400F"/>
@@ -326,7 +326,7 @@
             <column name="price" value="489.00"/>
             <column name="details" value="2.9 GHz / 6 Cores / Socket 1200"/>
             <column name="quantity" value="992"/>
-            <column name="image" valueBlobFile="products-images/processors/Inteli512th.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="AMD Ryzen 5 3600"/>
@@ -334,7 +334,7 @@
             <column name="price" value="439.00"/>
             <column name="details" value="3.6 GHz / 6 Cores / Socket AM4"/>
             <column name="quantity" value="168"/>
-            <column name="image" valueBlobFile="products-images/processors/Amd5.jpg"/>
+
         </insert>
         <!--        KEYBOARDS -->
         <insert tableName="product">
@@ -343,7 +343,7 @@
             <column name="price" value="299.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="619"/>
-            <column name="image" valueBlobFile="products-images/keyboards/OrnataV2.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="SteelSeries Apex PRO TKL OmniPoint"/>
@@ -351,7 +351,7 @@
             <column name="price" value="599.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="777"/>
-            <column name="image" valueBlobFile="products-images/keyboards/ApexPro.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="SPC Gear GK650K RGB Onyx White Pudding (Kailh Red)"/>
@@ -359,7 +359,7 @@
             <column name="price" value="249.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="329"/>
-            <column name="image" valueBlobFile="products-images/keyboards/SPCGear.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Logitech G213 PRODIGY"/>
@@ -367,7 +367,7 @@
             <column name="price" value="229.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="752"/>
-            <column name="image" valueBlobFile="products-images/keyboards/G213.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="SteelSeries Apex 7 TKL Red Switch"/>
@@ -375,7 +375,7 @@
             <column name="price" value="479.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="579"/>
-            <column name="image" valueBlobFile="products-images/keyboards/Apex7.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="KRUX Solar RGB"/>
@@ -383,7 +383,7 @@
             <column name="price" value="59.99"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="503"/>
-            <column name="image" valueBlobFile="products-images/keyboards/Krux.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Logitech G915 LIGHTSPEED Linear"/>
@@ -391,7 +391,7 @@
             <column name="price" value="749.00"/>
             <column name="details" value="Wireless"/>
             <column name="quantity" value="501"/>
-            <column name="image" valueBlobFile="products-images/keyboards/G915.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="iBOX Aurora K‑5 RGB (KGRD Red switch)"/>
@@ -399,7 +399,7 @@
             <column name="price" value="179.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="757"/>
-            <column name="image" valueBlobFile="products-images/keyboards/iBox.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="SteelSeries Apex 3"/>
@@ -407,7 +407,7 @@
             <column name="price" value="329.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="284"/>
-            <column name="image" valueBlobFile="products-images/keyboards/Apex3.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="SteelSeries Apex Pro Mini"/>
@@ -415,7 +415,7 @@
             <column name="price" value="799.00"/>
             <column name="details" value="Wired/Wireless"/>
             <column name="quantity" value="455"/>
-            <column name="image" valueBlobFile="products-images/keyboards/ProMini.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Keychron K2 C3H"/>
@@ -423,7 +423,7 @@
             <column name="price" value="549.00"/>
             <column name="details" value="Wired/Wireless"/>
             <column name="quantity" value="149"/>
-            <column name="image" valueBlobFile="products-images/keyboards/K2C3H.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Keychron K2 C2H"/>
@@ -431,7 +431,7 @@
             <column name="price" value="529.00"/>
             <column name="details" value="Wired/Wireless"/>
             <column name="quantity" value="680"/>
-            <column name="image" valueBlobFile="products-images/keyboards/K2C3H.jpg"/>
+
         </insert>
         <!--        MOUSES -->
         <insert tableName="product">
@@ -440,7 +440,7 @@
             <column name="price" value="229.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="992"/>
-            <column name="image" valueBlobFile="products-images/mouses/G502.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="SteelSeries Rival 650"/>
@@ -448,7 +448,7 @@
             <column name="price" value="299.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="573"/>
-            <column name="image" valueBlobFile="products-images/mouses/Rival650.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Logitech G305 LIGHTSPEED"/>
@@ -456,7 +456,7 @@
             <column name="price" value="199.00"/>
             <column name="details" value="Wireless"/>
             <column name="quantity" value="345"/>
-            <column name="image" valueBlobFile="products-images/mouses/G305.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Logitech G102 LIGHTSYNC"/>
@@ -464,7 +464,7 @@
             <column name="price" value="119.00"/>
             <column name="details" value="Wireless"/>
             <column name="quantity" value="345"/>
-            <column name="image" valueBlobFile="products-images/mouses/G102.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="Logitech G PRO X SUPERLIGHT"/>
@@ -472,7 +472,7 @@
             <column name="price" value="549.00"/>
             <column name="details" value="Wired/Wireless"/>
             <column name="quantity" value="1000"/>
-            <column name="image" valueBlobFile="products-images/mouses/Superlight.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="SteelSeries Rival 3"/>
@@ -480,7 +480,7 @@
             <column name="price" value="159.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="452"/>
-            <column name="image" valueBlobFile="products-images/mouses/Rival3.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="SpeedLink ASSERO"/>
@@ -488,7 +488,7 @@
             <column name="price" value="49.99"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="347"/>
-            <column name="image" valueBlobFile="products-images/mouses/Assero.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="SteelSeries Aerox 3 Snow"/>
@@ -496,7 +496,7 @@
             <column name="price" value="199.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="109"/>
-            <column name="image" valueBlobFile="products-images/mouses/3Snow.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="SteelSeries Aerox 3 Onyx"/>
@@ -504,7 +504,7 @@
             <column name="price" value="199.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="348"/>
-            <column name="image" valueBlobFile="products-images/mouses/3Onyx.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="KFA2 SLIDER‑03"/>
@@ -512,7 +512,7 @@
             <column name="price" value="49.00"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="194"/>
-            <column name="image" valueBlobFile="products-images/mouses/Slider03.jpg"/>
+
         </insert>
         <insert tableName="product">
             <column name="name" value="SteelSeries Prime"/>
@@ -520,7 +520,7 @@
             <column name="price" value="139.99"/>
             <column name="details" value="Wired"/>
             <column name="quantity" value="123"/>
-            <column name="image" valueBlobFile="products-images/mouses/Prime.jpg"/>
+
         </insert>
     </changeSet>
     <changeSet id="6" author="Robert Michalski">
@@ -669,7 +669,7 @@
             <column name="backlight" value="Yes"/>
             <column name="destination" value="Gaming"/>
         </insert>
-<!--        GRAPHICS ARE 9 - 11 incl 14 - 24 product id-->
+        <!--        GRAPHICS ARE 9 - 11 incl 14 - 24 product id-->
         <update tableName="product">
             <column name="product_details_id" value="9"/>
             <where>id="14"</where>

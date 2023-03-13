@@ -45,7 +45,7 @@ public class ProductService {
                 .price(productRequest.price())
                 .details(productRequest.details())
                 .quantity(productRequest.quantity())
-                .image(file.getBytes())
+                .imageId(productRequest.imageId())
                 .build();
         return ProductUtil.toDto(productRepository.save(productToSave));
     }

@@ -14,8 +14,8 @@ public class ProductUtil {
                 .price(product.getPrice())
                 .details(product.getDetails())
                 .quantity(product.getQuantity())
-                .image(product.getImage())
                 .productDetails(product.getProductDetails())
+                .imageId(product.getImageId())
                 .build();
     }
     public static ProductResponseShort toShortDto(Product product){

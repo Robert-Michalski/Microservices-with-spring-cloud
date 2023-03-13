@@ -1,9 +1,8 @@
 package com.rob.productservice.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ManyToAny;
-import org.hibernate.annotations.Type;
 
 @Entity
 @Getter @Setter
@@ -20,9 +19,8 @@ public class Product {
     private double price;
     private String details;
     private int quantity;
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] image;
+    @Nullable
+    private Long imageId;
 
     @ManyToOne
     @JoinColumn(name = "product_details_id")

@@ -26,13 +26,16 @@
             <column name="price" type="double"/>
             <column name="details" type="varchar(250)"/>
             <column name="quantity" type="bigint"/>
-            <column name="image" type="longblob">
+            <column name="image_id" type="bigint">
                 <constraints nullable="true"/>
             </column>
         </createTable>
 
         <addForeignKeyConstraint baseTableName="product" baseColumnNames="category_id"
                                  constraintName="FK_product_category_id" referencedTableName="category"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="product" baseColumnNames="image_id"
+                                 constraintName="FK_product_image_id" referencedTableName="image"
                                  referencedColumnNames="id"/>
     </changeSet>
     <changeSet id="5" author="Robert Michalski">
