@@ -2,6 +2,10 @@ Right now backend propablly will not compile because I am adding via liquibase p
 Solution - from product-service population remove all <column name image />
 I will work on solution which will work without you move a finger but now it is what it is.
 
+
+### LITTLE DEMO 
+https://www.youtube.com/watch?v=8FBAgQ5497M&ab_channel=RobertM
+
 ## HOW TO RUN BACKEND
 1. Have JDK installed
 2. Clone repository
@@ -19,7 +23,7 @@ I will work on solution which will work without you move a finger but now it is 
 
 # Order Management System Application
 This is a fullstack application with primary goal being to learn microservice architecture.
-I was modeling this project https://1000projects.org/order-management-system-for-steel-fabrication-factory-java-project.html
+
 
 # TECH STACK
 
@@ -44,4 +48,4 @@ Authentication is done in user-service. Here JWT is generated and passed as a he
 ## Frontend
 
 Frontend is made with React. To connect with backend I use Axios library.
-CSS is heavily dependent on Bootstrap
+I use bit of Bootsrap mostly because I like it's utility classes.
