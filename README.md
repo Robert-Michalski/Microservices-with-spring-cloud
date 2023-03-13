@@ -1,7 +1,3 @@
-Right now backend propablly will not compile because I am adding via liquibase photos  which you do not have.
-Solution - from product-service population remove all <column name image />
-I will work on solution which will work without you move a finger but now it is what it is.
-
 
 ### LITTLE DEMO 
 https://www.youtube.com/watch?v=8FBAgQ5497M&ab_channel=RobertM
@@ -12,7 +8,8 @@ https://www.youtube.com/watch?v=8FBAgQ5497M&ab_channel=RobertM
 3. Make sure you have any MySQL service running on port 3306, password set in project is **root**
 4. Add JWT_SECRET environmental variable to api-gateway and user-service
 5. Download all dependencies
-6. Run in order Eureka -> config-server -> user-service -> product-service -> order-service -> api-gateway
+6. Run in order Eureka -> config-server -> user-service -> image-service -> order-service -> notification-service -> product-service -> api-gateway
+7. To initilize database values for product and images use in mysql terminal  **mysql -uroot -proot order_ms < db.sql** make sure to be in path where db.sql is present     (main folder)
 ## HOW TO RUN FRONTEND
 1. Have node.js installed
 2. Run backend
