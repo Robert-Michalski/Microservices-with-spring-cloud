@@ -39,7 +39,7 @@ function SingleProductDetailed() {
       const ourRequest = Axios.CancelToken.source()
       try {
         setImageLoading(prev => (prev = true))
-        const productResponse = await Axios.get("http://localhost:9092/api/image/" + product.imageId, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+        const productResponse = await Axios.get("/api/image/" + product.imageId, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
         setImageData(productResponse.data)
         setImageLoading(prev => (prev = false))
       } catch (e) {

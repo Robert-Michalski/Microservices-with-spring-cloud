@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
 import GetImage from "../GetImage"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import Axios from "axios"
+import StateContext from "../../StateContext"
 function SingleProduct(props) {
   const [imgData, setImgData] = useState([])
-
+  const appState = useContext(StateContext)
   function getFormattedPrice() {
     const formatted = Intl.NumberFormat("en-US", {
       minimumFractionDigits: 2,
@@ -15,8 +16,9 @@ function SingleProduct(props) {
 
   useEffect(() => {
     async function fetchImg() {
+      const ourRequest = Axios.CancelToken.source()
       try {
-        const response = await Axios.get("http://localhost:9092/api/image/" + props.product.imageId)
+        const response = await Axios.get("/api/image/" + props.product.imageId, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
         setImgData(prev => (prev = response.data.data))
       } catch (e) {
         console.log("something went wrong when loading image " + e)
