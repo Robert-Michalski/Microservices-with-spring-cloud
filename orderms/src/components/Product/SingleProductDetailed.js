@@ -11,12 +11,15 @@ import KeyboardLabel from "./KeyboardLabel"
 import MouseLabel from "./MouseLabel"
 import DispatchContext from "../../DispatchContext"
 import MainTop from "../MainTop"
+import LoadingIcon from "../LoadingIcon"
 function SingleProductDetailed() {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   const { id } = useParams()
   const [product, setProduct] = useState({})
   const [amount, setAmount] = useState(1)
+  const [imageLoading, setImageLoading] = useState(false)
+  const [imageData, setImageData] = useState({})
 
   useEffect(() => {
     async function fetchProduct() {
@@ -30,6 +33,23 @@ function SingleProductDetailed() {
     }
     fetchProduct()
   }, [])
+
+  useEffect(() => {
+    async function fetchImage() {
+      const ourRequest = Axios.CancelToken.source()
+      try {
+        setImageLoading(prev => (prev = true))
+        const productResponse = await Axios.get("http://localhost:9092/api/image/" + product.imageId, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+        setImageData(productResponse.data)
+        setImageLoading(prev => (prev = false))
+      } catch (e) {
+        console.log("something went wrong during product loading " + e)
+      }
+    }
+    if (product.imageId) {
+      fetchImage()
+    }
+  }, [product])
 
   async function handleAdd() {
     const ourRequest = Axios.CancelToken.source()
@@ -57,7 +77,7 @@ function SingleProductDetailed() {
         </Link>
       </div>
       <div className="container mt-4 ms-2 p-3 d-flex bg-white orders">
-        <div className="col-6">{GetImage(product.image)}</div>
+        <div className="col-6">{imageLoading ? <LoadingIcon /> : GetImage(imageData.data)}</div>
         <div className="col-6 d-flex flex-column mt-4">
           <div>
             <span className="fs-4 fw-bold">{product.name}</span>
