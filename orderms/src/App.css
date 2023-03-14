@@ -477,3 +477,6 @@ input[type="number"] {
 .order-history-name {
   min-height: 120px;
 }
+.hidden {
+  visibility: hidden;
+}

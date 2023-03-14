@@ -4,9 +4,9 @@ import { useImmer } from "use-immer"
 import Axios from "axios"
 import { useNavigate, useParams } from "react-router"
 import MainTop from "../MainTop"
-import GetImage from "../GetImage"
 import { useState } from "react"
 import DispatchContext from "../../DispatchContext"
+import ProductDetailsForm from "./ProductDetailsForm"
 function AddProductPage() {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
@@ -98,6 +98,7 @@ function AddProductPage() {
       console.log("error during image upload " + e)
     }
   }
+
   return (
     <div className="col-11 mx-auto p-3 mt-4 bg-gray">
       <MainTop label="Products" />
@@ -210,6 +211,7 @@ function AddProductPage() {
                 />
               </div>
               <div className="w-100 mt-3"></div>
+              <ProductDetailsForm category={state.categories[state.product.category.id - 1]?.name} />
               <div className="col-5 mt-3 mx-auto">
                 <button type="submit" className="btn btn-primary container">
                   ADD
