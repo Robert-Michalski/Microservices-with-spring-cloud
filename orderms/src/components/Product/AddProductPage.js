@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react"
 import StateContext from "../../StateContext"
 import { useImmer } from "use-immer"
 import Axios from "axios"
-import { useNavigate, useParams } from "react-router"
+import { json, useNavigate, useParams } from "react-router"
 import MainTop from "../MainTop"
 import { useState } from "react"
 import DispatchContext from "../../DispatchContext"
@@ -22,10 +22,12 @@ function AddProductPage() {
       },
       price: 0,
       details: "",
-      quantity: 0
+      quantity: 0,
+      imageId: 0
     },
     categories: [],
-    imgData: {}
+    imgData: {},
+    productDetails: {}
   })
 
   async function handleSubmit(e) {
@@ -33,9 +35,39 @@ function AddProductPage() {
     const ourRequest = Axios.CancelToken.source()
     try {
       if (!id) {
-        const response = await Axios.post("/api/product", { name: state.product.name, categoryId: state.product.category.id, price: state.product.price, details: state.product.details, quantity: state.product.quantity }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-        if (response.request.status === 201) {
-          navigate("/products")
+        // const response = await Axios.post("/api/product", { name: state.product.name, categoryId: state.product.category.id, price: state.product.price, details: state.product.details, quantity: state.product.quantity, productDetailsId: state.product.productDetailsId }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+        // if (response.request.status === 201) {
+        //   navigate("/products")
+        // }
+
+        const productDetailsResponse = await Axios.post(
+          "/api/productDetails",
+          {
+            displayInInches: state.productDetails.displayInInches,
+            processorName: state.productDetails.processorName,
+            ram: state.productDetails.ram,
+            storageInGb: state.productDetails.storageInGb,
+            mainCameraInMpx: state.productDetails.mainCameraInMpx,
+            memoryType: state.productDetails.memoryType,
+            memoryInGb: state.productDetails.memoryInGb,
+            connectors: state.productDetails.connectors,
+            clockSpeedInMHz: state.productDetails.clockSpeedInMHz,
+            socket: state.productDetails.socket,
+            cores: state.productDetails.cores,
+            cacheInMb: state.productDetails.cacheInMb,
+            backlight: state.productDetails.backlight,
+            destination: state.productDetails.destination,
+            switches: state.productDetails.switches,
+            connectivity: state.productDetails.connectivity,
+            color: state.productDetails.color
+          },
+          { headers: { Authorization: `Bearer ${appState.user.token}` } },
+          { cancelToken: ourRequest.token }
+        )
+
+        if (productDetailsResponse.request.status === 201 && state.product.imageId !== 0) {
+          const response = await Axios.post("/api/product", { name: state.product.name, categoryId: state.product.category.id, price: state.product.price, details: state.product.details, quantity: state.product.quantity, productDetailsId: productDetailsResponse.data, imageId: state.product.imageId }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
+          console.log(response.data)
         }
       } else {
         const response = await Axios.put("/api/product/" + id, { name: state.product.name, categoryId: state.product.category.id, price: state.product.price, details: state.product.details, quantity: state.product.quantity }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
@@ -81,22 +113,33 @@ function AddProductPage() {
       data.append("file", state.imgData[0])
 
       const response = await Axios.post(
-        "http://localhost:9092/api/image/upload",
+        "/api/image/upload",
         data,
         {
           headers: {
-            "Content-Type": "multipart/form-data"
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${appState.user.token}`
           }
         },
         { cancelToken: ourRequest.token }
       )
       if (response.request.status === 201) {
         setIsUploaded(prev => (prev = true))
+        setState(draft => {
+          draft.product.imageId = response.data.id
+        })
+
         appDispatch({ type: "flashMessage", value: "Image uploaded successfully" })
       }
     } catch (e) {
       console.log("error during image upload " + e)
     }
+  }
+
+  function setProductDetails(details) {
+    setState(draft => {
+      draft.productDetails = details
+    })
   }
 
   return (
@@ -211,12 +254,7 @@ function AddProductPage() {
                 />
               </div>
               <div className="w-100 mt-3"></div>
-              <ProductDetailsForm category={state.categories[state.product.category.id - 1]?.name} />
-              <div className="col-5 mt-3 mx-auto">
-                <button type="submit" className="btn btn-primary container">
-                  ADD
-                </button>
-              </div>
+              <ProductDetailsForm category={state.categories[state.product.category.id - 1]?.name} setProductDetails={setProductDetails} />
               <div className="w-100 mt-3"></div>
             </div>
           </form>

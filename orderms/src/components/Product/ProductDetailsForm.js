@@ -1,4 +1,26 @@
+import { useImmer } from "use-immer"
 function ProductDetailsForm(props) {
+  const [state, setState] = useImmer({
+    productDetails: {
+      displayInInches: 0,
+      processorName: 0,
+      ram: 0,
+      storageInGb: 0,
+      mainCameraInMpx: 0,
+      memoryType: "",
+      memoryInGb: 0,
+      connectors: "",
+      clockSpeedInMHz: 0,
+      socket: "",
+      cores: 0,
+      cacheInMb: 0,
+      backlight: "",
+      destination: "",
+      switches: "",
+      connectivity: "",
+      color: ""
+    }
+  })
   function smartphone() {
     if (props.category === "Smartphones") {
       return true
@@ -33,7 +55,16 @@ function ProductDetailsForm(props) {
             Display
           </label>
           <div className="col-sm">
-            <input type="text" id="display" className="product-add-input" />
+            <input
+              type="text"
+              id="display"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.displayInInches = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -42,10 +73,19 @@ function ProductDetailsForm(props) {
       {smartphone() ? (
         <>
           <label className="col-sm fs-3" htmlFor="processor">
-            Processor
+            Processor name
           </label>
           <div className="col-sm">
-            <input type="text" id="processor" className="product-add-input" />
+            <input
+              type="text"
+              id="processor"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.processorName = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -56,7 +96,16 @@ function ProductDetailsForm(props) {
             Ram
           </label>
           <div className="col-sm">
-            <input type="text" id="ram" className="product-add-input" />
+            <input
+              type="text"
+              id="ram"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.ram = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -67,7 +116,16 @@ function ProductDetailsForm(props) {
             Storage
           </label>
           <div className="col-sm">
-            <input type="text" id="storage" className="product-add-input" />
+            <input
+              type="text"
+              id="storage"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.storageInGb = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -78,7 +136,16 @@ function ProductDetailsForm(props) {
             Color
           </label>
           <div className="col-sm">
-            <input type="text" id="color" className="product-add-input" />
+            <input
+              type="text"
+              id="color"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.color = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -89,7 +156,16 @@ function ProductDetailsForm(props) {
             Camera
           </label>
           <div className="col-sm">
-            <input type="text" id="camera" className="product-add-input" />
+            <input
+              type="text"
+              id="camera"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.mainCameraInMpx = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -100,7 +176,16 @@ function ProductDetailsForm(props) {
             Memory type
           </label>
           <div className="col-sm">
-            <input type="text" id="memory_type" className="product-add-input" />
+            <input
+              type="text"
+              id="memory_type"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.memoryType = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -111,7 +196,16 @@ function ProductDetailsForm(props) {
             Memory
           </label>
           <div className="col-sm">
-            <input type="text" id="memory" className="product-add-input" />
+            <input
+              type="text"
+              id="memory"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.memoryInGb = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -122,7 +216,16 @@ function ProductDetailsForm(props) {
             Connectors
           </label>
           <div className="col-sm">
-            <input type="text" id="connectors" className="product-add-input" />
+            <input
+              type="text"
+              id="connectors"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.connectors = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -133,7 +236,16 @@ function ProductDetailsForm(props) {
             Clock speed
           </label>
           <div className="col-sm">
-            <input type="text" id="clock_speed" className="product-add-input" />
+            <input
+              type="text"
+              id="clock_speed"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.clockSpeedInMHz = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -144,7 +256,16 @@ function ProductDetailsForm(props) {
             Destination
           </label>
           <div className="col-sm">
-            <input type="text" id="destination" className="product-add-input" />
+            <input
+              type="text"
+              id="destination"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.destination = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -155,7 +276,16 @@ function ProductDetailsForm(props) {
             Backlight
           </label>
           <div className="col-sm">
-            <input type="text" id="backlight" className="product-add-input" />
+            <input
+              type="text"
+              id="backlight"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.backlight = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -166,7 +296,16 @@ function ProductDetailsForm(props) {
             Socket
           </label>
           <div className="col-sm">
-            <input type="text" id="socket" className="product-add-input" />
+            <input
+              type="text"
+              id="socket"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.socket = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -177,7 +316,16 @@ function ProductDetailsForm(props) {
             Cores
           </label>
           <div className="col-sm">
-            <input type="text" id="cores" className="product-add-input" />
+            <input
+              type="text"
+              id="cores"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.cores = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -188,7 +336,16 @@ function ProductDetailsForm(props) {
             Cache
           </label>
           <div className="col-sm">
-            <input type="text" id="cache" className="product-add-input" />
+            <input
+              type="text"
+              id="cache"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.cacheInMb = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -199,7 +356,16 @@ function ProductDetailsForm(props) {
             Switches
           </label>
           <div className="col-sm">
-            <input type="text" id="switches" className="product-add-input" />
+            <input
+              type="text"
+              id="switches"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.switches = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
@@ -210,11 +376,25 @@ function ProductDetailsForm(props) {
             Connectivity
           </label>
           <div className="col-sm">
-            <input type="text" id="connectivity" className="product-add-input" />
+            <input
+              type="text"
+              id="connectivity"
+              className="product-add-input"
+              onChange={e =>
+                setState(draft => {
+                  draft.productDetails.connectivity = e.target.value
+                })
+              }
+            />
           </div>
           <div className="w-100 mt-2"></div>
         </>
       ) : null}
+      <div className="col-5 mt-3 mx-auto">
+        <button type="submit" className="btn btn-primary container" onClick={props.setProductDetails(state.productDetails)}>
+          ADD
+        </button>
+      </div>
     </>
   )
 }

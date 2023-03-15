@@ -6,7 +6,9 @@ import com.rob.productservice.dto.ProductResponseShort;
 import com.rob.productservice.dto.ProductStockRequest;
 import com.rob.productservice.entity.Category;
 import com.rob.productservice.entity.Product;
+import com.rob.productservice.entity.ProductDetails;
 import com.rob.productservice.repository.CategoryRepository;
+import com.rob.productservice.repository.ProductDetailsRepository;
 import com.rob.productservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -30,15 +32,20 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ProductDetailsRepository productDetailsRepository;
 
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
 
-    public ProductResponse addProduct(ProductRequest productRequest, MultipartFile file) throws IOException {
+    public ProductResponse addProduct(ProductRequest productRequest){
         if (categoryRepository.findById(productRequest.categoryId()).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         Category category = categoryRepository.findById(productRequest.categoryId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+        ProductDetails productDetails = productDetailsRepository.findById(productRequest.productDetailsId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST));
+
+
         Product productToSave = Product.builder()
                 .name(productRequest.name())
                 .category(category)
@@ -46,6 +53,7 @@ public class ProductService {
                 .details(productRequest.details())
                 .quantity(productRequest.quantity())
                 .imageId(productRequest.imageId())
+                .productDetails(productDetails)
                 .build();
         return ProductUtil.toDto(productRepository.save(productToSave));
     }

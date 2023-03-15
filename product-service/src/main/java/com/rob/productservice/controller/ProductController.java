@@ -23,8 +23,8 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ProductResponse addProduct(@RequestBody ProductRequest productRequest, @RequestParam("image")MultipartFile file) throws IOException {
-        return productService.addProduct(productRequest, file);
+    public ProductResponse addProduct(@RequestBody ProductRequest productRequest) throws IOException {
+        return productService.addProduct(productRequest);
     }
 
     @GetMapping("{id}")
