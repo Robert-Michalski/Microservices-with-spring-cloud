@@ -480,3 +480,6 @@ input[type="number"] {
 .hidden {
   visibility: hidden;
 }
+.fc-red {
+  color: red;
+}

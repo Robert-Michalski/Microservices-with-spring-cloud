@@ -27,14 +27,20 @@ function AddProductPage() {
     },
     categories: [],
     imgData: {},
-    productDetails: {}
+    productDetails: {},
+    showImageWarning: false
   })
 
   async function handleSubmit(e) {
     e.preventDefault()
     const ourRequest = Axios.CancelToken.source()
+    if (state.product.imageId === 0) {
+      setState(draft => {
+        draft.showImageWarning = true
+      })
+    }
     try {
-      if (!id) {
+      if (!id && state.wasWarned) {
         // const response = await Axios.post("/api/product", { name: state.product.name, categoryId: state.product.category.id, price: state.product.price, details: state.product.details, quantity: state.product.quantity, productDetailsId: state.product.productDetailsId }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
         // if (response.request.status === 201) {
         //   navigate("/products")
@@ -65,11 +71,14 @@ function AddProductPage() {
           { cancelToken: ourRequest.token }
         )
 
-        if (productDetailsResponse.request.status === 201 && state.product.imageId !== 0) {
+        if (productDetailsResponse.request.status === 201 && state.imageId !== 0) {
           const response = await Axios.post("/api/product", { name: state.product.name, categoryId: state.product.category.id, price: state.product.price, details: state.product.details, quantity: state.product.quantity, productDetailsId: productDetailsResponse.data, imageId: state.product.imageId }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
-          console.log(response.data)
+          if (response.request.status === 201) {
+            appDispatch({ type: "liveMessage", value: "Product added succesfully" })
+            navigate("/products/" + response.data.id)
+          }
         }
-      } else {
+      } else if (id) {
         const response = await Axios.put("/api/product/" + id, { name: state.product.name, categoryId: state.product.category.id, price: state.product.price, details: state.product.details, quantity: state.product.quantity }, { headers: { Authorization: `Bearer ${appState.user.token}` } }, { cancelToken: ourRequest.token })
         if (response.request.status === 200) {
           navigate("/products")
@@ -254,7 +263,10 @@ function AddProductPage() {
                 />
               </div>
               <div className="w-100 mt-3"></div>
+
               <ProductDetailsForm category={state.categories[state.product.category.id - 1]?.name} setProductDetails={setProductDetails} />
+              <div className="w-100 mt-3"></div>
+              {state.showImageWarning ? <div className="fs-5 fc-red">Cannot add product without an image</div> : null}
               <div className="w-100 mt-3"></div>
             </div>
           </form>
